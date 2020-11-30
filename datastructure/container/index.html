@@ -1,0 +1,1019 @@
+<!doctype html>
+<html lang="en-us">
+  <head>
+    <title>数据结构之容器 // Your title</title>
+    <meta charset="utf-8" />
+    <meta name="generator" content="Hugo 0.62.2" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="John Doe" />
+    <meta name="description" content="" />
+    <link rel="stylesheet" href="https://qmr0925.github.io/css/main.min.88e7083eff65effb7485b6e6f38d10afbec25093a6fac42d734ce9024d3defbd.css" />
+
+    
+    <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="数据结构之容器"/>
+<meta name="twitter:description" content="一、概述 1.什么是数据结构中的容器？  容器是一种把多个元素组织在一起的数据结构，也可以理解为一种可以包含其他类型对象作为元素的
+ 的对象。容器是仅仅用来存放数据的，本身没有取出元素这种能力，大多数情况下是通过可迭代对象来
+操作容器
+ 容器这种数据结构在各种编程语言中都有相应的实现，比如我们经常会比较熟悉的C&#43;&#43;的标准模板库
+ （Standard Template Library，STL）、Java的集合框架（Java Collections Framework，JCF）、而在
+Python中更是将容器类型的数据结构作为其基本数据类型、Go语言也有内建的容器和相应的标准库，
+本篇博客便是在总结各种容器使用及原理的基础上，对Java、Python中相同的类型的容器做一个横向的
+对比，以便于日后的总结和复习
+2.Java集合框架简介  （1）泛型的机制
+  Java中的容器就是可以容纳其他Java对象的对象，且Java容器中只能存放对象，对于一些基本的数据
+ 类型（比如int、long、float、double等），需要将其包装成对象类型之后（Interger、Long、Float、Double
+等）才能放到容器里，很多时候拆包装和解包装使能够自动完成的
+ Java容器能够容纳任何类型的对象，表面上是通过泛型机制完成的。事实上，所有容器的内部存放的都
+ 是Object类的对象，所有的对象都是Object类型的子类。泛型机制只是简化了编程，由编译器自动帮助我们
+完成了强制类型的转换而已，示例代码如下
+ArrayList&lt;String&gt; list = new ArrayList&lt;String&gt;(); //参数化类型 list.add(new String(&#34;csuyzz&#34;)); String name = list,get(0); //容器中存放的Object类的对象隐式转换成为String类型的对象  此外，Java里的对象都在堆上，且对象只能通过引用（reference）来访问，容器里存放的其实是对
+ 象的引用而不是对象的本身
+ （2）接口和实现（Interfaces and Implementations）
+  在Java 的集合框架中共定义了14种容器的接口，关系图如下所示，Map接口没有继承自Collection的
+ 接口，因为Map接口是关联式的容器而不是集合，但也可以从Map转换到Coolection；Stack已经被Deque
+所取代
+
+ 接口的实现如下表所示
+  迭代器为我们提供了遍历容器中元素的方法，它只能通过容器本身来得到，迭代器是我们更加方便地去操作
+ 容器，下面是示例：
+ArrayList&lt;String&gt; list = new ArrayList&lt;String&gt;(); list."/>
+
+    <meta property="og:title" content="数据结构之容器" />
+<meta property="og:description" content="一、概述 1.什么是数据结构中的容器？  容器是一种把多个元素组织在一起的数据结构，也可以理解为一种可以包含其他类型对象作为元素的
+ 的对象。容器是仅仅用来存放数据的，本身没有取出元素这种能力，大多数情况下是通过可迭代对象来
+操作容器
+ 容器这种数据结构在各种编程语言中都有相应的实现，比如我们经常会比较熟悉的C&#43;&#43;的标准模板库
+ （Standard Template Library，STL）、Java的集合框架（Java Collections Framework，JCF）、而在
+Python中更是将容器类型的数据结构作为其基本数据类型、Go语言也有内建的容器和相应的标准库，
+本篇博客便是在总结各种容器使用及原理的基础上，对Java、Python中相同的类型的容器做一个横向的
+对比，以便于日后的总结和复习
+2.Java集合框架简介  （1）泛型的机制
+  Java中的容器就是可以容纳其他Java对象的对象，且Java容器中只能存放对象，对于一些基本的数据
+ 类型（比如int、long、float、double等），需要将其包装成对象类型之后（Interger、Long、Float、Double
+等）才能放到容器里，很多时候拆包装和解包装使能够自动完成的
+ Java容器能够容纳任何类型的对象，表面上是通过泛型机制完成的。事实上，所有容器的内部存放的都
+ 是Object类的对象，所有的对象都是Object类型的子类。泛型机制只是简化了编程，由编译器自动帮助我们
+完成了强制类型的转换而已，示例代码如下
+ArrayList&lt;String&gt; list = new ArrayList&lt;String&gt;(); //参数化类型 list.add(new String(&#34;csuyzz&#34;)); String name = list,get(0); //容器中存放的Object类的对象隐式转换成为String类型的对象  此外，Java里的对象都在堆上，且对象只能通过引用（reference）来访问，容器里存放的其实是对
+ 象的引用而不是对象的本身
+ （2）接口和实现（Interfaces and Implementations）
+  在Java 的集合框架中共定义了14种容器的接口，关系图如下所示，Map接口没有继承自Collection的
+ 接口，因为Map接口是关联式的容器而不是集合，但也可以从Map转换到Coolection；Stack已经被Deque
+所取代
+
+ 接口的实现如下表所示
+  迭代器为我们提供了遍历容器中元素的方法，它只能通过容器本身来得到，迭代器是我们更加方便地去操作
+ 容器，下面是示例：
+ArrayList&lt;String&gt; list = new ArrayList&lt;String&gt;(); list." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://qmr0925.github.io/datastructure/container/" />
+<meta property="article:published_time" content="2019-11-28T17:01:10+08:00" />
+<meta property="article:modified_time" content="2019-11-28T17:01:10+08:00" />
+
+
+  </head>
+  <body>
+    <header class="app-header">
+      <a href="https://qmr0925.github.io"><img class="app-header-avatar" src="/1.png" alt="John Doe" /></a>
+      <h1>Your title</h1>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vehicula turpis sit amet elit pretium.</p>
+      <div class="app-header-social">
+        
+          <a target="_blank" href="https://github.com/gohugoio" rel="noreferrer noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-github">
+  <title>github</title>
+  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+</svg></a>
+        
+          <a target="_blank" href="mailto:csuyzz@foxmail.com" rel="noreferrer noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-mail">
+  <title>mail</title>
+  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline>
+</svg></a>
+        
+          <a target="_blank" href="https://cn.linkedin.com/in/csuyzz" rel="noreferrer noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-linkedin">
+  <title>linkedin</title>
+  <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle>
+</svg></a>
+        
+          <a target="_blank" href="https://twitter.com/gohugoio" rel="noreferrer noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-twitter">
+  <title>twitter</title>
+  <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path>
+</svg></a>
+        
+      </div>
+      <h3><a href="/" title="首页">首页</a></h3>
+      <h3><a href="/category/content/" title="首页">分类目录</a></h3>
+      <h3><a href="/personal/introduce/" title="首页">个人简介</a></h3>
+    </header>
+    <main class="app-container">
+      
+  <article class="post">
+    <header class="post-header">
+      <h1 class ="post-title">数据结构之容器</h1>
+      <div class="post-meta">
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-calendar">
+  <title>calendar</title>
+  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line>
+</svg>
+          Nov 28, 2019
+        </div>
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-clock">
+  <title>clock</title>
+  <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
+</svg>
+          8 min read
+        </div>
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tag">
+  <title>tag</title>
+  <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7" y2="7"></line>
+</svg>
+              <a class="tag" href="https://qmr0925.github.io/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构</a>
+              <a class="tag" href="https://qmr0925.github.io/tags/java/">Java</a>
+              <a class="tag" href="https://qmr0925.github.io/tags/python/">Python</a>
+        </div>
+      </div>
+    </header>
+    <div class="post-content">
+      <hr>
+<h3 id="一概述">一、概述</h3>
+<h4 id="1什么是数据结构中的容器">1.什么是数据结构中的容器？</h4>
+<blockquote>
+<p>容器是一种把多个元素组织在一起的数据结构，也可以理解为一种可以包含其他类型对象作为元素的</p>
+</blockquote>
+<p>的对象。容器是仅仅用来存放数据的，本身没有取出元素这种能力，大多数情况下是通过可迭代对象来</p>
+<p>操作容器</p>
+<blockquote>
+<p>容器这种数据结构在各种编程语言中都有相应的实现，比如我们经常会比较熟悉的C++的标准模板库</p>
+</blockquote>
+<p>（Standard Template Library，STL）、Java的集合框架（Java Collections Framework，JCF）、而在</p>
+<p>Python中更是将容器类型的数据结构作为其基本数据类型、Go语言也有内建的容器和相应的标准库，</p>
+<p>本篇博客便是在总结各种容器使用及原理的基础上，对Java、Python中相同的类型的容器做一个横向的</p>
+<p>对比，以便于日后的总结和复习</p>
+<h4 id="2java集合框架简介">2.Java集合框架简介</h4>
+<blockquote>
+<p><strong>（1）泛型的机制</strong></p>
+</blockquote>
+<blockquote>
+<p>Java中的容器就是可以容纳其他Java对象的对象，且Java容器中只能存放对象，对于一些基本的数据</p>
+</blockquote>
+<p>类型（比如int、long、float、double等），需要将其包装成对象类型之后（Interger、Long、Float、Double</p>
+<p>等）才能放到容器里，很多时候拆包装和解包装使能够自动完成的</p>
+<blockquote>
+<p>Java容器能够容纳任何类型的对象，表面上是通过泛型机制完成的。事实上，所有容器的内部存放的都</p>
+</blockquote>
+<p>是Object类的对象，所有的对象都是Object类型的子类。泛型机制只是简化了编程，由编译器自动帮助我们</p>
+<p>完成了强制类型的转换而已，示例代码如下</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">ArrayList<span style="color:#f92672">&lt;</span>String<span style="color:#f92672">&gt;</span> list <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> ArrayList<span style="color:#f92672">&lt;</span>String<span style="color:#f92672">&gt;</span><span style="color:#f92672">(</span><span style="color:#f92672">)</span><span style="color:#f92672">;</span>  <span style="color:#75715e">//参数化类型
+</span><span style="color:#75715e"></span>list<span style="color:#f92672">.</span><span style="color:#a6e22e">add</span><span style="color:#f92672">(</span><span style="color:#66d9ef">new</span> String<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;csuyzz&#34;</span><span style="color:#f92672">)</span><span style="color:#f92672">)</span><span style="color:#f92672">;</span>
+String name <span style="color:#f92672">=</span> list<span style="color:#f92672">,</span>get<span style="color:#f92672">(</span>0<span style="color:#f92672">)</span><span style="color:#f92672">;</span>  <span style="color:#75715e">//容器中存放的Object类的对象隐式转换成为String类型的对象
+</span></code></pre></div><blockquote>
+<p>此外，Java里的对象都在堆上，且对象只能通过引用（reference）来访问，容器里存放的其实是对</p>
+</blockquote>
+<p>象的引用而不是对象的本身</p>
+<blockquote>
+<p><strong>（2）接口和实现（Interfaces and Implementations）</strong></p>
+</blockquote>
+<blockquote>
+<p>在Java 的集合框架中共定义了14种容器的接口，关系图如下所示，Map接口没有继承自Collection的</p>
+</blockquote>
+<p>接口，因为Map接口是关联式的容器而不是集合，但也可以从Map转换到Coolection；Stack已经被Deque</p>
+<p>所取代</p>
+<p><a href="https://imgchr.com/i/154e3T"><!-- raw HTML omitted --></a></p>
+<blockquote>
+<p>接口的实现如下表所示</p>
+</blockquote>
+<!-- raw HTML omitted -->
+<blockquote>
+<p>迭代器为我们提供了遍历容器中元素的方法，它只能通过容器本身来得到，迭代器是我们更加方便地去操作</p>
+</blockquote>
+<p>容器，下面是示例：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">ArrayList<span style="color:#f92672">&lt;</span>String<span style="color:#f92672">&gt;</span> list <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> ArrayList<span style="color:#f92672">&lt;</span>String<span style="color:#f92672">&gt;</span><span style="color:#f92672">(</span><span style="color:#f92672">)</span><span style="color:#f92672">;</span>
+list<span style="color:#f92672">.</span><span style="color:#a6e22e">add</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;csuyzz&#34;</span><span style="color:#f92672">)</span><span style="color:#f92672">;</span>
+list<span style="color:#f92672">.</span><span style="color:#a6e22e">add</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;csu001&#34;</span><span style="color:#f92672">)</span><span style="color:#f92672">;</span>
+<span style="color:#66d9ef">for</span><span style="color:#f92672">(</span>String name <span style="color:#f92672">:</span> list<span style="color:#f92672">)</span><span style="color:#f92672">{</span>
+    System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>name<span style="color:#f92672">)</span><span style="color:#f92672">;</span>   <span style="color:#75715e">//使用迭代器进行输出数据
+</span><span style="color:#75715e"></span><span style="color:#f92672">}</span>
+</code></pre></div><h3 id="二list">二、List</h3>
+<h4 id="1java中的list容器">1.Java中的List容器</h4>
+<blockquote>
+<p><strong>（1）ArrayList</strong></p>
+</blockquote>
+<blockquote>
+<p>ArrayList 实现了List接口，元素存放的顺序与放进去的顺序相同，允许放入null元素，底层通过可变数</p>
+</blockquote>
+<p>组来实现。每个ArrayList都有一个容量（capacity）表示底层数组的实际大小，容器内存储的元素的个数</p>
+<p>不能大于当前容量；当向容器中添加元素时，如果容量不足，容器会自动增大底层数组的容量。而且这里</p>
+<p>的数组是一个Object的数组，可以容纳任何类型的对象</p>
+<blockquote>
+<p>ArrayList与Vector的最大不同就是ArrayList没有实现同步，当多个线程并发访问时，用户可以手动进行</p>
+</blockquote>
+<p>同步，也可以使用Vector来进行替代</p>
+<p><a href="https://imgchr.com/i/1IpxPK"><!-- raw HTML omitted --></a></p>
+<blockquote>
+<p>对于一些常用的方法，比如size()、isEmpty()、get()、set()时间复杂度为O（1）、add()方法的时间开销</p>
+</blockquote>
+<p>与插入的位置有关，其余均为线性时间</p>
+<blockquote>
+<p>set()方法就是对数组指定的位置赋值，源码实现如下</p>
+</blockquote>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#75715e">//Object[] elementData
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">public</span> E <span style="color:#a6e22e">set</span><span style="color:#f92672">(</span><span style="color:#66d9ef">int</span> index<span style="color:#f92672">,</span>E element<span style="color:#f92672">)</span><span style="color:#f92672">{</span>
+    rangeCheck<span style="color:#f92672">(</span>index<span style="color:#f92672">)</span><span style="color:#f92672">;</span> <span style="color:#75715e">//先检查下标是否越界
+</span><span style="color:#75715e"></span>    E oldValue <span style="color:#f92672">=</span> elementData<span style="color:#f92672">(</span>index<span style="color:#f92672">)</span><span style="color:#f92672">;</span> 
+    elementData<span style="color:#f92672">[</span>index<span style="color:#f92672">]</span> <span style="color:#f92672">=</span> element<span style="color:#f92672">;</span> <span style="color:#75715e">//赋值到指定的位置，赋值的仅仅是引用
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">return</span> oldValue<span style="color:#f92672">;</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><blockquote>
+<p>get（）方法，获取指定位置的元素，但是由于底层数组是Object[]，在得到元素后需要进行类型转换</p>
+</blockquote>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">public</span> E <span style="color:#a6e22e">get</span><span style="color:#f92672">(</span><span style="color:#66d9ef">int</span> index<span style="color:#f92672">)</span><span style="color:#f92672">{</span>
+    rangeCheck<span style="color:#f92672">(</span>index<span style="color:#f92672">)</span><span style="color:#f92672">;</span>
+    <span style="color:#66d9ef">return</span> <span style="color:#f92672">(</span>E<span style="color:#f92672">)</span> elementData<span style="color:#f92672">[</span>index<span style="color:#f92672">]</span><span style="color:#f92672">;</span> <span style="color:#75715e">//类型的转换
+</span><span style="color:#75715e"></span><span style="color:#f92672">}</span>
+</code></pre></div><blockquote>
+<p>add（）方法，在尾部追加元素 add (E e)，add（int index，E e）在指定位置插入元素，这两种方法在</p>
+</blockquote>
+<p>执行时都有可能导致容量的不足，实际在添加元素之前，都要进行剩余空间检查，需要时通过grow()方法进</p>
+<p>行自动扩容；注意add(int index，E e)需要先对元素进行移动，然后完成插入操作，该方法有着线性的时间</p>
+<p>复杂度</p>
+<blockquote>
+<p>remove() 方法有两种，remove( int index )删除指定位置的元素，remove(Object o)删除第一个满足</p>
+</blockquote>
+<p>o.equals(elementData[index])的元素，删除之后需要将删除点之后的元素向前移动一个位置，所以时间</p>
+<p>复杂度是O(n)的，但是为了让GC起作用，必须显示的为最后一个位置赋null值</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">public</span> E <span style="color:#a6e22e">remove</span><span style="color:#f92672">(</span><span style="color:#66d9ef">int</span> index<span style="color:#f92672">)</span><span style="color:#f92672">{</span>
+    rangeCheck<span style="color:#f92672">(</span>index<span style="color:#f92672">)</span><span style="color:#f92672">;</span>   <span style="color:#75715e">//下标越界检查
+</span><span style="color:#75715e"></span>    modCount<span style="color:#f92672">+</span><span style="color:#f92672">+</span><span style="color:#f92672">;</span>
+    E oldValue <span style="color:#f92672">=</span> elementData<span style="color:#f92672">(</span>index<span style="color:#f92672">)</span><span style="color:#f92672">;</span>
+    <span style="color:#66d9ef">int</span> numMoved <span style="color:#f92672">=</span> size <span style="color:#f92672">-</span> index <span style="color:#f92672">-</span> 1<span style="color:#f92672">;</span>
+    <span style="color:#66d9ef">if</span><span style="color:#f92672">(</span>numMoved <span style="color:#f92672">&gt;</span> 0<span style="color:#f92672">)</span>
+        System<span style="color:#f92672">.</span><span style="color:#a6e22e">arraycopy</span><span style="color:#f92672">(</span>elementData<span style="color:#f92672">,</span>index<span style="color:#f92672">+</span>1<span style="color:#f92672">,</span>elementData<span style="color:#f92672">,</span>index<span style="color:#f92672">,</span>numMoved<span style="color:#f92672">)</span><span style="color:#f92672">;</span>
+    elementData<span style="color:#f92672">[</span><span style="color:#f92672">-</span><span style="color:#f92672">-</span>size<span style="color:#f92672">]</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">;</span>  <span style="color:#75715e">//清除最后一个位置的引用，使GC起作用
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">return</span> oldValue<span style="color:#f92672">;</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><blockquote>
+<p><strong>(2) LinkedList</strong></p>
+</blockquote>
+<blockquote>
+<p>LinkedList同时实现了List接口和Deque接口，它可以充当顺序容器、队列和栈，但是使用栈或者队列的</p>
+</blockquote>
+<p>首选是ArrayDeque，LinkedList数据的存储方式如下图所示</p>
+<p><!-- raw HTML omitted --></p>
+<blockquote>
+<p>LinkedList底层通过双向链表来实现，双向链表的每个节点使用内部类Node表示，LinkedList通过first</p>
+</blockquote>
+<p>和last引用分别指向链表的第一个和最后一个元素，不存在哑元，当链表为空的时候first和last都指向null,</p>
+<p>LinkedList没有实现同步</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#75715e">//Node内部类
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Node</span><span style="color:#f92672">&lt;</span>E<span style="color:#f92672">&gt;</span><span style="color:#f92672">{</span>
+    E item<span style="color:#f92672">;</span>
+    Node<span style="color:#f92672">&lt;</span>E<span style="color:#f92672">&gt;</span> next<span style="color:#f92672">;</span>
+    Node<span style="color:#f92672">&lt;</span>E<span style="color:#f92672">&gt;</span> prev<span style="color:#f92672">;</span>
+    Node<span style="color:#f92672">(</span>Node<span style="color:#f92672">&lt;</span>E<span style="color:#f92672">&gt;</span> prev<span style="color:#f92672">,</span>E element<span style="color:#f92672">,</span>Node<span style="color:#f92672">&lt;</span>E<span style="color:#f92672">&gt;</span> next<span style="color:#f92672">)</span><span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">item</span> <span style="color:#f92672">=</span> element<span style="color:#f92672">;</span>
+        <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">next</span> <span style="color:#f92672">=</span> next<span style="color:#f92672">;</span>
+        <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">prev</span> <span style="color:#f92672">=</span> prev<span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><blockquote>
+<p>LinkedList中所有跟下标有关的操作都是O（n）的时间复杂度,在链表的头部和末尾插入和删除元素时都</p>
+</blockquote>
+<p>常数时间</p>
+<blockquote>
+<p>add（）方法有两种，add(E e),在链表的末尾插入元素，常数时间；add（int index，E element）,在指定</p>
+</blockquote>
+<p>的下标处插入元素</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Java" data-lang="Java"><span style="color:#75715e">//add(E e)方法的实现
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">boolean</span> <span style="color:#a6e22e">add</span><span style="color:#f92672">(</span>E e<span style="color:#f92672">)</span><span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">final</span> Node<span style="color:#f92672">&lt;</span>E<span style="color:#f92672">&gt;</span> l <span style="color:#f92672">=</span> last<span style="color:#f92672">;</span>   <span style="color:#75715e">//将原来最后一个节点赋给l
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">final</span> Node<span style="color:#f92672">&lt;</span>E<span style="color:#f92672">&gt;</span> newNode <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> Node<span style="color:#f92672">&lt;</span><span style="color:#f92672">&gt;</span><span style="color:#f92672">(</span>l<span style="color:#f92672">,</span>e<span style="color:#f92672">,</span><span style="color:#66d9ef">null</span><span style="color:#f92672">)</span><span style="color:#f92672">;</span>  <span style="color:#75715e">//新建节点指向原来最后的节点
+</span><span style="color:#75715e"></span>    last <span style="color:#f92672">=</span> newNode<span style="color:#f92672">;</span>         <span style="color:#75715e">//新建节点化成最后一个节点
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">if</span><span style="color:#f92672">(</span>l <span style="color:#f92672">=</span><span style="color:#f92672">=</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">)</span>
+        first <span style="color:#f92672">=</span> newNode<span style="color:#f92672">;</span>    <span style="color:#75715e">//原来的链表为空，这是插入的第一个元素
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">else</span>
+        l<span style="color:#f92672">.</span><span style="color:#a6e22e">next</span> <span style="color:#f92672">=</span> newNode<span style="color:#f92672">;</span>  <span style="color:#75715e">//原来最后的节点指向新的最后的节点
+</span><span style="color:#75715e"></span>    size<span style="color:#f92672">+</span><span style="color:#f92672">+</span><span style="color:#f92672">;</span>                <span style="color:#75715e">//链表的大小增加
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">true</span><span style="color:#f92672">;</span>        <span style="color:#75715e">//返回插入成功
+</span><span style="color:#75715e"></span><span style="color:#f92672">}</span>
+
+<span style="color:#75715e">//add(int index,E element)方法的实现
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">add</span><span style="color:#f92672">(</span><span style="color:#66d9ef">int</span> index<span style="color:#f92672">,</span>E element<span style="color:#f92672">)</span><span style="color:#f92672">{</span>
+    checkPositionIndex<span style="color:#f92672">(</span>index<span style="color:#f92672">)</span><span style="color:#f92672">;</span> <span style="color:#75715e">//判断元素的下标是否在范围内 0 - size
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">if</span><span style="color:#f92672">(</span>index <span style="color:#f92672">=</span><span style="color:#f92672">=</span> size<span style="color:#f92672">)</span> <span style="color:#75715e">//插入的位置是末尾包括列表为空的情况
+</span><span style="color:#75715e"></span>        add<span style="color:#f92672">(</span>element<span style="color:#f92672">)</span><span style="color:#f92672">;</span>
+    <span style="color:#66d9ef">else</span><span style="color:#f92672">{</span>
+        Node<span style="color:#f92672">&lt;</span>E<span style="color:#f92672">&gt;</span> target <span style="color:#f92672">=</span> node<span style="color:#f92672">(</span>index<span style="color:#f92672">)</span><span style="color:#f92672">;</span>  <span style="color:#75715e">//先根据index找到要插入的位置节点
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">final</span> Node<span style="color:#f92672">&lt;</span>E<span style="color:#f92672">&gt;</span> pred <span style="color:#f92672">=</span> target<span style="color:#f92672">.</span><span style="color:#a6e22e">prev</span><span style="color:#f92672">;</span>
+        <span style="color:#66d9ef">final</span> Node<span style="color:#f92672">&lt;</span>E<span style="color:#f92672">&gt;</span> newNode <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> Node<span style="color:#f92672">&lt;</span><span style="color:#f92672">&gt;</span><span style="color:#f92672">(</span>pred<span style="color:#f92672">,</span>element<span style="color:#f92672">,</span>target<span style="color:#f92672">)</span><span style="color:#f92672">;</span>
+        target<span style="color:#f92672">.</span><span style="color:#a6e22e">prev</span> <span style="color:#f92672">=</span> newNode<span style="color:#f92672">;</span>
+        <span style="color:#66d9ef">if</span><span style="color:#f92672">(</span>pred <span style="color:#f92672">=</span><span style="color:#f92672">=</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">)</span> <span style="color:#75715e">//插入首部节点
+</span><span style="color:#75715e"></span>            first <span style="color:#f92672">=</span> newNode<span style="color:#f92672">;</span>
+        <span style="color:#66d9ef">else</span>
+            pred<span style="color:#f92672">.</span><span style="color:#a6e22e">next</span> <span style="color:#f92672">=</span> newNode<span style="color:#f92672">;</span>
+        size<span style="color:#f92672">+</span><span style="color:#f92672">+</span><span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><blockquote>
+<p>remove() 方法：删除跟指定元素相等的第一个元素remove(Obiect o)，remove(int index)删除指定下标</p>
+</blockquote>
+<p>的元素，时间复杂度均为O(n)</p>
+<p><a href="https://imgchr.com/i/1I9Mrj"><!-- raw HTML omitted --></a></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#75715e">//unlink删除一个Node
+</span><span style="color:#75715e"></span>E <span style="color:#a6e22e">unlink</span><span style="color:#f92672">(</span>Node<span style="color:#f92672">&lt;</span>E<span style="color:#f92672">&gt;</span> x<span style="color:#f92672">)</span><span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">final</span> E element <span style="color:#f92672">=</span> x<span style="color:#f92672">.</span><span style="color:#a6e22e">item</span><span style="color:#f92672">;</span>
+    <span style="color:#66d9ef">final</span> Node<span style="color:#f92672">&lt;</span>E<span style="color:#f92672">&gt;</span> next <span style="color:#f92672">=</span> x<span style="color:#f92672">.</span><span style="color:#a6e22e">next</span><span style="color:#f92672">;</span>
+    <span style="color:#66d9ef">final</span> Node<span style="color:#f92672">&lt;</span>E<span style="color:#f92672">&gt;</span> prev <span style="color:#f92672">=</span> x<span style="color:#f92672">.</span><span style="color:#a6e22e">prev</span><span style="color:#f92672">;</span>
+    <span style="color:#66d9ef">if</span><span style="color:#f92672">(</span>prev<span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#66d9ef">null</span><span style="color:#f92672">)</span><span style="color:#f92672">{</span>
+        first<span style="color:#f92672">=</span>next<span style="color:#f92672">;</span>   <span style="color:#75715e">//删除的是第一个元素
+</span><span style="color:#75715e"></span>    <span style="color:#f92672">}</span><span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span><span style="color:#f92672">(</span>next<span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#66d9ef">null</span><span style="color:#f92672">)</span><span style="color:#f92672">{</span>
+        last <span style="color:#f92672">=</span> prev<span style="color:#f92672">;</span>   <span style="color:#75715e">//删除的是最后一个元素
+</span><span style="color:#75715e"></span>    <span style="color:#f92672">}</span><span style="color:#66d9ef">else</span><span style="color:#f92672">{</span>
+        prev<span style="color:#f92672">.</span><span style="color:#a6e22e">next</span> <span style="color:#f92672">=</span> next<span style="color:#f92672">;</span>
+        next<span style="color:#f92672">.</span><span style="color:#a6e22e">prev</span> <span style="color:#f92672">=</span> prev<span style="color:#f92672">;</span>
+        x<span style="color:#f92672">.</span><span style="color:#a6e22e">prev</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">;</span>
+        x<span style="color:#f92672">.</span><span style="color:#a6e22e">next</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+    x<span style="color:#f92672">.</span><span style="color:#a6e22e">item</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">null</span> <span style="color:#f92672">;</span>  <span style="color:#75715e">//删除的节点赋null值使其可以被GC清理掉
+</span><span style="color:#75715e"></span>    size<span style="color:#f92672">-</span><span style="color:#f92672">-</span><span style="color:#f92672">;</span>
+    <span style="color:#66d9ef">return</span> element<span style="color:#f92672">;</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><blockquote>
+<p>get() 方法，得到指定下标处元素的引用</p>
+</blockquote>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">public</span> E <span style="color:#a6e22e">get</span><span style="color:#f92672">(</span><span style="color:#66d9ef">int</span> index<span style="color:#f92672">)</span><span style="color:#f92672">{</span>
+    checkElementIndex<span style="color:#f92672">(</span>index<span style="color:#f92672">)</span><span style="color:#f92672">;</span> <span style="color:#75715e">//验证下标是否合法
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">return</span> node<span style="color:#f92672">(</span>index<span style="color:#f92672">)</span><span style="color:#f92672">.</span><span style="color:#a6e22e">item</span><span style="color:#f92672">;</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><blockquote>
+<p>set（）方法：set（int index，E element）将指定下标出的元素修改为指定值</p>
+</blockquote>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">public</span> E <span style="color:#a6e22e">set</span><span style="color:#f92672">(</span><span style="color:#66d9ef">int</span> index<span style="color:#f92672">,</span>E element<span style="color:#f92672">)</span><span style="color:#f92672">{</span>
+    checkElementIndex<span style="color:#f92672">(</span>index<span style="color:#f92672">)</span><span style="color:#f92672">;</span>
+    Node<span style="color:#f92672">&lt;</span>E<span style="color:#f92672">&gt;</span> x <span style="color:#f92672">=</span> node<span style="color:#f92672">(</span>index<span style="color:#f92672">)</span><span style="color:#f92672">;</span>
+    E oldVal <span style="color:#f92672">=</span> x<span style="color:#f92672">.</span><span style="color:#a6e22e">item</span><span style="color:#f92672">;</span>
+    x<span style="color:#f92672">.</span><span style="color:#a6e22e">item</span> <span style="color:#f92672">=</span> element<span style="color:#f92672">;</span>  <span style="color:#75715e">//替换成新值
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">return</span> oldVal<span style="color:#f92672">;</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><h4 id="2python中的list">2.Python中的list</h4>
+<blockquote>
+<p>Python中list(列表)是其最基本的数据结构，也可以理解为List容器是Python内置的，不像Java那样专门</p>
+</blockquote>
+<p>去写一套集合框架，list底层实现的原理和Java中的ArrayList是非常相似的，这里就不再过多阐述</p>
+<blockquote>
+<p>值得一提的是Python中也有自己的数据结构与工具库，<a href="https://flaggo.github.io/pydu/#/zh-cn/list">pydu</a>（python data structures and utils）,在这个</p>
+</blockquote>
+<p>工具库中给出了python本身list所不具有的比较强大的功能，以后用到的时候可以查阅</p>
+<h3 id="三栈和队列">三、栈和队列</h3>
+<h4 id="1java-中的栈和队列">1.Java 中的栈和队列</h4>
+<blockquote>
+<p>在使用栈和队列时，Java比较推荐使用ArrayDeque，当然也可以使用LinkedList。那么ArrayDeque是如何</p>
+</blockquote>
+<p>既能实现栈，又能实现队列的呢？Deque的含义是 “Double ended queue”，即双端队列，对于双端队列的操</p>
+<p>作其实是非常简单的，无非就是对容器的两端进行添加、删除或者查看</p>
+<blockquote>
+<p>ArrayDeque底层是通过数组进行实现的，此外为了满足可以在数组两端插入或者删除元素时，该数组还</p>
+</blockquote>
+<p>必须是循环的，即循环数组。这种的数组的特点就是，任何一点都可能被看做起点或者是终点，head指向首</p>
+<p>端第一个有效元素，tail指向尾端第一个可以插入元素的空位；head不一定总等于0，tail也不一定总比head大。</p>
+<p>ArrayDeque是非线程安全的</p>
+<p><!-- raw HTML omitted --></p>
+<blockquote>
+<p>addFirst() ：addFirst（E e）的作用是在deque的首端插入元素的，也就是在head前面插入元素，在</p>
+</blockquote>
+<p>插入的过程中实际要考虑到空间是否够用，下标是否会越界等问题</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">addFirst</span><span style="color:#f92672">(</span>E e<span style="color:#f92672">)</span><span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">if</span><span style="color:#f92672">(</span>e<span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#66d9ef">null</span><span style="color:#f92672">)</span> <span style="color:#75715e">//deque中不允许放入null
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> NullPointerException<span style="color:#f92672">(</span><span style="color:#f92672">)</span><span style="color:#f92672">;</span>
+    elements<span style="color:#f92672">[</span>head <span style="color:#f92672">=</span> <span style="color:#f92672">(</span>head <span style="color:#f92672">-</span> 1<span style="color:#f92672">)</span><span style="color:#f92672">&amp;</span><span style="color:#f92672">(</span>elements<span style="color:#f92672">.</span><span style="color:#a6e22e">length</span> <span style="color:#f92672">-</span> 1<span style="color:#f92672">)</span><span style="color:#f92672">]</span> <span style="color:#f92672">=</span> e<span style="color:#f92672">;</span><span style="color:#75715e">//当head为0是插入到最后，解决了数组越界问题
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">if</span><span style="color:#f92672">(</span>head <span style="color:#f92672">=</span><span style="color:#f92672">=</span> tail<span style="color:#f92672">)</span>  <span style="color:#75715e">//判断空间是否足够使用
+</span><span style="color:#75715e"></span>        doubleCapacity<span style="color:#f92672">(</span><span style="color:#f92672">)</span><span style="color:#f92672">;</span>  <span style="color:#75715e">//扩容 申请一个原数组两倍的数组，在将现有数组复制过去
+</span><span style="color:#75715e"></span><span style="color:#f92672">}</span>
+
+<span style="color:#75715e">//扩容函数 doubleCapacity()
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">private</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">doubleCapacity</span><span style="color:#f92672">(</span><span style="color:#f92672">)</span><span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">assert</span> head <span style="color:#f92672">=</span><span style="color:#f92672">=</span> tail<span style="color:#f92672">;</span>
+    <span style="color:#66d9ef">int</span> p <span style="color:#f92672">=</span> head<span style="color:#f92672">;</span>
+    <span style="color:#66d9ef">int</span> n <span style="color:#f92672">=</span> elements<span style="color:#f92672">.</span><span style="color:#a6e22e">length</span><span style="color:#f92672">;</span>
+    <span style="color:#66d9ef">int</span> r <span style="color:#f92672">=</span> n <span style="color:#f92672">-</span> p<span style="color:#f92672">;</span>  <span style="color:#75715e">//head右边元素的个数
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">int</span> newCapacity <span style="color:#f92672">=</span> n <span style="color:#f92672">&lt;</span><span style="color:#f92672">&lt;</span> 1<span style="color:#f92672">;</span> <span style="color:#75715e">//原空间的2倍
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>newCapacity <span style="color:#f92672">&lt;</span> 0<span style="color:#f92672">)</span>
+        <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> IllegalStateException<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;Sorry,deque too big&#34;</span><span style="color:#f92672">)</span><span style="color:#f92672">;</span>
+    Object<span style="color:#f92672">[</span><span style="color:#f92672">]</span> a <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> Object<span style="color:#f92672">[</span>newCapacity<span style="color:#f92672">]</span><span style="color:#f92672">;</span>
+    System<span style="color:#f92672">.</span><span style="color:#a6e22e">arraycopy</span><span style="color:#f92672">(</span>elements<span style="color:#f92672">,</span>p<span style="color:#f92672">,</span>a<span style="color:#f92672">,</span>0<span style="color:#f92672">,</span>r<span style="color:#f92672">)</span><span style="color:#f92672">;</span> <span style="color:#75715e">//将elements数组从p开始的r个元素放置到a数组中从0开始的地方
+</span><span style="color:#75715e"></span>    System<span style="color:#f92672">.</span><span style="color:#a6e22e">arraycopy</span><span style="color:#f92672">(</span>elements<span style="color:#f92672">,</span>0<span style="color:#f92672">,</span>a<span style="color:#f92672">,</span>r<span style="color:#f92672">,</span>r<span style="color:#f92672">,</span>p<span style="color:#f92672">)</span><span style="color:#f92672">;</span>
+    elements <span style="color:#f92672">=</span> <span style="color:#f92672">(</span>E<span style="color:#f92672">[</span><span style="color:#f92672">]</span><span style="color:#f92672">)</span>a<span style="color:#f92672">;</span>
+    head <span style="color:#f92672">=</span> 0<span style="color:#f92672">;</span>            <span style="color:#75715e">//扩充完成后放置head和tail的节点
+</span><span style="color:#75715e"></span>    tail <span style="color:#f92672">=</span> n<span style="color:#f92672">;</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><blockquote>
+<p>addLast（E e）函数在Deque插入元素，即在tail的位置插入元素，tail总是指向下一个可以插入的空位，</p>
+</blockquote>
+<p>插入完成后检查空间，如果用光，则需要进行扩容</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">addLast</span><span style="color:#f92672">(</span>E e<span style="color:#f92672">)</span><span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>e <span style="color:#f92672">=</span><span style="color:#f92672">=</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">)</span>
+        <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> NullPointerException<span style="color:#f92672">(</span><span style="color:#f92672">)</span><span style="color:#f92672">;</span>
+    elements<span style="color:#f92672">[</span>tail<span style="color:#f92672">]</span> <span style="color:#f92672">=</span> e<span style="color:#f92672">;</span>  <span style="color:#75715e">//赋值
+</span><span style="color:#75715e"></span>    tail <span style="color:#f92672">=</span> <span style="color:#f92672">(</span>tail <span style="color:#f92672">+</span> 1<span style="color:#f92672">)</span> <span style="color:#f92672">%</span> <span style="color:#f92672">(</span>elements<span style="color:#f92672">.</span><span style="color:#a6e22e">length</span><span style="color:#f92672">-</span>1<span style="color:#f92672">)</span><span style="color:#f92672">;</span> <span style="color:#75715e">//获取tail的新坐标
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">if</span><span style="color:#f92672">(</span>tail <span style="color:#f92672">=</span><span style="color:#f92672">=</span> head<span style="color:#f92672">)</span>  <span style="color:#75715e">//下标越界
+</span><span style="color:#75715e"></span>        doubleCapacity<span style="color:#f92672">(</span><span style="color:#f92672">)</span><span style="color:#f92672">;</span><span style="color:#75715e">//扩容
+</span><span style="color:#75715e"></span><span style="color:#f92672">}</span>
+</code></pre></div><blockquote>
+<p>pollFirst（） 删除并返回Deque的首端元素，也即是head位置处的元素</p>
+</blockquote>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">public</span> E <span style="color:#a6e22e">pollFirst</span><span style="color:#f92672">(</span><span style="color:#f92672">)</span><span style="color:#f92672">{</span>
+    E result <span style="color:#f92672">=</span> elements<span style="color:#f92672">[</span>head<span style="color:#f92672">]</span><span style="color:#f92672">;</span>
+    <span style="color:#66d9ef">if</span><span style="color:#f92672">(</span>result <span style="color:#f92672">=</span><span style="color:#f92672">=</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">)</span>  <span style="color:#75715e">//此时deque的值为空
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">;</span>
+    elements<span style="color:#f92672">[</span>head<span style="color:#f92672">]</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">null</span> <span style="color:#f92672">;</span><span style="color:#75715e">//手动赋null值，这样可以使GC工作
+</span><span style="color:#75715e"></span>    head <span style="color:#f92672">=</span> <span style="color:#f92672">(</span>head<span style="color:#f92672">+</span>1<span style="color:#f92672">)</span> <span style="color:#f92672">&amp;</span> <span style="color:#f92672">(</span>elements<span style="color:#f92672">.</span><span style="color:#a6e22e">length</span> <span style="color:#f92672">-</span>1<span style="color:#f92672">)</span><span style="color:#f92672">;</span>  <span style="color:#75715e">//下标越界处理
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">return</span> result<span style="color:#f92672">;</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><blockquote>
+<p>pollLast() 删除并返回Deque尾端的元素，也即是tail位置前面的元素</p>
+</blockquote>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">public</span> E <span style="color:#a6e22e">pollLast</span><span style="color:#f92672">(</span><span style="color:#f92672">)</span><span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">int</span> t <span style="color:#f92672">=</span> <span style="color:#f92672">(</span>tail<span style="color:#f92672">-</span>1<span style="color:#f92672">)</span><span style="color:#f92672">&amp;</span><span style="color:#f92672">(</span>elements<span style="color:#f92672">.</span><span style="color:#a6e22e">length</span> <span style="color:#f92672">-</span> 1<span style="color:#f92672">)</span><span style="color:#f92672">;</span>  <span style="color:#75715e">//tail的上一个位置是最后一个元素
+</span><span style="color:#75715e"></span>    E result <span style="color:#f92672">=</span> elements<span style="color:#f92672">[</span>t<span style="color:#f92672">]</span><span style="color:#f92672">;</span>
+    <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>result <span style="color:#f92672">=</span><span style="color:#f92672">=</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">)</span><span style="color:#75715e">//null为空则意味着deque为空
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">;</span>
+    elements<span style="color:#f92672">[</span>t<span style="color:#f92672">]</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">null</span> <span style="color:#f92672">;</span> <span style="color:#75715e">//GC
+</span><span style="color:#75715e"></span>    tail <span style="color:#f92672">=</span> t<span style="color:#f92672">;</span>
+    <span style="color:#66d9ef">return</span> result<span style="color:#f92672">;</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><blockquote>
+<p>peekFirst() 的作用是返回但是不删除Deque首端的元素，也即是head位置处的元素</p>
+</blockquote>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">public</span> E <span style="color:#a6e22e">peekFirst</span><span style="color:#f92672">(</span><span style="color:#f92672">)</span><span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">return</span> elements<span style="color:#f92672">[</span>head<span style="color:#f92672">]</span><span style="color:#f92672">;</span>  <span style="color:#75715e">//如果队列为空，则会返回null
+</span><span style="color:#75715e"></span><span style="color:#f92672">}</span>
+</code></pre></div><blockquote>
+<p>peekLast() 返回但不删除Deque尾端的元素，即tail位置前面的那个元素</p>
+</blockquote>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">public</span> E <span style="color:#a6e22e">peekLast</span><span style="color:#f92672">(</span><span style="color:#f92672">)</span><span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">return</span> elements<span style="color:#f92672">[</span><span style="color:#f92672">(</span>tail <span style="color:#f92672">-</span>1<span style="color:#f92672">)</span><span style="color:#f92672">&amp;</span> <span style="color:#f92672">(</span>elements<span style="color:#f92672">.</span><span style="color:#a6e22e">length</span> <span style="color:#f92672">-</span> 1<span style="color:#f92672">)</span><span style="color:#f92672">]</span><span style="color:#f92672">;</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><h4 id="2python中的栈和队列">2.Python中的栈和队列</h4>
+<blockquote>
+<p>与Java非常的类似，Python在栈和队列方面也有自己的轮子，collections模块中的deque也是一个双向</p>
+</blockquote>
+<p>队列，它的使用与ArrayDeque非常相似，它的底层实现的原理与list是相同的</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e">#对于deque数据结构的示例操作</span>
+<span style="color:#f92672">import</span> collections
+douqueue <span style="color:#f92672">=</span> collections<span style="color:#f92672">.</span>deque()   <span style="color:#75715e">#创建一个双端队列</span>
+douqueue<span style="color:#f92672">.</span>append()   <span style="color:#75715e">#往右边添加一个元素</span>
+douqueue<span style="color:#f92672">.</span>appendleft()     <span style="color:#75715e">#往左边添加一个元素</span>
+douqueue<span style="color:#f92672">.</span>pop()    <span style="color:#75715e">#获取最右边的一个元素，并在队列中删除</span>
+douqueue<span style="color:#f92672">.</span>popleft()   <span style="color:#75715e">#获取最左边的一个元素 </span>
+douqueue[<span style="color:#ae81ff">0</span>]    <span style="color:#75715e">#获取队列中最左边的第一个元素</span>
+douqueue[<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>]   <span style="color:#75715e">#获取队列中最右边的第一个元素</span>
+<span style="color:#75715e">#deque的这些操作足够我们去模拟栈和队列了</span>
+</code></pre></div><blockquote>
+<p>当然在实现栈时我们通过Python内置的list来进行实现的，在末尾插入和删除一个元素所使用的时间都是</p>
+</blockquote>
+<p>O(1)的，符合stack的要求，所以在实际的应用中完全可以将list当做栈来使用</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Stack</span>(object):
+    <span style="color:#66d9ef">def</span> __init__(self):  <span style="color:#75715e">#初始化将列表看为堆栈</span>
+        self<span style="color:#f92672">.</span>stack <span style="color:#f92672">=</span> []
+        
+    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">push</span>(self,value):  <span style="color:#75715e">#进栈</span>
+        self<span style="color:#f92672">.</span>stack<span style="color:#f92672">.</span>append(value)
+        
+    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">pop</span>(self):         <span style="color:#75715e">#出栈</span>
+        <span style="color:#66d9ef">if</span> self<span style="color:#f92672">.</span>stack:
+            self<span style="color:#f92672">.</span>stack<span style="color:#f92672">.</span>pop()
+        <span style="color:#66d9ef">else</span>:
+            <span style="color:#66d9ef">raise</span> <span style="color:#a6e22e">LookupError</span>(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">stack is empty</span><span style="color:#e6db74">&#39;</span>);
+            
+    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">is_empty</span>(self):          <span style="color:#75715e">#栈为空的情况</span>
+        <span style="color:#66d9ef">return</span> bool(self<span style="color:#f92672">.</span>stack)
+    
+    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">top</span>(self):
+        <span style="color:#66d9ef">return</span> self<span style="color:#f92672">.</span>stack[<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>] <span style="color:#75715e">#取出目前stack中最新的元素</span>
+</code></pre></div><blockquote>
+<p>最后还想使用链表来实现一个最基本的队列，定义一个头结点，左边指向队列的开头，右边指向队列的</p>
+</blockquote>
+<p>末尾，这样插入元素和取出元素时都是一个O(1)的操作</p>
+<p><img src="https://s2.ax1x.com/2020/02/11/1ot5ZQ.png" alt="1ot5ZQ.png"></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Head</span>(object):   <span style="color:#75715e">#头结点</span>
+    <span style="color:#66d9ef">def</span> __init__(self):
+        self<span style="color:#f92672">.</span>left <span style="color:#f92672">=</span> None     <span style="color:#75715e">#左边指向队列的开头节点</span>
+        self<span style="color:#f92672">.</span>right <span style="color:#f92672">=</span> None    <span style="color:#75715e">#右边指向队列的结尾节点</span>
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Node</span>(object):   <span style="color:#75715e">#中间节点</span>
+    <span style="color:#66d9ef">def</span> __init__(self,value):
+        self<span style="color:#f92672">.</span>value <span style="color:#f92672">=</span> value
+        self<span style="color:#f92672">.</span>next <span style="color:#f92672">=</span> None
+        
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Queue</span>(object):
+    <span style="color:#66d9ef">def</span> __init__(self):
+        self<span style="color:#f92672">.</span>head <span style="color:#f92672">=</span> Head()    <span style="color:#75715e">#初始化节点</span>
+    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">enqueue</span>(self,value):
+        newnode <span style="color:#f92672">=</span> Node(value)
+        <span style="color:#66d9ef">if</span> self<span style="color:#f92672">.</span>head<span style="color:#f92672">.</span>right:    <span style="color:#75715e">#队列中元素不为空的情况</span>
+            self<span style="color:#f92672">.</span>head<span style="color:#f92672">.</span>next,self<span style="color:#f92672">.</span>head<span style="color:#f92672">.</span>right<span style="color:#f92672">=</span>newnode,newnode
+        <span style="color:#66d9ef">else</span>:
+            self<span style="color:#f92672">.</span>head<span style="color:#f92672">.</span>right,self<span style="color:#f92672">.</span>head<span style="color:#f92672">.</span>left <span style="color:#f92672">=</span> newnode,newnode
+    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">dequeue</span>(self):      <span style="color:#75715e">#出队</span>
+        <span style="color:#66d9ef">if</span> self<span style="color:#f92672">.</span>head<span style="color:#f92672">.</span>left <span style="color:#f92672">and</span> (self<span style="color:#f92672">.</span>head<span style="color:#f92672">.</span>left <span style="color:#f92672">==</span> self<span style="color:#f92672">.</span>head<span style="color:#f92672">.</span>right):  <span style="color:#75715e">#队列中有且仅有一个元素了</span>
+            temp <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>head<span style="color:#f92672">.</span>left<span style="color:#f92672">.</span>value
+            self<span style="color:#f92672">.</span>head<span style="color:#f92672">.</span>right,self<span style="color:#f92672">.</span>head<span style="color:#f92672">.</span>left <span style="color:#f92672">=</span> None,None
+            <span style="color:#66d9ef">return</span> temp
+        <span style="color:#66d9ef">elif</span> self<span style="color:#f92672">.</span>head<span style="color:#f92672">.</span>left <span style="color:#f92672">and</span> (self<span style="color:#f92672">.</span>head<span style="color:#f92672">.</span>left <span style="color:#f92672">!=</span> self<span style="color:#f92672">.</span>head<span style="color:#f92672">.</span>right):  <span style="color:#75715e">#队列中不止一个元素</span>
+            temp<span style="color:#f92672">=</span>self<span style="color:#f92672">.</span>head<span style="color:#f92672">.</span>left<span style="color:#f92672">.</span>value
+            self<span style="color:#f92672">.</span>head<span style="color:#f92672">.</span>left <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>head<span style="color:#f92672">.</span>left<span style="color:#f92672">.</span>next
+            <span style="color:#66d9ef">return</span> temp
+        <span style="color:#66d9ef">else</span>:    <span style="color:#75715e">#队列为空</span>
+            <span style="color:#66d9ef">raise</span> <span style="color:#a6e22e">LookupError</span>(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">queue is empty</span><span style="color:#e6db74">&#34;</span>)
+     <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">is_empty</span>(self):
+        <span style="color:#66d9ef">return</span> (True <span style="color:#66d9ef">if</span> self<span style="color:#f92672">.</span>head<span style="color:#f92672">.</span>left <span style="color:#66d9ef">else</span> False)
+    
+     <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">top</span>(self):
+            <span style="color:#66d9ef">if</span> self<span style="color:#f92672">.</span>head<span style="color:#f92672">.</span>left:
+                <span style="color:#66d9ef">return</span> self<span style="color:#f92672">.</span>head<span style="color:#f92672">.</span>left<span style="color:#f92672">.</span>value
+            <span style="color:#66d9ef">else</span>:
+                <span style="color:#66d9ef">raise</span> <span style="color:#a6e22e">LookupError</span>(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">queue is empty</span><span style="color:#e6db74">&#34;</span>)
+</code></pre></div><h3 id="四map">四、Map</h3>
+<h4 id="1java中的map">1.Java中的Map</h4>
+<blockquote>
+<p><strong>(1)HashMap</strong></p>
+</blockquote>
+<blockquote>
+<p>HashMap实现了Map接口，允许放入key为null的元素，也允许插入value为null的元素，该容器不保证元</p>
+</blockquote>
+<p>素的顺序，根据需要可能会对元素进行重新哈希，元素的顺序也会被重新打散，在不同的时间迭代同一个</p>
+<p>HashMap的顺序可能会不同，HashMap还尚未实现同步</p>
+<blockquote>
+<p>根据对冲突的处理方式，哈希表有两种实现方式，一种是开放地址方式，一种是冲突链表方式，Java</p>
+</blockquote>
+<p>中的HashMap采用的是冲突链表方式</p>
+<p><!-- raw HTML omitted --></p>
+<blockquote>
+<p>从这张图中可以看出初始容量（inital capacity）和负载系数（load factor）这两个参数影响了HashMap的</p>
+</blockquote>
+<p>性能，当entry的数量超过了capacity*load_factor时，容器会自动进行扩容并重新哈希。对于插入元素比较多的</p>
+<p>场景，将初始容量设大可以减少重新哈希的次数</p>
+<blockquote>
+<p>将对象放入到HashMap时，有两个方法特别重要，hashCode()方法决定了对象会被放入到哪个bucket</p>
+</blockquote>
+<p>中，当多个对象的哈希值冲突时，equals()方法决定了这些对象是否是同一个对象。当需要将自定义的对象</p>
+<p>放入HashMap时需要重写hashCode()方法和equals() 方法</p>
+<blockquote>
+<p>get（Object key）方法根据指定的key值返回对应的value，该方法调用了getEnery(Object key)得到</p>
+</blockquote>
+<p>相应的entry，然后返回entry.getValue()；算法的思想首先是通过哈希函数得到对应bucket的下标，然后</p>
+<p>一次遍历冲突链表，通过key.equals(k)方法来判断是否是要寻找的那个entry</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#75715e">//getEntry方法的核心代码
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">final</span> Entry<span style="color:#f92672">&lt;</span>K<span style="color:#f92672">,</span>V<span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">getEntry</span><span style="color:#f92672">(</span>Object key<span style="color:#f92672">)</span><span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">int</span> hash <span style="color:#f92672">=</span> <span style="color:#f92672">(</span>key <span style="color:#f92672">=</span><span style="color:#f92672">=</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">)</span><span style="color:#f92672">?</span> 0<span style="color:#f92672">:</span>hash<span style="color:#f92672">(</span>key<span style="color:#f92672">)</span><span style="color:#f92672">;</span>
+    <span style="color:#66d9ef">for</span><span style="color:#f92672">(</span>Entry<span style="color:#f92672">&lt;</span>K<span style="color:#f92672">,</span>V<span style="color:#f92672">&gt;</span> e <span style="color:#f92672">=</span> table<span style="color:#f92672">[</span>hash<span style="color:#f92672">&amp;</span><span style="color:#f92672">(</span>table<span style="color:#f92672">.</span><span style="color:#a6e22e">length</span><span style="color:#f92672">-</span>1<span style="color:#f92672">)</span><span style="color:#f92672">]</span><span style="color:#f92672">;</span>e<span style="color:#f92672">!</span><span style="color:#f92672">=</span><span style="color:#66d9ef">null</span><span style="color:#f92672">;</span>e<span style="color:#f92672">=</span>e<span style="color:#f92672">.</span><span style="color:#a6e22e">next</span><span style="color:#f92672">)</span><span style="color:#f92672">{</span>  <span style="color:#75715e">//得到冲突的链表，依次进行遍历
+</span><span style="color:#75715e"></span>        Object k<span style="color:#f92672">;</span>
+        <span style="color:#66d9ef">if</span><span style="color:#f92672">(</span>e<span style="color:#f92672">.</span><span style="color:#a6e22e">hash</span> <span style="color:#f92672">=</span><span style="color:#f92672">=</span> hash <span style="color:#f92672">&amp;</span><span style="color:#f92672">&amp;</span> <span style="color:#f92672">(</span><span style="color:#f92672">(</span>k <span style="color:#f92672">=</span> e<span style="color:#f92672">.</span><span style="color:#a6e22e">key</span><span style="color:#f92672">)</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span>key <span style="color:#f92672">|</span><span style="color:#f92672">|</span> <span style="color:#f92672">(</span>key<span style="color:#f92672">!</span><span style="color:#f92672">=</span><span style="color:#66d9ef">null</span> <span style="color:#f92672">&amp;</span><span style="color:#f92672">&amp;</span> key<span style="color:#f92672">.</span><span style="color:#a6e22e">equals</span><span style="color:#f92672">(</span>k<span style="color:#f92672">)</span><span style="color:#f92672">)</span><span style="color:#f92672">)</span><span style="color:#f92672">)</span>
+            <span style="color:#66d9ef">return</span> e<span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">;</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><blockquote>
+<p>put(K key ，V value) 方法是将指定的key，value对添加到map里，该方法首先会对map做一次查找，看</p>
+</blockquote>
+<p>是否包含该元组，如果已经包含则直接返回，查找过程类似于getEntry方法；如果没有找到，则会通过addEntry</p>
+<p>(int hash，K key，V value，int bucketIndex)方法插入新的Entry</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">addEntry</span><span style="color:#f92672">(</span><span style="color:#66d9ef">int</span> hash<span style="color:#f92672">,</span>K key<span style="color:#f92672">,</span>V value<span style="color:#f92672">,</span><span style="color:#66d9ef">int</span> bucketIndex<span style="color:#f92672">)</span><span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">if</span><span style="color:#f92672">(</span><span style="color:#f92672">(</span>size<span style="color:#f92672">&gt;</span><span style="color:#f92672">=</span>threshold<span style="color:#f92672">)</span> <span style="color:#f92672">&amp;</span><span style="color:#f92672">&amp;</span> <span style="color:#f92672">(</span><span style="color:#66d9ef">null</span> <span style="color:#f92672">!</span><span style="color:#f92672">=</span>table<span style="color:#f92672">[</span>bucketIndex<span style="color:#f92672">]</span><span style="color:#f92672">)</span><span style="color:#f92672">)</span><span style="color:#f92672">{</span>
+        resize<span style="color:#f92672">(</span>2<span style="color:#f92672">*</span>table<span style="color:#f92672">.</span><span style="color:#a6e22e">length</span><span style="color:#f92672">)</span><span style="color:#f92672">;</span>   <span style="color:#75715e">//自动扩容并重新哈希
+</span><span style="color:#75715e"></span>        hash <span style="color:#f92672">=</span> <span style="color:#f92672">(</span><span style="color:#66d9ef">null</span><span style="color:#f92672">!</span><span style="color:#f92672">=</span>key<span style="color:#f92672">)</span><span style="color:#f92672">?</span> hash<span style="color:#f92672">(</span>key<span style="color:#f92672">)</span><span style="color:#f92672">:</span>0<span style="color:#f92672">;</span>
+        bucketIndex <span style="color:#f92672">=</span> hash <span style="color:#f92672">&amp;</span> <span style="color:#f92672">(</span>table<span style="color:#f92672">.</span><span style="color:#a6e22e">length</span><span style="color:#f92672">-</span>1<span style="color:#f92672">)</span><span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+    <span style="color:#75715e">//在冲突链表头部插入新的Index
+</span><span style="color:#75715e"></span>    Entry<span style="color:#f92672">&lt;</span>K<span style="color:#f92672">,</span>V<span style="color:#f92672">&gt;</span> e <span style="color:#f92672">=</span> table<span style="color:#f92672">[</span>bucketIndex<span style="color:#f92672">]</span><span style="color:#f92672">;</span>
+    table<span style="color:#f92672">[</span>bucketIndex<span style="color:#f92672">]</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> Entry<span style="color:#f92672">&lt;</span><span style="color:#f92672">&gt;</span><span style="color:#f92672">(</span>hash<span style="color:#f92672">,</span>key<span style="color:#f92672">,</span>value<span style="color:#f92672">,</span>e<span style="color:#f92672">)</span><span style="color:#f92672">;</span>
+    size<span style="color:#f92672">+</span><span style="color:#f92672">+</span><span style="color:#f92672">;</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><blockquote>
+<p>remove(Object key)方法删除Key值对应的entry，核心算法在removeEntryForKey(Object key)实现的</p>
+</blockquote>
+<p>removeEntryForKey(Object key)方法首先会找到key值对应的entry，然后再删除该entry</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">final</span> Entry<span style="color:#f92672">&lt;</span>K<span style="color:#f92672">,</span>V<span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">removeEntryForKey</span><span style="color:#f92672">(</span>Object key<span style="color:#f92672">)</span><span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">int</span> hash <span style="color:#f92672">=</span> <span style="color:#f92672">(</span>key<span style="color:#f92672">!</span><span style="color:#f92672">=</span><span style="color:#66d9ef">null</span><span style="color:#f92672">)</span><span style="color:#f92672">?</span> hash<span style="color:#f92672">(</span>key<span style="color:#f92672">)</span><span style="color:#f92672">:</span>0<span style="color:#f92672">;</span>
+    <span style="color:#66d9ef">int</span> index <span style="color:#f92672">=</span> hash<span style="color:#f92672">&amp;</span><span style="color:#f92672">(</span>table<span style="color:#f92672">.</span><span style="color:#a6e22e">length</span> <span style="color:#f92672">-</span> 1<span style="color:#f92672">)</span><span style="color:#f92672">;</span>
+    Entry<span style="color:#f92672">&lt;</span>K<span style="color:#f92672">,</span>V<span style="color:#f92672">&gt;</span> prev <span style="color:#f92672">=</span> table<span style="color:#f92672">[</span>index<span style="color:#f92672">]</span><span style="color:#f92672">;</span>   <span style="color:#75715e">//冲突的链表
+</span><span style="color:#75715e"></span>    Entry<span style="color:#f92672">&lt;</span>K<span style="color:#f92672">,</span>V<span style="color:#f92672">&gt;</span> e <span style="color:#f92672">=</span> prev<span style="color:#f92672">;</span>
+    <span style="color:#66d9ef">while</span><span style="color:#f92672">(</span>e<span style="color:#f92672">!</span><span style="color:#f92672">=</span><span style="color:#66d9ef">null</span><span style="color:#f92672">)</span><span style="color:#f92672">{</span>       <span style="color:#75715e">//遍历冲突的链表
+</span><span style="color:#75715e"></span>        Entry<span style="color:#f92672">&lt;</span>K<span style="color:#f92672">,</span>V<span style="color:#f92672">&gt;</span> next <span style="color:#f92672">=</span> e<span style="color:#f92672">.</span><span style="color:#a6e22e">next</span><span style="color:#f92672">;</span>
+        Object k<span style="color:#f92672">;</span>
+        <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>e<span style="color:#f92672">.</span><span style="color:#a6e22e">hash</span> <span style="color:#f92672">=</span><span style="color:#f92672">=</span> hash <span style="color:#f92672">&amp;</span><span style="color:#f92672">&amp;</span><span style="color:#f92672">(</span><span style="color:#f92672">(</span>k <span style="color:#f92672">=</span> e<span style="color:#f92672">.</span><span style="color:#a6e22e">key</span><span style="color:#f92672">)</span> <span style="color:#f92672">=</span><span style="color:#f92672">=</span> key <span style="color:#f92672">|</span><span style="color:#f92672">|</span> <span style="color:#f92672">(</span>key <span style="color:#f92672">!</span><span style="color:#f92672">=</span> <span style="color:#66d9ef">null</span> <span style="color:#f92672">&amp;</span><span style="color:#f92672">&amp;</span> key<span style="color:#f92672">.</span><span style="color:#a6e22e">equals</span><span style="color:#f92672">(</span>k<span style="color:#f92672">)</span><span style="color:#f92672">)</span><span style="color:#f92672">)</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+            <span style="color:#75715e">//找到要删除的entry
+</span><span style="color:#75715e"></span>            modCount<span style="color:#f92672">+</span><span style="color:#f92672">+</span><span style="color:#f92672">;</span> size<span style="color:#f92672">-</span><span style="color:#f92672">-</span><span style="color:#f92672">;</span>
+            <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>prev <span style="color:#f92672">=</span><span style="color:#f92672">=</span> e<span style="color:#f92672">)</span> table<span style="color:#f92672">[</span>i<span style="color:#f92672">]</span> <span style="color:#f92672">=</span> next<span style="color:#f92672">;</span><span style="color:#75715e">//删除的是冲突链表的第一个entry
+</span><span style="color:#75715e"></span>            <span style="color:#66d9ef">else</span> prev<span style="color:#f92672">.</span><span style="color:#a6e22e">next</span> <span style="color:#f92672">=</span> next<span style="color:#f92672">;</span>
+            <span style="color:#66d9ef">return</span> e<span style="color:#f92672">;</span>
+        <span style="color:#f92672">}</span>
+        prev <span style="color:#f92672">=</span> e<span style="color:#f92672">;</span>
+        e <span style="color:#f92672">=</span>next<span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+    <span style="color:#66d9ef">return</span> e<span style="color:#f92672">;</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><blockquote>
+<p><strong>(2)  TreeMap</strong></p>
+</blockquote>
+<blockquote>
+<p>Java中的TreeMap会按照key的大小顺序进行排序，key的大小比较可以通过其本身的自然顺序，也可以</p>
+</blockquote>
+<p>通过构造时传入的比较器；TreeMap底层通过红黑树来实现，其containskey()、get()、put()和remove()都</p>
+<p>有着log(n)的时间复杂度，TreeMap是非同步的</p>
+<blockquote>
+<p>先简单的介绍下红黑树吧，红黑树可以说是二叉搜索树的改良版，目的就是解决后者退化成单链表后搜索</p>
+</blockquote>
+<p>的时间复杂度由O（N）变成O（logN）的问题，它是一种近似的二叉查找树，能够确保任何一个节点的左右子</p>
+<p>树的高度差不会超过二者中较低那个的一倍</p>
+<p><!-- raw HTML omitted --></p>
+<blockquote>
+<p>具体来看，红黑树的特点如下：</p>
+</blockquote>
+<ul>
+<li>每个节点只能是红色或者黑色的</li>
+<li>根节点必须是黑色的</li>
+<li>红色节点的孩子和父亲都不能是红色</li>
+<li>对于每个节点，从该点至叶子节点的任何路径都含有相同颜色的黑色节点</li>
+</ul>
+<blockquote>
+<p>在树的结构发生改变时（插入或者删除操作），会破坏上述要求，需要经过调整才能使得树重新满足</p>
+</blockquote>
+<p>约束的条件，调整一方面是颜色调整，另一方面是结构的调整，结构调整包括左旋和右旋，下面对一些</p>
+<p>常见的操作写出代码</p>
+<blockquote>
+<p>左旋的过程是将x的右子树绕逆时针旋转，使得x的右子树成为x的父节点</p>
+</blockquote>
+<p><!-- raw HTML omitted --></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#75715e">//Rotate Left左旋函数代码  以上图所示为例进行说明
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">private</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">rotateLeft</span><span style="color:#f92672">(</span>Entry<span style="color:#f92672">&lt;</span>K<span style="color:#f92672">,</span>V<span style="color:#f92672">&gt;</span> p<span style="color:#f92672">)</span><span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">if</span><span style="color:#f92672">(</span>p<span style="color:#f92672">!</span><span style="color:#f92672">=</span><span style="color:#66d9ef">null</span><span style="color:#f92672">)</span><span style="color:#f92672">{</span>
+        Entry<span style="color:#f92672">&lt;</span>K<span style="color:#f92672">,</span>V<span style="color:#f92672">&gt;</span> r <span style="color:#f92672">=</span> p<span style="color:#f92672">.</span><span style="color:#a6e22e">right</span><span style="color:#f92672">;</span>    <span style="color:#75715e">//假设p节点为x节点，也即是待旋转的节点，r节点就是y节点
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">if</span><span style="color:#f92672">(</span>r<span style="color:#f92672">.</span><span style="color:#a6e22e">left</span><span style="color:#f92672">!</span><span style="color:#f92672">=</span><span style="color:#66d9ef">null</span><span style="color:#f92672">)</span>           <span style="color:#75715e">//修改y节点左节点的引用关系
+</span><span style="color:#75715e"></span>            p<span style="color:#f92672">.</span><span style="color:#a6e22e">right</span> <span style="color:#f92672">=</span> r<span style="color:#f92672">.</span><span style="color:#a6e22e">left</span><span style="color:#f92672">;</span>          <span style="color:#75715e">//将y节点的左节点(B子树)改为x的右节点
+</span><span style="color:#75715e"></span>            r<span style="color:#f92672">.</span><span style="color:#a6e22e">left</span><span style="color:#f92672">.</span><span style="color:#a6e22e">parent</span> <span style="color:#f92672">=</span> p<span style="color:#f92672">;</span>         <span style="color:#75715e">//将y节点的左节点(B子树)的父节点设置成为x节点
+</span><span style="color:#75715e"></span>        <span style="color:#75715e">//修改y节点与x节点父节点的引用关系
+</span><span style="color:#75715e"></span>        r<span style="color:#f92672">.</span><span style="color:#a6e22e">parent</span> <span style="color:#f92672">=</span> p<span style="color:#f92672">.</span><span style="color:#a6e22e">parent</span><span style="color:#f92672">;</span>       <span style="color:#75715e">//将原来x节点的父节点修改成y节点的父节点
+</span><span style="color:#75715e"></span>        <span style="color:#75715e">//判断x是其父节点的左节点还是右节点
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">if</span><span style="color:#f92672">(</span>p<span style="color:#f92672">.</span><span style="color:#a6e22e">parent</span> <span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#66d9ef">null</span><span style="color:#f92672">)</span>    <span style="color:#75715e">//p节点是根节点的情况
+</span><span style="color:#75715e"></span>            root <span style="color:#f92672">=</span> r<span style="color:#f92672">;</span>
+        <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span><span style="color:#f92672">(</span>p<span style="color:#f92672">.</span><span style="color:#a6e22e">parent</span><span style="color:#f92672">.</span><span style="color:#a6e22e">left</span> <span style="color:#f92672">=</span><span style="color:#f92672">=</span> p<span style="color:#f92672">)</span>
+            p<span style="color:#f92672">.</span><span style="color:#a6e22e">parent</span><span style="color:#f92672">.</span><span style="color:#a6e22e">left</span> <span style="color:#f92672">=</span> r<span style="color:#f92672">;</span>
+        <span style="color:#66d9ef">else</span>
+            p<span style="color:#f92672">.</span><span style="color:#a6e22e">parent</span><span style="color:#f92672">.</span><span style="color:#a6e22e">right</span> <span style="color:#f92672">=</span> r<span style="color:#f92672">;</span>
+        <span style="color:#75715e">//修改x节点和y节点间的应用关系
+</span><span style="color:#75715e"></span>        r<span style="color:#f92672">.</span><span style="color:#a6e22e">left</span> <span style="color:#f92672">=</span> p<span style="color:#f92672">;</span>
+        p<span style="color:#f92672">.</span><span style="color:#a6e22e">parent</span> <span style="color:#f92672">=</span> r<span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><blockquote>
+<p>右旋的过程是将x的左子树绕x顺时针旋转，使得x的左子树成为x的父节点</p>
+</blockquote>
+<p><!-- raw HTML omitted --></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#75715e">//右旋的过程代码 Rotate Right   原理与左旋过程相似
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">private</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">rotateRight</span><span style="color:#f92672">(</span>Entry<span style="color:#f92672">&lt;</span>K<span style="color:#f92672">,</span>V<span style="color:#f92672">&gt;</span> p<span style="color:#f92672">)</span><span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">if</span><span style="color:#f92672">(</span>p<span style="color:#f92672">!</span><span style="color:#f92672">=</span><span style="color:#66d9ef">null</span><span style="color:#f92672">)</span><span style="color:#f92672">{</span>
+        Entry<span style="color:#f92672">&lt;</span>K<span style="color:#f92672">,</span>V<span style="color:#f92672">&gt;</span> l <span style="color:#f92672">=</span> p<span style="color:#f92672">.</span><span style="color:#a6e22e">left</span><span style="color:#f92672">;</span>
+        <span style="color:#66d9ef">if</span><span style="color:#f92672">(</span>l<span style="color:#f92672">.</span><span style="color:#a6e22e">right</span> <span style="color:#f92672">!</span><span style="color:#f92672">=</span><span style="color:#66d9ef">null</span><span style="color:#f92672">)</span>
+            p<span style="color:#f92672">.</span><span style="color:#a6e22e">left</span> <span style="color:#f92672">=</span> l<span style="color:#f92672">.</span><span style="color:#a6e22e">right</span><span style="color:#f92672">;</span>
+            l<span style="color:#f92672">.</span><span style="color:#a6e22e">rigth</span><span style="color:#f92672">.</span><span style="color:#a6e22e">parent</span> <span style="color:#f92672">=</span>  p<span style="color:#f92672">;</span>
+        l<span style="color:#f92672">.</span><span style="color:#a6e22e">parent</span> <span style="color:#f92672">=</span> p<span style="color:#f92672">.</span><span style="color:#a6e22e">parent</span><span style="color:#f92672">;</span>
+        <span style="color:#66d9ef">if</span><span style="color:#f92672">(</span>p<span style="color:#f92672">.</span><span style="color:#a6e22e">parent</span> <span style="color:#f92672">=</span><span style="color:#f92672">=</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">)</span>
+            root <span style="color:#f92672">=</span> l<span style="color:#f92672">;</span>
+        <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span><span style="color:#f92672">(</span>p<span style="color:#f92672">.</span><span style="color:#a6e22e">parent</span><span style="color:#f92672">.</span><span style="color:#a6e22e">left</span> <span style="color:#f92672">=</span><span style="color:#f92672">=</span> p<span style="color:#f92672">)</span>
+            p<span style="color:#f92672">.</span><span style="color:#a6e22e">parent</span><span style="color:#f92672">.</span><span style="color:#a6e22e">left</span> <span style="color:#f92672">=</span> l<span style="color:#f92672">;</span>
+        <span style="color:#66d9ef">else</span> 
+            p<span style="color:#f92672">.</span><span style="color:#a6e22e">parent</span><span style="color:#f92672">.</span><span style="color:#a6e22e">right</span> <span style="color:#f92672">=</span> l<span style="color:#f92672">;</span>
+        l<span style="color:#f92672">.</span><span style="color:#a6e22e">right</span> <span style="color:#f92672">=</span> p<span style="color:#f92672">;</span>
+        p<span style="color:#f92672">.</span><span style="color:#a6e22e">parent</span> <span style="color:#f92672">=</span> l<span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><blockquote>
+<p>寻找节点后继，对于一颗二叉查找树，其后继（树中比大于t的最小的那个元素），一般可以通过下面的</p>
+</blockquote>
+<p>方法来找到：t的右子树不空，则t的后继结点是其右子树中最小的那个元素；t的右孩子为空，则t的后继是其</p>
+<p>第一个向走的祖先</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#75715e">//寻找节点后继函数successor()
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> TreeMap<span style="color:#f92672">.</span><span style="color:#a6e22e">Entry</span><span style="color:#f92672">&lt;</span>K<span style="color:#f92672">,</span>V<span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">successor</span><span style="color:#f92672">(</span>Entry<span style="color:#f92672">&lt;</span>K<span style="color:#f92672">,</span>V<span style="color:#f92672">&gt;</span> t<span style="color:#f92672">)</span><span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">if</span><span style="color:#f92672">(</span>t<span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#66d9ef">null</span><span style="color:#f92672">)</span>
+        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">;</span>
+    <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span><span style="color:#f92672">(</span>t<span style="color:#f92672">.</span><span style="color:#a6e22e">right</span> <span style="color:#f92672">!</span><span style="color:#f92672">=</span><span style="color:#66d9ef">null</span><span style="color:#f92672">)</span><span style="color:#f92672">{</span>  <span style="color:#75715e">//t的右子树不为空，则t的后继是其右子树中最小的那个元素
+</span><span style="color:#75715e"></span>        Entry<span style="color:#f92672">&lt;</span>K<span style="color:#f92672">,</span>V<span style="color:#f92672">&gt;</span> p <span style="color:#f92672">=</span>t<span style="color:#f92672">.</span><span style="color:#a6e22e">right</span><span style="color:#f92672">;</span>
+        <span style="color:#66d9ef">while</span><span style="color:#f92672">(</span>p<span style="color:#f92672">.</span><span style="color:#a6e22e">left</span> <span style="color:#f92672">!</span><span style="color:#f92672">=</span><span style="color:#66d9ef">null</span><span style="color:#f92672">)</span>
+            p<span style="color:#f92672">=</span>p<span style="color:#f92672">.</span><span style="color:#a6e22e">left</span><span style="color:#f92672">;</span>
+        <span style="color:#66d9ef">return</span> p<span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span><span style="color:#66d9ef">else</span><span style="color:#f92672">{</span>          <span style="color:#75715e">//t的右孩子为空,则t的后继是其第一个向左走的祖先
+</span><span style="color:#75715e"></span>        Entry<span style="color:#f92672">&lt;</span>K<span style="color:#f92672">,</span>V<span style="color:#f92672">&gt;</span> p <span style="color:#f92672">=</span> t<span style="color:#f92672">.</span><span style="color:#a6e22e">parent</span><span style="color:#f92672">;</span>   <span style="color:#75715e">//获取当前节点的父节点
+</span><span style="color:#75715e"></span>        Entry<span style="color:#f92672">&lt;</span>K<span style="color:#f92672">,</span>v<span style="color:#f92672">&gt;</span> ch <span style="color:#f92672">=</span> t <span style="color:#f92672">;</span>      <span style="color:#75715e">//当前节点
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">while</span><span style="color:#f92672">(</span>p<span style="color:#f92672">!</span><span style="color:#f92672">=</span><span style="color:#66d9ef">null</span> <span style="color:#f92672">&amp;</span><span style="color:#f92672">&amp;</span> ch <span style="color:#f92672">=</span><span style="color:#f92672">=</span> p<span style="color:#f92672">.</span><span style="color:#a6e22e">right</span><span style="color:#f92672">)</span><span style="color:#f92672">{</span>   <span style="color:#75715e">//当前节点是其父节点的右节点
+</span><span style="color:#75715e"></span>            ch <span style="color:#f92672">=</span> p<span style="color:#f92672">;</span>
+            p <span style="color:#f92672">=</span> p<span style="color:#f92672">.</span><span style="color:#a6e22e">parent</span><span style="color:#f92672">;</span>
+        <span style="color:#f92672">}</span>
+        <span style="color:#66d9ef">return</span> p<span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><blockquote>
+<p>get（object key）：根据指定的key值返回指定的value值，getEntry（）是算法的核心，根据key的自然</p>
+</blockquote>
+<p>顺序或者比较器的顺序对二叉查找树进行查找</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#75715e">//核心算法代码
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">final</span> Entry<span style="color:#f92672">&lt;</span>K<span style="color:#f92672">,</span>V<span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">getEntry</span><span style="color:#f92672">(</span>Object key<span style="color:#f92672">)</span><span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">if</span><span style="color:#f92672">(</span>key <span style="color:#f92672">=</span><span style="color:#f92672">=</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">)</span>
+        <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> NullPointerException<span style="color:#f92672">(</span><span style="color:#f92672">)</span><span style="color:#f92672">;</span>
+    Comparable<span style="color:#f92672">&lt;</span><span style="color:#f92672">?</span> <span style="color:#66d9ef">super</span> K<span style="color:#f92672">&gt;</span> k <span style="color:#f92672">=</span> <span style="color:#f92672">(</span>Comparable<span style="color:#f92672">&lt;</span><span style="color:#f92672">?</span> <span style="color:#66d9ef">super</span> K<span style="color:#f92672">&gt;</span><span style="color:#f92672">)</span> key<span style="color:#f92672">;</span>
+    <span style="color:#75715e">//使用元素的自然顺序
+</span><span style="color:#75715e"></span>    Entry<span style="color:#f92672">&lt;</span>K<span style="color:#f92672">,</span>V<span style="color:#f92672">&gt;</span> p <span style="color:#f92672">=</span> root<span style="color:#f92672">;</span>
+    <span style="color:#66d9ef">while</span><span style="color:#f92672">(</span>p<span style="color:#f92672">!</span><span style="color:#f92672">=</span><span style="color:#66d9ef">null</span><span style="color:#f92672">)</span><span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">int</span> cmp <span style="color:#f92672">=</span> k<span style="color:#f92672">.</span><span style="color:#a6e22e">compareTo</span><span style="color:#f92672">(</span>p<span style="color:#f92672">.</span><span style="color:#a6e22e">key</span><span style="color:#f92672">)</span><span style="color:#f92672">;</span>
+        <span style="color:#66d9ef">if</span><span style="color:#f92672">(</span>cmp<span style="color:#f92672">&lt;</span>0<span style="color:#f92672">)</span>   <span style="color:#75715e">//向左找
+</span><span style="color:#75715e"></span>            p <span style="color:#f92672">=</span> p<span style="color:#f92672">.</span><span style="color:#a6e22e">left</span><span style="color:#f92672">;</span>
+        <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>cmp<span style="color:#f92672">&gt;</span>0<span style="color:#f92672">)</span>  <span style="color:#75715e">//向右找
+</span><span style="color:#75715e"></span>            p <span style="color:#f92672">=</span> p<span style="color:#f92672">.</span><span style="color:#a6e22e">right</span><span style="color:#f92672">;</span>
+        <span style="color:#66d9ef">else</span>
+            <span style="color:#66d9ef">return</span> p<span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">null</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><blockquote>
+<p>put(K key , V value) 方法是将key,value对添加到map里面，该方法在执行时会先对map做一次检查，看</p>
+</blockquote>
+<p>是否包含该元祖，如果已经包含则直接返回，如果没有找到则会红黑树中插入新的Entry，插入时首先在红黑</p>
+<p>树上找到合适的位置，然后创建一个新的Entry并插入，新插入的节点一定是树的叶子，在插入完成后还需要进</p>
+<p>行调整，比如旋转或者改变某些节点的颜色</p>
+<blockquote>
+<p>remove（Object key）的作用是删除key值对应的Entry，该方法首先通过getEntry(Object key)方法找到</p>
+</blockquote>
+<p>key值对应的entry，然后调用deleteentry删除对应的entry；删除之后需要对红黑树进行调整。由于红黑树是</p>
+<p>一颗增强版的二叉查找树，删除操作非常相似，普通的二叉查找树有两种情况，一是删除点p的左右子树都</p>
+<p>为空（直接删除即可），或有一颗子树为空（只有一颗子树非空）、二是左右子树均不为空，这时可以使用</p>
+<p>p的后继节点来代替p，然后使用情况一来删除s，此时s节点一定满足情况一</p>
+<blockquote>
+<p>在具体的调整函数中，只有删除点BLACK的时候，才会触发调整函数，删除RED节点不会破坏红</p>
+</blockquote>
+<p>黑树的任何性质，删除BLACK点会破坏规则4</p>
+<blockquote>
+<p><strong>(3)LinkedHashMap</strong></p>
+</blockquote>
+<blockquote>
+<p>从名字上就可以看出该容器是linked list 和HashMap的混合体，它同时满足二者的某些特性。具体来说</p>
+</blockquote>
+<p>LinkedHashMap是HashMap的直接子类，前者在后者的基础上采用双向链表的形式将所有entry连接起来，</p>
+<p>这样做可以使元素的<strong>迭代顺序跟插入顺序</strong>相同；此外，迭代LinkedHashMap时不需要像HashMap那样遍历整</p>
+<p>个Table，而只需要遍历header指向的双向链表即可，LinkedHashMap的迭代时间就只跟entry的个数有关，与</p>
+<p>Table的大小无关</p>
+<p><!-- raw HTML omitted --></p>
+<blockquote>
+<p>get（Object key）方法即为根据key值返回对应的value值，原理和HashMap相同</p>
+</blockquote>
+<blockquote>
+<p>put（K key，V key）方法将指定的key，value对添加到map中，但是这里的插入有两重含义，一是从</p>
+</blockquote>
+<p>table的角度来看，新的entry需要插入到对应的bucket里，当有哈希冲突时，采用头插法，将新的entry插</p>
+<p>入到冲突链表的头部；二是从header的角度来看，新的entry需要插入到双向链表的尾部</p>
+<blockquote>
+<p>remove（Object key）的作用就是删除key值对应entry，具体实现方法为removeEntryForKey（Object key）</p>
+</blockquote>
+<p>实现的过程就是先找到key对应的entry在进行删除；删除时既要在hashtable的bucket中删除，也要从双向链表</p>
+<p>中删除</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">final</span> Entry<span style="color:#f92672">&lt;</span>K<span style="color:#f92672">,</span>V<span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">removeEntryForKey</span><span style="color:#f92672">(</span>Object key<span style="color:#f92672">)</span><span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">int</span> hash <span style="color:#f92672">=</span> <span style="color:#f92672">(</span>key <span style="color:#f92672">=</span><span style="color:#f92672">=</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">)</span><span style="color:#f92672">?</span> 0<span style="color:#f92672">:</span>hash<span style="color:#f92672">(</span>key<span style="color:#f92672">)</span><span style="color:#f92672">;</span>
+    <span style="color:#66d9ef">int</span> index <span style="color:#f92672">=</span> hash<span style="color:#f92672">&amp;</span><span style="color:#f92672">(</span>table<span style="color:#f92672">.</span><span style="color:#a6e22e">length</span><span style="color:#f92672">-</span>1<span style="color:#f92672">)</span><span style="color:#f92672">;</span>
+    Entry<span style="color:#f92672">&lt;</span>K<span style="color:#f92672">,</span>V<span style="color:#f92672">&gt;</span> prev <span style="color:#f92672">=</span> table<span style="color:#f92672">[</span>index<span style="color:#f92672">]</span><span style="color:#f92672">;</span>  <span style="color:#75715e">//得到冲突链表
+</span><span style="color:#75715e"></span>    Entry<span style="color:#f92672">&lt;</span>K<span style="color:#f92672">,</span>V<span style="color:#f92672">&gt;</span> e <span style="color:#f92672">=</span> prev<span style="color:#f92672">;</span>
+    <span style="color:#66d9ef">while</span><span style="color:#f92672">(</span>e<span style="color:#f92672">!</span><span style="color:#f92672">=</span><span style="color:#66d9ef">null</span><span style="color:#f92672">)</span><span style="color:#f92672">{</span>   <span style="color:#75715e">//开始遍历冲突链表
+</span><span style="color:#75715e"></span>        Entry<span style="color:#f92672">&lt;</span>K<span style="color:#f92672">,</span>V<span style="color:#f92672">&gt;</span> next <span style="color:#f92672">=</span> e<span style="color:#f92672">.</span><span style="color:#a6e22e">next</span><span style="color:#f92672">;</span>
+        Object k<span style="color:#f92672">;</span>
+        <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>e<span style="color:#f92672">.</span><span style="color:#a6e22e">hash</span> <span style="color:#f92672">=</span><span style="color:#f92672">=</span> hash <span style="color:#f92672">&amp;</span><span style="color:#f92672">&amp;</span><span style="color:#f92672">(</span><span style="color:#f92672">(</span>k <span style="color:#f92672">=</span> e<span style="color:#f92672">.</span><span style="color:#a6e22e">key</span><span style="color:#f92672">)</span> <span style="color:#f92672">=</span><span style="color:#f92672">=</span> key <span style="color:#f92672">|</span><span style="color:#f92672">|</span> <span style="color:#f92672">(</span>key <span style="color:#f92672">!</span><span style="color:#f92672">=</span> <span style="color:#66d9ef">null</span> <span style="color:#f92672">&amp;</span><span style="color:#f92672">&amp;</span> key<span style="color:#f92672">.</span><span style="color:#a6e22e">equals</span><span style="color:#f92672">(</span>k<span style="color:#f92672">)</span><span style="color:#f92672">)</span><span style="color:#f92672">)</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+            <span style="color:#75715e">// 找到要删除的entry
+</span><span style="color:#75715e"></span>           size<span style="color:#f92672">-</span><span style="color:#f92672">-</span><span style="color:#f92672">;</span>
+            <span style="color:#75715e">// 1. 将e从对应bucket的冲突链表中删除
+</span><span style="color:#75715e"></span>           <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>prev <span style="color:#f92672">=</span><span style="color:#f92672">=</span> e<span style="color:#f92672">)</span> table<span style="color:#f92672">[</span>i<span style="color:#f92672">]</span> <span style="color:#f92672">=</span> next<span style="color:#f92672">;</span>
+           <span style="color:#66d9ef">else</span> prev<span style="color:#f92672">.</span><span style="color:#a6e22e">next</span> <span style="color:#f92672">=</span> next<span style="color:#f92672">;</span>
+            <span style="color:#75715e">// 2. 将e从双向链表中删除
+</span><span style="color:#75715e"></span>            e<span style="color:#f92672">.</span><span style="color:#a6e22e">before</span><span style="color:#f92672">.</span><span style="color:#a6e22e">after</span> <span style="color:#f92672">=</span> e<span style="color:#f92672">.</span><span style="color:#a6e22e">after</span><span style="color:#f92672">;</span>
+            e<span style="color:#f92672">.</span><span style="color:#a6e22e">after</span><span style="color:#f92672">.</span><span style="color:#a6e22e">before</span> <span style="color:#f92672">=</span> e<span style="color:#f92672">.</span><span style="color:#a6e22e">before</span><span style="color:#f92672">;</span>
+            <span style="color:#66d9ef">return</span> e<span style="color:#f92672">;</span>
+        <span style="color:#f92672">}</span>
+        prev <span style="color:#f92672">=</span> e<span style="color:#f92672">;</span> e <span style="color:#f92672">=</span> next<span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+    <span style="color:#66d9ef">return</span> e<span style="color:#f92672">;</span>
+
+</code></pre></div><blockquote>
+<p><strong>使用LinkedHashMap实现缓存</strong></p>
+</blockquote>
+<blockquote>
+<p>LinkedHashMap可以很方便地实现一个FIFO替换策略的缓存，LinkedHashMap有一个子类方法可以告</p>
+</blockquote>
+<p>诉Map是否要删除“最老”的Entry，所谓最老就是当前的Map中最早插入的Entry，如果方法返回true则最老</p>
+<p>的那个元素删除。每次插入新元素时，LinkedHashMap会自动询问那个子类方法是否删除，当元素个数超</p>
+<p>过一定数量时让那个子类方法返回true即可实现一个固定大小的FIFO策略的缓存</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#75715e">//一个固定大小的FIFO替换策略的缓存实现
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">FIFOCache</span><span style="color:#f92672">&lt;</span>K<span style="color:#f92672">,</span>V<span style="color:#f92672">&gt;</span> <span style="color:#66d9ef">extends</span> LinkedHashMap<span style="color:#f92672">&lt;</span>K<span style="color:#f92672">,</span>V<span style="color:#f92672">&gt;</span><span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">final</span> <span style="color:#66d9ef">int</span> cacheSize<span style="color:#f92672">;</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#a6e22e">FIFOCache</span><span style="color:#f92672">(</span><span style="color:#66d9ef">int</span> cacheSize<span style="color:#f92672">)</span><span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">cacheSize</span> <span style="color:#f92672">=</span> cacheSize<span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span> 
+    
+    <span style="color:#75715e">//当Entry个数超过cacheSize时，删除最老的Entry
+</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">@Override</span>
+    <span style="color:#66d9ef">protected</span> <span style="color:#66d9ef">boolean</span> <span style="color:#a6e22e">removeEldestEntry</span><span style="color:#f92672">(</span>Map<span style="color:#f92672">.</span><span style="color:#a6e22e">Entry</span><span style="color:#f92672">&lt;</span>K<span style="color:#f92672">,</span>V<span style="color:#f92672">&gt;</span> eldest<span style="color:#f92672">)</span><span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">return</span> size<span style="color:#f92672">(</span><span style="color:#f92672">)</span> <span style="color:#f92672">&gt;</span> cacheSize<span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><h3 id="五set集合">五、Set集合</h3>
+<h4 id="1java中的set">1.Java中的Set</h4>
+<blockquote>
+<p>在Java中，TreeSet和TreeMap、HashMap和HashSet、LinkedHashMap和LinkedHashSet都具有</p>
+</blockquote>
+<p>相同的实现，前者仅仅是对后者做了一层包装</p>
+<h4 id="2python中的set">2.Python中的Set</h4>
+<blockquote>
+<p>集合是Python中一个最基本的数据类型，在Cpython中，集合被实现为带有空值的字典，只有健才是实际的</p>
+</blockquote>
+<p>集合元素，所以集合的底层是用哈希来实现的，它最大的特点就是其中的元素是唯一的，无序的。在元素顺序的</p>
+<p>重要性不如元素的唯一性和测试元素是否包含在集合中的效率时，set是最好的选择</p>
+<blockquote>
+<p>在pydu模块中，set.OrderedSet（iterable = None）可以保持插入元素有序的集合</p>
+</blockquote>
+<blockquote>
+<p>Python中对于Set去重的底层实现原理： set的去重是通过两个函数  hash和eq结合实现的，当两个变量的</p>
+</blockquote>
+<p>的哈希值不相同时，就认为这两个变量是不同的，当哈希值一样，而调用eq（）方法时，返回值为true认为这</p>
+<p>两个变量是同一个，应该去除一个，返回False时，不去重</p>
+<h3 id="六优先队列">六、优先队列</h3>
+<h4 id="1java中的优先队列">1.Java中的优先队列</h4>
+<blockquote>
+<p>PriorityQueue是一种的特殊的队列，即优先队列，优先队列的作用是保证每次取出的元素都是队列中权</p>
+</blockquote>
+<p>值最小的或者权值最大的；优先队列又称为堆，堆又分为小顶堆和大顶堆，小顶堆即是每一个根节点都会小</p>
+<p>其左孩子和右孩子，而大顶堆即是每一个根节点都会大于其左孩子和右孩子</p>
+<blockquote>
+<p>Java中的优先队列即为PriorityQueue，它是通过完全二叉树来实现的小顶堆，底层是通过数组来进行存</p>
+</blockquote>
+<p>储数据的，不允许放入null。元素大小的评判可以通过元素本身的自然顺序，也可以通过构造时传入的比较器；</p>
+<p><!-- raw HTML omitted --></p>
+<blockquote>
+<p>从上面的这张图中可以看出，每个元素按照层序遍历的方式进行编号后，父子节点的编号之间存在</p>
+</blockquote>
+<p>如下关系，所以使用来进行存储是非常方便的</p>
+<ul>
+<li>
+<p>leftNo = parentNo * 2+1</p>
+</li>
+<li>
+<p>rightNo = parentNo*2 + 2</p>
+</li>
+<li>
+<p>parentNo = (nodeNo-1)/2</p>
+</li>
+</ul>
+<blockquote>
+<p>PriorityQueue的peek（）和element（）的时间复杂度都是O(1)的，而add（）、offer（）、无参数</p>
+</blockquote>
+<p>的remove（）以及poll（）方法的时间复杂度都是log(N)</p>
+<blockquote>
+<p>add（）方法和offer（）方法都是向优先队列中插入元素，只不过前者插入失败后抛出异常，后者返回</p>
+</blockquote>
+<p>false，二者的底层实现原理相同；插入元素破坏小顶堆的性质，需要进行调整，具体的调整的过程为从k指</p>
+<p>定的位置开始，将x逐层与当前点的parent进行比较并交换，知道满足x&gt;=queue[parent]</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#75715e">//offer(E e) 函数源码 
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">boolean</span> <span style="color:#a6e22e">offer</span><span style="color:#f92672">(</span>E e<span style="color:#f92672">)</span><span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">if</span><span style="color:#f92672">(</span>e <span style="color:#f92672">=</span><span style="color:#f92672">=</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">)</span> <span style="color:#75715e">//不允许放入null元素
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> NullPointerException<span style="color:#f92672">(</span><span style="color:#f92672">)</span><span style="color:#f92672">;</span>
+    <span style="color:#f92672">.</span><span style="color:#f92672">.</span><span style="color:#f92672">.</span>
+    <span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> size<span style="color:#f92672">;</span>
+    <span style="color:#66d9ef">if</span><span style="color:#f92672">(</span>i<span style="color:#f92672">&gt;</span><span style="color:#f92672">=</span>queue<span style="color:#f92672">.</span><span style="color:#a6e22e">length</span><span style="color:#f92672">)</span>
+        grow<span style="color:#f92672">(</span>i<span style="color:#f92672">+</span>1<span style="color:#f92672">)</span><span style="color:#f92672">;</span>   <span style="color:#75715e">//自动扩容 就是申请一个更大的数组，将原数组的元素复制过去
+</span><span style="color:#75715e"></span>    size <span style="color:#f92672">+</span><span style="color:#f92672">=</span>1<span style="color:#f92672">;</span>
+    <span style="color:#66d9ef">if</span><span style="color:#f92672">(</span>i<span style="color:#f92672">=</span><span style="color:#f92672">=</span>0<span style="color:#f92672">)</span><span style="color:#75715e">//队列原来为空，这是插入的第一个元素
+</span><span style="color:#75715e"></span>        queue<span style="color:#f92672">[</span>0<span style="color:#f92672">]</span> <span style="color:#f92672">=</span> e<span style="color:#f92672">;</span>
+    <span style="color:#66d9ef">else</span>
+        siftUp<span style="color:#f92672">(</span>i<span style="color:#f92672">,</span>e<span style="color:#f92672">)</span><span style="color:#f92672">;</span>  <span style="color:#75715e">//调整函数
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">true</span><span style="color:#f92672">;</span>
+<span style="color:#f92672">}</span>
+
+<span style="color:#75715e">//siftUp()函数  该方法用于插入元素x并维持堆的特性
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">private</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">siftUp</span><span style="color:#f92672">(</span><span style="color:#66d9ef">int</span> k<span style="color:#f92672">,</span>E x<span style="color:#f92672">)</span><span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">while</span><span style="color:#f92672">(</span>k<span style="color:#f92672">&gt;</span>0<span style="color:#f92672">)</span><span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">int</span> parent <span style="color:#f92672">=</span> <span style="color:#f92672">(</span>k<span style="color:#f92672">-</span>1<span style="color:#f92672">)</span> <span style="color:#f92672">&gt;</span><span style="color:#f92672">&gt;</span> 1<span style="color:#f92672">;</span> <span style="color:#75715e">//根据子节点求父节点下标
+</span><span style="color:#75715e"></span>        Object e <span style="color:#f92672">=</span> queue<span style="color:#f92672">[</span>parent<span style="color:#f92672">]</span><span style="color:#f92672">;</span>
+        <span style="color:#66d9ef">if</span><span style="color:#f92672">(</span>comparator<span style="color:#f92672">.</span><span style="color:#a6e22e">compare</span><span style="color:#f92672">(</span>x<span style="color:#f92672">,</span><span style="color:#f92672">(</span>E<span style="color:#f92672">)</span> e<span style="color:#f92672">)</span><span style="color:#f92672">&gt;</span><span style="color:#f92672">=</span>0<span style="color:#f92672">)</span>
+            <span style="color:#66d9ef">break</span><span style="color:#f92672">;</span>
+        queue<span style="color:#f92672">[</span>k<span style="color:#f92672">]</span> <span style="color:#f92672">=</span> e<span style="color:#f92672">;</span>
+        k <span style="color:#f92672">=</span> parent<span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+    queue<span style="color:#f92672">[</span>k<span style="color:#f92672">]</span> <span style="color:#f92672">=</span> x<span style="color:#f92672">;</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><blockquote>
+<p>element （）和 peek（）都是获取但不删除队首元素，也就是队列中权值最小的那个元素，二者区别</p>
+</blockquote>
+<p>就是前者方法失败时抛出异常，后者返回null。根据小顶堆的性质，堆顶的那个元素就是最小的</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#75715e">//peak() 函数源码
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">public</span> E <span style="color:#a6e22e">peek</span><span style="color:#f92672">(</span><span style="color:#f92672">)</span><span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">if</span><span style="color:#f92672">(</span>size <span style="color:#f92672">=</span><span style="color:#f92672">=</span> 0<span style="color:#f92672">)</span>
+        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">null</span>
+    <span style="color:#a6e22e">return</span> <span style="color:#f92672">(</span>E<span style="color:#f92672">)</span> queue<span style="color:#f92672">[</span>0<span style="color:#f92672">]</span><span style="color:#f92672">;</span>   <span style="color:#75715e">//0下标就是最小的那个
+</span><span style="color:#75715e"></span><span style="color:#f92672">}</span>
+</code></pre></div><blockquote>
+<p>remove（）和poll（）方法都是获取并删除队首元素，区别是当方法失败时，前者抛出异常，后者返回</p>
+</blockquote>
+<p>null，删除操作会改变队列的结构，为维护小顶堆的性质，需要进行调整，siftDown()方法是从k指定的位置</p>
+<p>开始，将x逐层向下与当前点的左右孩子中较小的那个进行交换，直到x小于或等于左右孩子中的任何一个为止</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">public</span> E <span style="color:#a6e22e">poll</span><span style="color:#f92672">(</span><span style="color:#f92672">)</span><span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">if</span><span style="color:#f92672">(</span>size <span style="color:#f92672">=</span><span style="color:#f92672">=</span> 0<span style="color:#f92672">)</span>
+        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">null</span>
+    <span style="color:#66d9ef">int</span> s  <span style="color:#f92672">=</span> <span style="color:#f92672">-</span><span style="color:#f92672">-</span>size<span style="color:#f92672">;</span>
+    <span style="color:#f92672">.</span><span style="color:#f92672">.</span><span style="color:#f92672">.</span>
+    E result <span style="color:#f92672">=</span> <span style="color:#f92672">(</span>E<span style="color:#f92672">)</span> queue<span style="color:#f92672">[</span>0<span style="color:#f92672">]</span><span style="color:#f92672">;</span> <span style="color:#75715e">//0下标处的元素是最小的那个元素
+</span><span style="color:#75715e"></span>    E x  <span style="color:#f92672">=</span> <span style="color:#f92672">(</span>E<span style="color:#f92672">)</span>  queue<span style="color:#f92672">[</span>s<span style="color:#f92672">]</span><span style="color:#f92672">;</span>  <span style="color:#75715e">//原队列中的最后一个元素
+</span><span style="color:#75715e"></span>    queue<span style="color:#f92672">[</span>s<span style="color:#f92672">]</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">;</span>       <span style="color:#75715e">//使用最后一个元素替换0下标位置的元素
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">if</span><span style="color:#f92672">(</span>s<span style="color:#f92672">!</span><span style="color:#f92672">=</span>0<span style="color:#f92672">)</span>
+        siftDown<span style="color:#f92672">(</span>0<span style="color:#f92672">,</span>x<span style="color:#f92672">)</span><span style="color:#f92672">;</span>  <span style="color:#75715e">//使用siftDown()方法对堆进行调整
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">return</span> result<span style="color:#f92672">;</span>
+<span style="color:#f92672">}</span>
+
+<span style="color:#75715e">//siftDown()方法源码 
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">private</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">siftDown</span><span style="color:#f92672">(</span><span style="color:#66d9ef">int</span> k<span style="color:#f92672">,</span>E x<span style="color:#f92672">)</span><span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">int</span> half <span style="color:#f92672">=</span> size<span style="color:#f92672">&gt;</span><span style="color:#f92672">&gt;</span>1<span style="color:#f92672">;</span>
+    <span style="color:#66d9ef">while</span><span style="color:#f92672">(</span>k<span style="color:#f92672">&lt;</span>half<span style="color:#f92672">)</span><span style="color:#f92672">{</span>
+        <span style="color:#75715e">//首先找到左右孩子中较小的那个，记录到c中，并用child记录其下标
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">int</span> child <span style="color:#f92672">=</span> <span style="color:#f92672">(</span>k<span style="color:#f92672">&lt;</span><span style="color:#f92672">&lt;</span>1<span style="color:#f92672">)</span><span style="color:#f92672">+</span>1<span style="color:#f92672">;</span>  <span style="color:#75715e">//child表示左节点
+</span><span style="color:#75715e"></span>        Object c <span style="color:#f92672">=</span> queue<span style="color:#f92672">[</span>child<span style="color:#f92672">]</span><span style="color:#f92672">;</span>
+        <span style="color:#66d9ef">int</span> right <span style="color:#f92672">=</span> child <span style="color:#f92672">+</span> 1<span style="color:#f92672">;</span>
+        <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>right <span style="color:#f92672">&lt;</span> size <span style="color:#f92672">&amp;</span><span style="color:#f92672">&amp;</span>
+            comparator<span style="color:#f92672">.</span><span style="color:#a6e22e">compare</span><span style="color:#f92672">(</span><span style="color:#f92672">(</span>E<span style="color:#f92672">)</span> c<span style="color:#f92672">,</span> <span style="color:#f92672">(</span>E<span style="color:#f92672">)</span> queue<span style="color:#f92672">[</span>right<span style="color:#f92672">]</span><span style="color:#f92672">)</span> <span style="color:#f92672">&gt;</span> 0<span style="color:#f92672">)</span>
+            c <span style="color:#f92672">=</span> queue<span style="color:#f92672">[</span>child <span style="color:#f92672">=</span> right<span style="color:#f92672">]</span><span style="color:#f92672">;</span>    <span style="color:#75715e">//左节点的值大于右节点的值
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>comparator<span style="color:#f92672">.</span><span style="color:#a6e22e">compare</span><span style="color:#f92672">(</span>x<span style="color:#f92672">,</span> <span style="color:#f92672">(</span>E<span style="color:#f92672">)</span> c<span style="color:#f92672">)</span> <span style="color:#f92672">&lt;</span><span style="color:#f92672">=</span> 0<span style="color:#f92672">)</span>
+            <span style="color:#66d9ef">break</span><span style="color:#f92672">;</span>
+        queue<span style="color:#f92672">[</span>k<span style="color:#f92672">]</span> <span style="color:#f92672">=</span> c<span style="color:#f92672">;</span>
+        k <span style="color:#f92672">=</span> child<span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+    queue<span style="color:#f92672">[</span>k<span style="color:#f92672">]</span> <span style="color:#f92672">=</span> x<span style="color:#f92672">;</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><blockquote>
+<p>remove(Object o)方法用于删除队列中跟o相等的某一个元素，删除操作会改变队列的结构，需要进行调整，</p>
+</blockquote>
+<p>具体可分为两种情况，删除的是最后一个元素，直接删即可，不需要进行调整；当删除的不是最后一个元素时</p>
+<p>从删除点开始以最后一个元素为参照调用一次siftDown()函数即可</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#75715e">//remove(Object o)
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">boolean</span> <span style="color:#a6e22e">remove</span><span style="color:#f92672">(</span>Object o<span style="color:#f92672">)</span><span style="color:#f92672">{</span>
+    <span style="color:#75715e">//通过遍历数组的方式找到第一个满足o.equals(queue[i])元素的下标
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">int</span> index <span style="color:#f92672">=</span> indexof<span style="color:#f92672">(</span>o<span style="color:#f92672">)</span><span style="color:#f92672">;</span>  <span style="color:#75715e">//假设o存在于该队列中
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>index <span style="color:#f92672">=</span><span style="color:#f92672">=</span> <span style="color:#f92672">-</span>1<span style="color:#f92672">)</span>
+        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">false</span><span style="color:#f92672">;</span>   <span style="color:#75715e">//实际上不存在
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">int</span> s <span style="color:#f92672">=</span> <span style="color:#f92672">-</span><span style="color:#f92672">-</span>size<span style="color:#f92672">;</span>    <span style="color:#75715e">//s为删除的最后一个元素的下标
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">if</span><span style="color:#f92672">(</span>s <span style="color:#f92672">=</span><span style="color:#f92672">=</span> i<span style="color:#f92672">)</span> <span style="color:#75715e">//待删除的元素为最后一个元素
+</span><span style="color:#75715e"></span>        queue<span style="color:#f92672">[</span>i<span style="color:#f92672">]</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">null</span>
+    <span style="color:#66d9ef">else</span><span style="color:#f92672">{</span>
+        E moved <span style="color:#f92672">=</span> <span style="color:#f92672">(</span>E<span style="color:#f92672">)</span> queue<span style="color:#f92672">[</span>s<span style="color:#f92672">]</span><span style="color:#f92672">;</span>
+        queue<span style="color:#f92672">[</span>s<span style="color:#f92672">]</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">;</span>
+        siftDown<span style="color:#f92672">(</span>i<span style="color:#f92672">,</span>moved<span style="color:#f92672">)</span><span style="color:#f92672">;</span>  <span style="color:#75715e">//如果不是最后一个元素，找到最后一个元素调用siftDown()方法
+</span><span style="color:#75715e"></span>    <span style="color:#f92672">}</span>
+    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">true</span><span style="color:#f92672">;</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><h4 id="2python中的优先队列">2.Python中的优先队列</h4>
+<blockquote>
+<p>Python中提供了heapq模块，可以让我们很方便地堆的相关操作进行简化，常用的方法如下：</p>
+</blockquote>
+<ul>
+<li>heappush（heap，item）往堆中插入一条新的值</li>
+<li>heappop（heap）从堆中弹出最小值</li>
+<li>heapreplace（heap，item）从堆中弹出最小值，并向堆中插入item</li>
+<li>heapify（x） 以线性时间将列表转化成一个堆</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e">#有关堆的操作函数</span>
+<span style="color:#f92672">import</span> heapq
+<span style="color:#75715e">#第一种创建堆的方法</span>
+nums <span style="color:#f92672">=</span> [<span style="color:#ae81ff">2</span>,<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">7</span>,<span style="color:#ae81ff">53</span>,<span style="color:#ae81ff">32</span>,<span style="color:#ae81ff">44</span>,<span style="color:#ae81ff">89</span>,<span style="color:#ae81ff">4</span>]
+heap <span style="color:#f92672">=</span> []
+<span style="color:#66d9ef">for</span> num <span style="color:#f92672">in</span> nums:
+	heapq<span style="color:#f92672">.</span>heappush(heap,num)  <span style="color:#75715e">#将原列表中的元素加入堆</span>
+<span style="color:#66d9ef">print</span>(heap[<span style="color:#ae81ff">0</span>])                <span style="color:#75715e">#查看堆首的元素，底层是一个列表</span>
+<span style="color:#66d9ef">print</span>(heap)
+heapq<span style="color:#f92672">.</span>heapreplace(heap,<span style="color:#ae81ff">13</span>)    <span style="color:#75715e">#删除队首的元素并添加一个新的元素</span>
+<span style="color:#66d9ef">print</span>(heap)
+
+<span style="color:#75715e">#第二种创建堆的方法</span>
+nums2 <span style="color:#f92672">=</span> [<span style="color:#ae81ff">5</span>,<span style="color:#ae81ff">6</span>,<span style="color:#ae81ff">7</span>,<span style="color:#ae81ff">8</span>,<span style="color:#ae81ff">3</span>,<span style="color:#ae81ff">3</span>,<span style="color:#ae81ff">53</span>,<span style="color:#ae81ff">89</span>]
+heapq<span style="color:#f92672">.</span>heapify(nums2)          <span style="color:#75715e">#将一个列表初始化成一个堆</span>
+<span style="color:#66d9ef">print</span>([heapq<span style="color:#f92672">.</span>heappop(nums2) <span style="color:#66d9ef">for</span> _ <span style="color:#f92672">in</span> range(len(nums2))])  <span style="color:#75715e">#一行代码实现堆排序，时间复杂度为O（nlogn）</span>
+
+<span style="color:#75715e">#如何去建立一个大根堆</span>
+<span style="color:#75715e">#如何建立一个大根堆</span>
+a <span style="color:#f92672">=</span> []
+<span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> [<span style="color:#ae81ff">4</span>,<span style="color:#ae81ff">5</span>,<span style="color:#ae81ff">2</span>,<span style="color:#ae81ff">2</span>,<span style="color:#ae81ff">55</span>,<span style="color:#ae81ff">64</span>,<span style="color:#ae81ff">2</span>,<span style="color:#ae81ff">255</span>,<span style="color:#ae81ff">6</span>]:
+	heapq<span style="color:#f92672">.</span>heappush(a,<span style="color:#f92672">-</span>i)
+<span style="color:#66d9ef">print</span>(list(map(<span style="color:#66d9ef">lambda</span> x:<span style="color:#f92672">-</span>x,a)))
+<span style="color:#75715e">#heapq里面没有直接提供建立大根堆的方法,在每次push时给元素加一个负号，此时最小值就变成最大值了</span>
+<span style="color:#75715e">#实际上的最大值就处于堆顶了，返回时在取负即可</span>
+</code></pre></div>
+    </div>
+    <div class="post-footer">
+      
+    </div>
+  </article>
+
+    </main>
+  </body>
+</html>

@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Linux on Your title</title>
+    <link>https://qmr0925.github.io/tags/linux/</link>
+    <description>Recent content in Linux on Your title</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 24 Apr 2020 19:55:33 +0800</lastBuildDate>
+    
+	<atom:link href="https://qmr0925.github.io/tags/linux/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Linux文本处理命令总结</title>
+      <link>https://qmr0925.github.io/linux/text/</link>
+      <pubDate>Fri, 24 Apr 2020 19:55:33 +0800</pubDate>
+      
+      <guid>https://qmr0925.github.io/linux/text/</guid>
+      <description>一、概述  Linux中的有关文本处理和分析的命令有很多，本节主要介绍几个使用比较频繁的命令：
+ grep、sed、find、awk。其中每个命令的使用方式都是比较灵活的，命令的参数很多，选
+项也很多，但我们只需记住些常用的即可
+二、grep 1、用途简介  grep用于查找文件中符合条件的字符串，比较多地用于日志行为分析
+ 2、命令格式  grep match_pattern file
+ 3、常用参数   -o:只输出匹配的文本行
+  -v:只输出没有匹配的文本行
+  -c:统计文件中包含文本的行数
+  -n:打印匹配的行号
+  -i:搜索时忽略大小写
+  -l:只打印文件名
+  -e:指定字符串作为查找文件内容的样式
+  -r:递归的搜索
+  4、使用示例  （1）匹配多个字符串模式
+   grep -e &amp;ldquo;mode1&amp;rdquo; -e &amp;ldquo;mode2&amp;rdquo; filename
+   （2）在多级目录中对文本递归搜索
+   grep &amp;ldquo;mode&amp;rdquo; . -r -n
+   （3）在当前目录下查找以file为后缀的文件名并且包含test字符串的文件</description>
+    </item>
+    
+    <item>
+      <title>Linux文件系统目录结构</title>
+      <link>https://qmr0925.github.io/linux/filesys/</link>
+      <pubDate>Fri, 24 Apr 2020 00:45:56 +0800</pubDate>
+      
+      <guid>https://qmr0925.github.io/linux/filesys/</guid>
+      <description>一、Linux文件系统目录概述  Linux下的文件系统为树形结构，入口为 / (根目录)。树形结构下的文件目录，具体如
+ 下图所示，不同的Linux发行版有较大差异，但是主体的目录都是比较相似的
+二、具体目录功能简介 1、 / (根目录)  这是文件系统的统一入口，是最高一级的目录
+ 2、/bin和/sbin  这些目录下存放着可执行文件的链接，基础系统所需的命令位于此目录，如cp、chmod、
+ ls等命令；对于/bin下的命令任何用户均可执行或者配置，但是/sbin下的命令，普通用户无
+权限执行该目录下的命令
+3、/boot  这里存放Linux内核以及系统引导程序，你可以看到grub文件夹(常见的开机引导程序)，
+ 千万不懂乱动这些文件
+4、/dev  dev即是device，这里存放着所有的设备文件，Linux中所有的东西都是以文件的形式
+ 存在的，也包括硬件设备，比如说硬盘、U盘、鼠标等设备
+5、/etc  存放系统程序或者一般工具的配置文件
+ 6、/lib  系统程序所需要的所有共享库文件、类似于Windows平台下的共享库DLL文件
+ 7、/lost+found  系统以外崩溃或者机器意外关机时，在该目录下产生一些文件碎片；在系统启动时，
+ 文件系统会检查这里，尝试修复破损的文件系统
+8、/media  即插即用型存储设备的挂载点自动在这个目录下创建，比如USB盘系统自动挂载后
+ 或者CDROM自动挂载后便会在这个目录中创建一个目录
+9、/mnt  media文件夹是系统自动挂载设备的地方，而这个目录是用户手动挂载设备的地方
+ 比如可以将dev文件夹中的设备通过命令挂载到mnt的目录进行操作的
+ 挂载是由操作系统使一个存储设备上的计算机文件和目录可供用户通过计算机的文件
+ 系统访问的一个过程。Windows系统中的挂载通常指给磁盘分区分配一个盘符，想当于打开
+一个文件系统的入口；Linux系统的挂载是指将一个设备，挂接到一个已存在的目录上，Linux
+操作系统将所有的设备都看作文件，它将整个计算机的资源整合成一个大的文件目录，要想
+访问存储设备中的文件，必须将文件所在的分区挂载到一个已经存在的目录上了，然后通过
+这个目录来访问存储设备
+ 常用的命令就是：
+  mount [-参数] [设备名称] [挂载点] 对应的解挂命令就是umonut</description>
+    </item>
+    
+    <item>
+      <title>Linux系统性能分析命令总结</title>
+      <link>https://qmr0925.github.io/linux/perfcommand/</link>
+      <pubDate>Fri, 24 Apr 2020 00:43:15 +0800</pubDate>
+      
+      <guid>https://qmr0925.github.io/linux/perfcommand/</guid>
+      <description>一、概述  操作系统的资源主要包括以下几种：CPU、内存、硬盘IO、网络IO，熟练地对这些资
+ 源的使用进行分析可以帮助我们排查一些服务器使用过程中遇到的问题
+二、CPU使用分析 1、CPU性能指标简介  CPU使用时间主要分为用户态时间、系统态时间和空闲态时间，分别表示CPU处于用
+ 户态执行的时间、系统内核执行的时间和空闲系统进程执行的时间，三者之和就是CPU的
+总时间。
+ 当用户没有用户进程和系统进程需要执行的时候，CPU就执行系统缺省的空闲进程,
+ CPU的利用率就是指非空闲进程占用时间的比例，即CPU执行非空闲进程 / CPU总的执行
+时间
+ CPU方面的主要性能指标如下几项：
+   CPU的使用率
+  上下文切换
+  运行队列长度
+   下面分别介绍几个CPU的性能指标
+ 1、CPU_IDLE  CPU_IDLE就是基于/proc/stat计算出来的，运行cat /proc/stat后的结果如下：
+  可以看出cpu的核数，比如cpu0-cpu7便是表是系统有8个核，截取cpu0的参数
+ 如下：cpu0 32736 0 51047 48473626 33879 0 142 0 0 0，这些参数含义分别为：
+  user(32736) 系统从启动开始累计到当前时刻，用户态的CPU时间，不包含nice值为负
+ 的进程
+   nice(0) : 系统从启动开始累计到当前时刻，nice值为负的进程所占用的CPU时间
+  sysytem(51047) 系统启动开始累计到当前时刻，内核时间</description>
+    </item>
+    
+  </channel>
+</rss>

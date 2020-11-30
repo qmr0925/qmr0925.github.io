@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Datastructures on Your title</title>
+    <link>https://qmr0925.github.io/datastructure/</link>
+    <description>Recent content in Datastructures on Your title</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 04 Apr 2020 23:04:00 +0800</lastBuildDate>
+    
+	<atom:link href="https://qmr0925.github.io/datastructure/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>常见的排序算法总结</title>
+      <link>https://qmr0925.github.io/datastructure/sort/</link>
+      <pubDate>Sat, 04 Apr 2020 23:04:00 +0800</pubDate>
+      
+      <guid>https://qmr0925.github.io/datastructure/sort/</guid>
+      <description>经典排序算法的总结   之前总是听一些大牛说学会了排序就相等于学会了算法，能手写个快速排序基本就能通过面试了，这一
+ 点我是很不理解的；后来慢慢地发现这是有道理的，常见的几种排序算法中蕴含了许多经典的算法思想，
+比如说递归、分治、迭代、双指针、空间换时间等，算法的问题很多，但是计算机处理问题的方式却只
+有那一种。所以要归根溯源，从简单的排序算法中去学习算法思想也是一种很有效的方法
+一、算法描述  对一个无序的数组进行排序 (从小到大或者从大到小)
+ 二、算法分类标准  划分排序算法的主要标准有稳定性、内外排序、时空复杂度、是否比较排序等
+  1.稳定性   如果数组中有两个元素是相等的，在经过某个排序算法之后，原来前面的那个元素仍然在另一个元素的
+ 前面，那这个排序算法就是稳定的；相反如果在原来两个相等元素中前面的一个元素被移到了后面，那就
+是不稳定的
+ 2.内外排序   内排序是所有的排序操作都在内存中完成；
+  外排序是由于数据太大，因此把数据放入磁盘中，排序需要经过磁盘和内存的数据传输才能进行
+  3.是否比较排序   比较排序： 一个算法在排序的过程中使用比较操作来判断两个元素的大小关系，那么这个算法
+ 就是比较排序，常见的排序算法都是比较排序算法，比如冒泡排序、插入排序、堆排序，这些排序
+算法的平均时间复杂度最快也只能是O(nlogn)
+ 非比较排序比较典型的算法有计数排序、桶排序和基数排序，这类排序的时间复杂度可以达到
+ O(n)的级别
+ 4.时空复杂度   就是时间复杂度和空间的复杂度了
+ 三、常见的排序算法  1.冒泡排序(Bubble Sort)  （1）算法描述：冒泡排序是将相邻元素进行比较,大数慢慢地沉底，小数放置到前面
+（2）算法特点：
+  内排序，所有操作在原来的数组中就可以完成了，不需要额外的空间
+  时间复杂度是O(n^2),空间的复杂度是O(1)
+  稳定排序: 如果两个元素的位置相同，他们的位置是不会进行交换的</description>
+    </item>
+    
+    <item>
+      <title>高级数据结构(一) 字典树</title>
+      <link>https://qmr0925.github.io/datastructure/trie/</link>
+      <pubDate>Fri, 20 Mar 2020 12:41:41 +0800</pubDate>
+      
+      <guid>https://qmr0925.github.io/datastructure/trie/</guid>
+      <description>高级数据结构(一) 字典树  </description>
+    </item>
+    
+    <item>
+      <title>数据结构学习心得</title>
+      <link>https://qmr0925.github.io/datastructure/summay/</link>
+      <pubDate>Sat, 21 Dec 2019 14:01:10 +0800</pubDate>
+      
+      <guid>https://qmr0925.github.io/datastructure/summay/</guid>
+      <description>数据结构学习心得   学习数据结构和算法也有段时间了， 在此记录自己学习的过程，以及心得和体会
+  我不是计算机专业的，没有学过对应的课程，但我知道数据结构与算法是一个编程人员的核心能力。很
+ 长时间以来，我都因为自己不会这个而怀疑自己到底会不会编程。当然，从过往的经历来看，好像开发一个
+实际的APP或者Web应用也没有用到很多相关的知识，我就一直在逃避学习，直到一次头条的面试彻底让我
+清醒了过来
+一、迷雾重重，被现实吊打  相比于数据结构来说，其他计算机的核心课程显然我要更熟悉一些，而且我也不觉得精通数据结构的人
+ 学习其他知识不吃力。但是从实际的面试中，遇到数据结构我就基本是卡住了，以至于有些时候似乎觉得
+面试就无法聊下去了
+ 终于逃离了自己的舒适圈，开启一条煎熬之路，但我也很明确自己的目的，提高自己的逻辑思维和在面
+ 试中不会因为它被卡主，至于那些搞竞赛的同学我就只能投去羡慕的眼神了
+ 一开始，我找到了几个计算机的同学，问了一些课程的用书和一些推荐的学习资源。于是就从严蔚敏奶
+ 奶的那本紫皮书开始了，可以说看的一脸懵逼，找到了学习高数的那种感觉。而且书里面给出的都是一些伪
+算法，没有具体的实现，感觉非常的苦恼。后来，又多方打听找到了高一凡大神写的数据结构算法实现，还
+有点C/C++基础的我比着人家的思路开始把一些常用的数据结构实现了一遍，当然在这个过程中，自己也在
+看B站上郝斌老师的视频课程，这一段时间总算把数组和链表给搞懂了，也认识了一些像队列、栈等一些更
+级的数据结构
+二、初现水面，站在数组和链表上眺望远方  其实这个时候，我还只是在学习数据结构，没有一点用它们解决实际问题的意识，似乎只是一些需要记住
+ 的知识点。但是从自己不断遇到的问题来看，如果只用数组和链表去存取数据的话，问题的解决方案会很麻烦
+，但是也是可以解决的，所以应该得出第一个结论：
+   数组和链表是数据结构中最底层的抽象
+    为什么呢？数组和链表对于数据存储的结构逻辑和实际的物理逻辑是相关联的，那么后来学习到的队列、
+ 栈、哈希表、堆、树、图都跑哪去了呢？它们都可看做是数组或者链表的上层建筑，换用计算机语言来描述
+就是对数组和链表进行封装。如果你需要的话，也可以自行封装，这就是我们常说的数据结构的设计。多样
+化的数据结构本质上没什么差别，都是对数组和链表的不同操作而已
+ 很多高级的数据结构都可以用数组或链表来实现，但是具体用哪一种，就要从性能上考虑了，所以这个
+ 时候我又学习到了两个新的名词，时间复杂度和空间复杂度，从后来学习的情况来看，它们占据了数据结构
+与算法的半壁江山。那就从数组和链表的特点来引入这复杂度的两个概念。
+ 数组在物理空间上是紧凑连续存储的，可以随机访问，通过索引很快的找到对应元素，而且数组中数据
+ 在物理空间中的密度是比较高的。但是正是因为是连续存储的，物理上的空间必须一次给够；如果不够的
+话就要考虑扩容的问题，扩容时需要将原来的数据搬家到一个新的空间，从整体来说这样是比较复杂的。
+此外，如果你想要在数组中进行插入或者删除，会惊动后面的许多元素，这样也是比较费劲的
+ 再来看看链表，似乎链表和数组是优劣互补的，比如数组元素连续，链表元素不连续，靠指针来保持自
+ 己前后同伴的关系；数组集中存储，链表则是分散存储，见缝插针，不会存在整体扩容的问题；当改动一个
+元素时只会影响前后元素，不会像数组那样大动干戈。但是相比于数组的随机访问，链表则就显得吃力了许
+多，它必须一个一个地找，同时由于多存储了地址，它占用的空间会更大
+ 所以复杂度最直观的理解就是对于数据结构的操作是否麻烦
+ 三、拨开乌云晴天日   应该用数组还是链表取决于数据结构具体的应用场景</description>
+    </item>
+    
+    <item>
+      <title>为什么要用ConcurrentHashMap</title>
+      <link>https://qmr0925.github.io/datastructure/concurrent/</link>
+      <pubDate>Tue, 17 Dec 2019 16:05:44 +0800</pubDate>
+      
+      <guid>https://qmr0925.github.io/datastructure/concurrent/</guid>
+      <description>为什么要用ConcurrentHashMap  一、HashMap的线程安全问题 1、线程安全  在我刚开始接触并发的时候，对于线程安全这个词语很不理解，线程有什么安全性可言呢！后来慢慢地发
+ 现线程安全实际上指的是线程的内存安全，多个线程在对共享数据进行操作时，可能会出现数据不一致的情况
+ 所以HashMap的线程安全问题，我们可以理解为多个线程在HashMap这种数据结构中的数据进行操作可能
+ 会出现的数据不一致的情况；显然HashMap不是线程安全的，在并发插入元素时，有可能出现环形链表，让下
+一次读操作出现死循环，下面会进行详细的阐述
+2、ReHash的问题  HashMap的容量是有限的，当经过多次元素插入时，HashMap达到一定的饱和度时，Key映射位置发生冲突
+ 的几率会逐渐提高的，这个时候HashMap需要扩展它的长度，也就是Resize，ReHash就是Resize过程中的一个
+步骤，影响Resize的因素主要有两个：
+  Capacity : HashMap的当前长度，HashMap的长度一定是2的幂次方
+  LoadFactor：HashMap的负载因子，默认值为0.75f
+   判断HashMap是否进行Resize的条件如下：HashMap.Size &amp;gt;= Capacity*LoadFactor
+  Resize的具体过程：
+   扩容：创建一个新的Entry数组，长度是原数组的2倍
+  ReHash：遍历原数组，将所有的Entry重新Hash到新数组（在长度改变后，Hash规则也随之改变），
+ Hash的具体公式如下： index = HashCode（Key）&amp;amp; （Length - 1）,当原数组长度为8的时候,
+  Hash之后的结果是和111B做运算；新数组的长度为16，Hash运算是和1111B做运算，结果不同
+ //ReHash的源码如下 public void transfer(Entry[] newTable,boolean rehash){ int newCapacity = newTable.length; for(Entry&amp;lt;K,V&amp;gt; e:table){ while(e!= null){ Entry&amp;lt;K,V&amp;gt; next = e.</description>
+    </item>
+    
+    <item>
+      <title>Java中的ArrayDeque和LinkedList的使用</title>
+      <link>https://qmr0925.github.io/datastructure/deque_linked/</link>
+      <pubDate>Tue, 10 Dec 2019 16:10:36 +0800</pubDate>
+      
+      <guid>https://qmr0925.github.io/datastructure/deque_linked/</guid>
+      <description>Java中的ArrayDeque和LinkedList的使用   在Java的集合框架中，ArrayDeque和LinkdedList是实现栈和队列的两种不同方式，那么应该如何使用，
+ 才能使自己构造的数据结构解决问题时性能更好呢，先上一张继承关系表 
+ 从上图中我们可以看到，ArrayDeque是继承于Deque接口，LinkedList继承于List接口和Deque接口，看
+ 起来功能要更加强大，那么我们从几个方面来进行比较
+ 从这张表格可以看出ArrayDeque和LinkedList的主要区别就是数组和链表的区别，二者都能用作双向队列、
+ 栈；但是使用ArrayDeque当数据不断插入时，底层数组可能扩容，对性能的影响是比较大的；LinkedList底层
+是使用的双向链表，不存在扩容的问题，但由于链表，占用的存储空间更大。二者各有优劣，所以综合来看：
+  当做队列或栈使用并且数据量比较少时，使用ArrayDeque，占用的存储空间更小
+  当做队列或栈使用并且数据量很大时，使用LinkjedList，这样不用扩容对性能的影响
+  当需要随机访问时，使用ArrayDeque，数组有先天的优势
+  </description>
+    </item>
+    
+    <item>
+      <title>BFS &amp; DFS算法</title>
+      <link>https://qmr0925.github.io/datastructure/bfs-dfs/</link>
+      <pubDate>Thu, 28 Nov 2019 17:01:10 +0800</pubDate>
+      
+      <guid>https://qmr0925.github.io/datastructure/bfs-dfs/</guid>
+      <description>深度优先和广度优先算法详解  一、DFS 和 BFS 算法概述 1.什么是DFS和BFS？  DFS （Depth-First-Search）,称为深度优先搜索；BFS（Breadth-First-Search），称为广度优先搜索。
+ 这二者都是在树和图的遍历中应用非常广泛的算法，那么再来看下遍历的定义：从初始点出发，按照某种
+搜索方法对树或图中的每个节点均做一次且仅做一次的访问，访问具体节点所做的操作依赖于具体的问题。
+ 在树的遍历算法中，我们经常会看到前序遍历、中序遍历、后续遍历、层序遍历等方法，其实前序遍历
+ 就是深度优先搜索的一种实现，层序遍历就是对广度优先搜索的一种实现。树也可以看做是一种特殊的图，
+树和图的遍历主要的区别就是树有根节点（指定的），而图需要我们自身指定开始遍历的节点。
+2.DFS和BFS算法的核心思想  BFS和DFS都是图的遍历方法。它们具有一些共性的问题，比如都要避免节点的重复访问，具体的实践
+ 中可以设置一个访问数组，数组中的每个元素代表一个节点，当节点被访问后数组中对应的元素赋一个特定
+的值进行标记即可
+ DFS的搜索过程是这样的：
+   先访问初始节点V
+  从V未被访问的邻接点中选取一个W，从W出发进行DFS
+  重复上述步骤即可
+   BFS的搜索过程是这样的：
+   先访问图的初始节点V
+  依次访问V节点的所有邻接节点V1，V2，V3&amp;hellip;
+  按照V1，V2，V3被访问的次序依次访问与它们相邻接的未被访问的节点
+  重复上述过程
+  3.DFS和BFS算法效率分析  DFS和BFS的时间复杂度只与数据的底层存储结构相关，而与搜索的路径无关。当使用邻接矩阵存
+ 储时，对于每一个被访问的节点，都要循环检测矩阵中的整整一行（n个元素），时间复杂度为O（n^2）
+当使用邻接表来存储时，有2e个表节点，但只需要扫描e个节点即可完成遍历，加上访问n个头节点的
+时间，时间复杂度为O（n+e）
+ DFS和BFS算法的空间复杂度相同，都是借用了堆栈或队列，为O（n）。递归在本质上也属于栈
+ 二、DFS 和BFS 的算法实现  图在底层都是以邻接表或者邻接矩阵的方式来存储的，在Java、C++都可以使用表或者矩阵来进行定义</description>
+    </item>
+    
+    <item>
+      <title>数据结构之容器</title>
+      <link>https://qmr0925.github.io/datastructure/container/</link>
+      <pubDate>Thu, 28 Nov 2019 17:01:10 +0800</pubDate>
+      
+      <guid>https://qmr0925.github.io/datastructure/container/</guid>
+      <description>一、概述 1.什么是数据结构中的容器？  容器是一种把多个元素组织在一起的数据结构，也可以理解为一种可以包含其他类型对象作为元素的
+ 的对象。容器是仅仅用来存放数据的，本身没有取出元素这种能力，大多数情况下是通过可迭代对象来
+操作容器
+ 容器这种数据结构在各种编程语言中都有相应的实现，比如我们经常会比较熟悉的C++的标准模板库
+ （Standard Template Library，STL）、Java的集合框架（Java Collections Framework，JCF）、而在
+Python中更是将容器类型的数据结构作为其基本数据类型、Go语言也有内建的容器和相应的标准库，
+本篇博客便是在总结各种容器使用及原理的基础上，对Java、Python中相同的类型的容器做一个横向的
+对比，以便于日后的总结和复习
+2.Java集合框架简介  （1）泛型的机制
+  Java中的容器就是可以容纳其他Java对象的对象，且Java容器中只能存放对象，对于一些基本的数据
+ 类型（比如int、long、float、double等），需要将其包装成对象类型之后（Interger、Long、Float、Double
+等）才能放到容器里，很多时候拆包装和解包装使能够自动完成的
+ Java容器能够容纳任何类型的对象，表面上是通过泛型机制完成的。事实上，所有容器的内部存放的都
+ 是Object类的对象，所有的对象都是Object类型的子类。泛型机制只是简化了编程，由编译器自动帮助我们
+完成了强制类型的转换而已，示例代码如下
+ArrayList&amp;lt;String&amp;gt; list = new ArrayList&amp;lt;String&amp;gt;(); //参数化类型 list.add(new String(&amp;#34;csuyzz&amp;#34;)); String name = list,get(0); //容器中存放的Object类的对象隐式转换成为String类型的对象  此外，Java里的对象都在堆上，且对象只能通过引用（reference）来访问，容器里存放的其实是对
+ 象的引用而不是对象的本身
+ （2）接口和实现（Interfaces and Implementations）
+  在Java 的集合框架中共定义了14种容器的接口，关系图如下所示，Map接口没有继承自Collection的
+ 接口，因为Map接口是关联式的容器而不是集合，但也可以从Map转换到Coolection；Stack已经被Deque
+所取代
+
+ 接口的实现如下表所示
+  迭代器为我们提供了遍历容器中元素的方法，它只能通过容器本身来得到，迭代器是我们更加方便地去操作
+ 容器，下面是示例：
+ArrayList&amp;lt;String&amp;gt; list = new ArrayList&amp;lt;String&amp;gt;(); list.</description>
+    </item>
+    
+    <item>
+      <title>布隆过滤器的原理及使用</title>
+      <link>https://qmr0925.github.io/datastructure/bloomfilter/</link>
+      <pubDate>Sun, 24 Nov 2019 17:01:10 +0800</pubDate>
+      
+      <guid>https://qmr0925.github.io/datastructure/bloomfilter/</guid>
+      <description>布隆过滤器的原理及使用  一、BloomFilter简介  BloomFilter是大数据领域中经常使用到的算法，主要用于在海量的数据中判断一个数据是否已经存在，但
+ 如果不存在，判断结果一定是正确的。如果存在判断结果可能出现错误；这种数据结构的速度是非常快的，内
+存消耗得比较小，使用很方便，在各种编程语言中都有对应实现的类库
+二、Bloom的原理  BloomFilter本身是一个非常长的二进制向量（可以看成一个位数组）和一个映射函数。这个位数组初始情
+ 况下内部全部是0，长度是m；对于每个新增的项，我们使用K种不同的hash算法对他计算hash值，可以得到K
+个hash值，再使用这些hash值对m取模映射到数组范围内，假设取模后的结果是x，便会把x值对应的位置标记
+为1，过程图如下：
+ 但是当插入的数据大幅提升的时候，位数组中大部分的元素就会被置成１。此时如果查询一个元素，通过
+ 哈希函数映射到的位置可能已经被标记了，这时候就会出现误判；但是如果所有映射的位置中出现未被标记的
+位置，那么这个元素一定是不存在的，原理示意图如下：
+ 我们可以使用Python将Bloomfilter实现的原理用代码实现：
+ #插入元素 def BloomFilter(filter,value,hash_functions): m = len(filter) for func in hash_functions: idx = func(value) % m #哈希映射取模 filter[idx] = True #对应的位置进行标记 return filter #判断元素 def MemberInFilter(filter,value,hash_functions): m = len(filter) for func in hash_functions: idx = func(value) % m if not filter[idx]: return False return True  　通过上面的代码实现我们可以看到BloomFilter插入数据和查询数据时的时间复杂度都是O（k）,其中k是哈</description>
+    </item>
+    
+    <item>
+      <title>常见数据结构的定义</title>
+      <link>https://qmr0925.github.io/datastructure/defindatastructure/</link>
+      <pubDate>Fri, 15 Nov 2019 14:01:10 +0800</pubDate>
+      
+      <guid>https://qmr0925.github.io/datastructure/defindatastructure/</guid>
+      <description>常见数据结构的定义 一、链表（以singly-linked list为例） 1.Java public class ListNode{ int val; ListNode next; //如果是双向链表，则会为left or right  ListNode(int x) { val = x; next = null; } } 2.Python class ListNode: def __init__(self,x): self.val = x self.next = Node 3.C struct ListNode{ int val; struct ListNode *next; }; 4.Go type ListNode struct{ Val int Next *ListNode } 二、二叉树（Binary Tree Node） 1.Java //Definition for a binary tree node public class TreeNode{ int val; TreeNode left; TreeNode right; TreeNode(int x){val = x;} } 2.</description>
+    </item>
+    
+  </channel>
+</rss>

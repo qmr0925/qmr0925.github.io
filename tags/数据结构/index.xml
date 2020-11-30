@@ -1,0 +1,411 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>数据结构 on Your title</title>
+    <link>https://qmr0925.github.io/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/</link>
+    <description>Recent content in 数据结构 on Your title</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 04 Apr 2020 23:04:00 +0800</lastBuildDate>
+    
+	<atom:link href="https://qmr0925.github.io/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>常见的排序算法总结</title>
+      <link>https://qmr0925.github.io/datastructure/sort/</link>
+      <pubDate>Sat, 04 Apr 2020 23:04:00 +0800</pubDate>
+      
+      <guid>https://qmr0925.github.io/datastructure/sort/</guid>
+      <description>经典排序算法的总结   之前总是听一些大牛说学会了排序就相等于学会了算法，能手写个快速排序基本就能通过面试了，这一
+ 点我是很不理解的；后来慢慢地发现这是有道理的，常见的几种排序算法中蕴含了许多经典的算法思想，
+比如说递归、分治、迭代、双指针、空间换时间等，算法的问题很多，但是计算机处理问题的方式却只
+有那一种。所以要归根溯源，从简单的排序算法中去学习算法思想也是一种很有效的方法
+一、算法描述  对一个无序的数组进行排序 (从小到大或者从大到小)
+ 二、算法分类标准  划分排序算法的主要标准有稳定性、内外排序、时空复杂度、是否比较排序等
+  1.稳定性   如果数组中有两个元素是相等的，在经过某个排序算法之后，原来前面的那个元素仍然在另一个元素的
+ 前面，那这个排序算法就是稳定的；相反如果在原来两个相等元素中前面的一个元素被移到了后面，那就
+是不稳定的
+ 2.内外排序   内排序是所有的排序操作都在内存中完成；
+  外排序是由于数据太大，因此把数据放入磁盘中，排序需要经过磁盘和内存的数据传输才能进行
+  3.是否比较排序   比较排序： 一个算法在排序的过程中使用比较操作来判断两个元素的大小关系，那么这个算法
+ 就是比较排序，常见的排序算法都是比较排序算法，比如冒泡排序、插入排序、堆排序，这些排序
+算法的平均时间复杂度最快也只能是O(nlogn)
+ 非比较排序比较典型的算法有计数排序、桶排序和基数排序，这类排序的时间复杂度可以达到
+ O(n)的级别
+ 4.时空复杂度   就是时间复杂度和空间的复杂度了
+ 三、常见的排序算法  1.冒泡排序(Bubble Sort)  （1）算法描述：冒泡排序是将相邻元素进行比较,大数慢慢地沉底，小数放置到前面
+（2）算法特点：
+  内排序，所有操作在原来的数组中就可以完成了，不需要额外的空间
+  时间复杂度是O(n^2),空间的复杂度是O(1)
+  稳定排序: 如果两个元素的位置相同，他们的位置是不会进行交换的</description>
+    </item>
+    
+    <item>
+      <title>高级数据结构(一) 字典树</title>
+      <link>https://qmr0925.github.io/datastructure/trie/</link>
+      <pubDate>Fri, 20 Mar 2020 12:41:41 +0800</pubDate>
+      
+      <guid>https://qmr0925.github.io/datastructure/trie/</guid>
+      <description>高级数据结构(一) 字典树  </description>
+    </item>
+    
+    <item>
+      <title>编辑距离</title>
+      <link>https://qmr0925.github.io/leetcode/distance/</link>
+      <pubDate>Mon, 23 Dec 2019 22:26:15 +0800</pubDate>
+      
+      <guid>https://qmr0925.github.io/leetcode/distance/</guid>
+      <description>从编辑距离问题学字符串的动态规划   解决两个字符串的动态规划问题，一般都是使用两个指针分别指向两个字符串的最后，然后一步一步地
+ 向前走，不断地缩小问题的规模，进而找出最优解，下面先看题吧：
+一、问题描述  Leetcode 72 编辑距离 ，题目简述如下
+  两个单词 word1 和 word2，计算出将 word1 转换成 word2 所使用的最少操作数步数，你可以对一个单
+ 词进行如下三种操作：
+  插入一个字符
+  删除一个字符
+  替换一个字符
+   我想大部分人看到这个问题后，思考的方式和我是一样的，就是如何在word1中找到尽可能多的出现在
+ word2中的字符，并尽可能保留住；但实际上单是找到重复的字符还是不够的，我们还必须关注它们出现的
+顺序，顺序不一样该删就删，毫不留情。实际上我们所关注的只是步数，删除、插入和替换都是一样的
+ 其实这个问题已经露出了动态规划的马脚了，因为它给了我们三个选择，就是在比较两个字符串的字母
+ 时如何选择策略，那当然是哪种策略的转化步数最小就是哪种了，这不就是在寻找最优子问题嘛
+二、算法思想的描述  1.初始化两个指针分别指向两个字符串的末尾
+  2.比较两个指针所指字符，如果字符相同，说明这个位置对编辑距离的结果不会造成影响
+  如果不相同，那么就选择3种策略中，所需转化步数最小的那种
+  3.还会出现两种基本的情况：
+    指针已经遍历完word1时，word2还没有被遍历完，只能不断地向word1中插入元素了       指针已经遍历完word2时，word1还没有被遍历完，只能不断地删除word1中的元素了    三、代码实现  我们假设 i , j指针分别指向word1和word2中的最后一个字符，代码可以这样写的</description>
+    </item>
+    
+    <item>
+      <title>数据结构学习心得</title>
+      <link>https://qmr0925.github.io/datastructure/summay/</link>
+      <pubDate>Sat, 21 Dec 2019 14:01:10 +0800</pubDate>
+      
+      <guid>https://qmr0925.github.io/datastructure/summay/</guid>
+      <description>数据结构学习心得   学习数据结构和算法也有段时间了， 在此记录自己学习的过程，以及心得和体会
+  我不是计算机专业的，没有学过对应的课程，但我知道数据结构与算法是一个编程人员的核心能力。很
+ 长时间以来，我都因为自己不会这个而怀疑自己到底会不会编程。当然，从过往的经历来看，好像开发一个
+实际的APP或者Web应用也没有用到很多相关的知识，我就一直在逃避学习，直到一次头条的面试彻底让我
+清醒了过来
+一、迷雾重重，被现实吊打  相比于数据结构来说，其他计算机的核心课程显然我要更熟悉一些，而且我也不觉得精通数据结构的人
+ 学习其他知识不吃力。但是从实际的面试中，遇到数据结构我就基本是卡住了，以至于有些时候似乎觉得
+面试就无法聊下去了
+ 终于逃离了自己的舒适圈，开启一条煎熬之路，但我也很明确自己的目的，提高自己的逻辑思维和在面
+ 试中不会因为它被卡主，至于那些搞竞赛的同学我就只能投去羡慕的眼神了
+ 一开始，我找到了几个计算机的同学，问了一些课程的用书和一些推荐的学习资源。于是就从严蔚敏奶
+ 奶的那本紫皮书开始了，可以说看的一脸懵逼，找到了学习高数的那种感觉。而且书里面给出的都是一些伪
+算法，没有具体的实现，感觉非常的苦恼。后来，又多方打听找到了高一凡大神写的数据结构算法实现，还
+有点C/C++基础的我比着人家的思路开始把一些常用的数据结构实现了一遍，当然在这个过程中，自己也在
+看B站上郝斌老师的视频课程，这一段时间总算把数组和链表给搞懂了，也认识了一些像队列、栈等一些更
+级的数据结构
+二、初现水面，站在数组和链表上眺望远方  其实这个时候，我还只是在学习数据结构，没有一点用它们解决实际问题的意识，似乎只是一些需要记住
+ 的知识点。但是从自己不断遇到的问题来看，如果只用数组和链表去存取数据的话，问题的解决方案会很麻烦
+，但是也是可以解决的，所以应该得出第一个结论：
+   数组和链表是数据结构中最底层的抽象
+    为什么呢？数组和链表对于数据存储的结构逻辑和实际的物理逻辑是相关联的，那么后来学习到的队列、
+ 栈、哈希表、堆、树、图都跑哪去了呢？它们都可看做是数组或者链表的上层建筑，换用计算机语言来描述
+就是对数组和链表进行封装。如果你需要的话，也可以自行封装，这就是我们常说的数据结构的设计。多样
+化的数据结构本质上没什么差别，都是对数组和链表的不同操作而已
+ 很多高级的数据结构都可以用数组或链表来实现，但是具体用哪一种，就要从性能上考虑了，所以这个
+ 时候我又学习到了两个新的名词，时间复杂度和空间复杂度，从后来学习的情况来看，它们占据了数据结构
+与算法的半壁江山。那就从数组和链表的特点来引入这复杂度的两个概念。
+ 数组在物理空间上是紧凑连续存储的，可以随机访问，通过索引很快的找到对应元素，而且数组中数据
+ 在物理空间中的密度是比较高的。但是正是因为是连续存储的，物理上的空间必须一次给够；如果不够的
+话就要考虑扩容的问题，扩容时需要将原来的数据搬家到一个新的空间，从整体来说这样是比较复杂的。
+此外，如果你想要在数组中进行插入或者删除，会惊动后面的许多元素，这样也是比较费劲的
+ 再来看看链表，似乎链表和数组是优劣互补的，比如数组元素连续，链表元素不连续，靠指针来保持自
+ 己前后同伴的关系；数组集中存储，链表则是分散存储，见缝插针，不会存在整体扩容的问题；当改动一个
+元素时只会影响前后元素，不会像数组那样大动干戈。但是相比于数组的随机访问，链表则就显得吃力了许
+多，它必须一个一个地找，同时由于多存储了地址，它占用的空间会更大
+ 所以复杂度最直观的理解就是对于数据结构的操作是否麻烦
+ 三、拨开乌云晴天日   应该用数组还是链表取决于数据结构具体的应用场景</description>
+    </item>
+    
+    <item>
+      <title>从LRU开始学习缓存</title>
+      <link>https://qmr0925.github.io/leetcode/cache/</link>
+      <pubDate>Sun, 15 Dec 2019 14:01:10 +0800</pubDate>
+      
+      <guid>https://qmr0925.github.io/leetcode/cache/</guid>
+      <description>从LRU开始学习缓存   缓存相信大家已经不陌生了，用个通俗的比方来说一下就是，如果把你的家比作一个仓库，那么你每天出
+ 门时背的包就是你的缓存，你会把最近经常使用的东西放入到背包中，如果背包中没有你需要的，就只能回家
+去拿了。
+ 这篇文章从一道Leetcode的题目开始引入缓存的设计方式，然后介绍一些常见的缓存策略，最后简单介绍
+ 一些经典的缓存系统和经常遇到的缓存问题
+一、Leetcode 146 LRU缓存机制 1.题目描述  设计一个LRU缓存机制，支持获取数据get和写入数据put，具体含义如下：
+   获取数据get：如果key存在于缓存中，获取key的值value并且将这个数据放到数据结构的最前面，否则返回-1
+  写入数据put：如果key不存在，写入数据值，并且将新写入的数据放到数据结构的最前面；如果缓存的容量已
+   经达到了上限，应该在写入新数据之前删除最近最少使用的数据值，这也是LRU的核心思想,这里我们可以
+  将排在数据结构最后的位置的元素视为最近最少使用的元素
+  get和put操作的时间复杂度要求是O（1）   如果还没有明白，可以看看这个缓存是怎么工作的
+ //假设这个缓存的容量为2 LRUCache cache = new LRUCache(2); //先将cache理解成一个数组，左边是头部，右边是尾部，最近使用的排在对头，最久未使用的排在队尾 cache.put(1,1); //此时缓存中的数据是[(1,1)] cache.put(2,2); //此时缓存中的数据是[(2,2),(1,1)] 新加入的数据应该放在头部 cache.get(1); //查询key为1的值，返回1，最近访问了键1，移动到头部,缓存中的数据是[(1,1),(2,2)] cache.put(3,3) //缓存已满，出去尾部元素(2,2)，[(3,3),(1,1)] cache.get(2) //未找到该元素，返回-1 2.解题思路  要想在O(1)的时间复杂度内完成上述操作，存储缓存的数据结构应该具备这样的特点：查找是O(1)、插入
+ 是O（1）、删除是O（1）、而且元素之间还要有一定的顺序；查找O(1)和删除O(1)这个比较好办，哈希表就
+可以满足了，但是它没有顺序啊，实际在应用的时候需要将数据插入头部和从尾部进行删除，这是哈希表无法
+做到的；这个时候就轮到链表上场了，链表是有顺序的，只需将哈希表和链表结合即可
+ 但是这个时候又有问题了，链表是使用单向链表还是双向链表呢？我们可以从删除操作的执行过程来分析
+ 单向链表要想删除一个节点，必须要知道它的前驱节点，也就是多用一个指针，你可以通过哈希表来找到当前
+节点，但是如何找到前一个节点，但是如何找找到前一个节点呢？所以只能使用双向链表，最终我们将这种数
+剧结构称为哈希链表，话不多说，赶紧上图
+3.缓存使用的数据结构  Python和Java都有内置的哈希链表和类似LRU功能的库函数，比如Java中的LinkedHashMap，关于</description>
+    </item>
+    
+    <item>
+      <title>使用堆解决常见TOPK问题</title>
+      <link>https://qmr0925.github.io/leetcode/topkheap/</link>
+      <pubDate>Wed, 11 Dec 2019 14:01:10 +0800</pubDate>
+      
+      <guid>https://qmr0925.github.io/leetcode/topkheap/</guid>
+      <description>使用堆解决常见的TOK问题   关于常见的TOPK问题，都可以使用堆这种数据结构来巧妙的解决，除了去统计最大的或者最小的K个元素
+ 之外，还有一些变形的问题，比如统计出现频率TOPK的问题，这种问题一般需要进行排序。下面列出leetcode
+上一些典型的例题：
+  数组中的第K最大的元素
+  根据字符出现的频率进行排序（堆排序）
+  前K个高频元素 leetcode 347
+  前K个高频单词 leetcode 692
+   理解了堆的特点后，解决这些问题并不难，但是我们要熟悉一些堆的基本操作，比如如何生成一个堆、对
+ 堆中的元素进行排序等。此外，在满足复杂度要求的前提下，如何写出更加简练的代码也是一个关注点。毫无
+疑问的是在对数据的处理上，python比Java有着先天的优势，在代码编写方面会更加简洁，下面是例题
+一、前K个高频元素  给定一个非空的整数数组，返回其中出现频率前 *k* 高的元素
+  对于这种求TOPK频率的问题，与以往的求最大的K个元素不同，我们需要用哈希表来存放每个元素及其出
+ 现的频率，再用堆这种数据结构去按照升序排列，代码如下：
+//构建一个哈希表用来存放每个元素及其出现的频率 private HashMap&amp;lt;Integer,Integer&amp;gt; map = new HashMap(); //构建一个小顶堆，并且该堆要对map中的元素出现的频率进行排序 private PriorityQueue&amp;lt;Integer&amp;gt; heap = new PriorityQueue&amp;lt;&amp;gt;((n1,n2) -&amp;gt; map.get(n1) map.get(n2)); //返回的列表 private List&amp;lt;Integer&amp;gt; topK = new LinkedList(); public List&amp;lt;Integer&amp;gt; topKFrequent(int[] nums, int k) { //先统计每个元素及其出现的频率，当然还有更简单的写法，请看拓展内容  for(int n : nums){ if(map.</description>
+    </item>
+    
+    <item>
+      <title>Java中的ArrayDeque和LinkedList的使用</title>
+      <link>https://qmr0925.github.io/datastructure/deque_linked/</link>
+      <pubDate>Tue, 10 Dec 2019 16:10:36 +0800</pubDate>
+      
+      <guid>https://qmr0925.github.io/datastructure/deque_linked/</guid>
+      <description>Java中的ArrayDeque和LinkedList的使用   在Java的集合框架中，ArrayDeque和LinkdedList是实现栈和队列的两种不同方式，那么应该如何使用，
+ 才能使自己构造的数据结构解决问题时性能更好呢，先上一张继承关系表 
+ 从上图中我们可以看到，ArrayDeque是继承于Deque接口，LinkedList继承于List接口和Deque接口，看
+ 起来功能要更加强大，那么我们从几个方面来进行比较
+ 从这张表格可以看出ArrayDeque和LinkedList的主要区别就是数组和链表的区别，二者都能用作双向队列、
+ 栈；但是使用ArrayDeque当数据不断插入时，底层数组可能扩容，对性能的影响是比较大的；LinkedList底层
+是使用的双向链表，不存在扩容的问题，但由于链表，占用的存储空间更大。二者各有优劣，所以综合来看：
+  当做队列或栈使用并且数据量比较少时，使用ArrayDeque，占用的存储空间更小
+  当做队列或栈使用并且数据量很大时，使用LinkjedList，这样不用扩容对性能的影响
+  当需要随机访问时，使用ArrayDeque，数组有先天的优势
+  </description>
+    </item>
+    
+    <item>
+      <title>滑动窗口解题总结</title>
+      <link>https://qmr0925.github.io/leetcode/slidingwind/</link>
+      <pubDate>Mon, 09 Dec 2019 15:50:27 +0800</pubDate>
+      
+      <guid>https://qmr0925.github.io/leetcode/slidingwind/</guid>
+      <description>滑动窗口解题总结  一、算法简介  滑动窗口是一种高级双指针技巧的算法框架，代码模板可以按照如下表示
+ int left = 0,right = 0; //1.初始化双指针，建立一个索引闭区间，也就是窗口 	//2.定义求解目标的初始值 while(right &amp;lt; s.length()){ window.add(s[right]); //3.通过增加right指针不断地扩大窗口 （找到可行解）  //并同时更新求解的目标值  right++; while(valid){ //4.判断当前窗口是否满足要求  window.remove(s[left]); //5.停止增加right指针，转而增加left指针，直至窗口中的数据不符合要求  // 并同时更新求解的目标值  left++; //6.继续循环  } }  其中的window的数据类型一般为哈希表，当然在存储英文字母时也可以使用数组；代码的关键点如何判断
+ 滑动窗口是有效的
+二、典型例题 1.Leetcode 3  给定一个字符串，找出其中不含有重复字符的最长子串的长度
+ class Solution { private Map&amp;lt;Character,Integer&amp;gt; window = new HashMap&amp;lt;&amp;gt;(); //定义存储元素出现次数的哈希表  public int lengthOfLongestSubstring(String s) { if(s.length() == 0) return 0; int left = 0,right = 0; //初始化左右指针  int maxLen = 0; //初始化最大长度  while(right &amp;lt; s.</description>
+    </item>
+    
+    <item>
+      <title>回溯算法解题总结</title>
+      <link>https://qmr0925.github.io/leetcode/backtrack/</link>
+      <pubDate>Thu, 05 Dec 2019 22:26:15 +0800</pubDate>
+      
+      <guid>https://qmr0925.github.io/leetcode/backtrack/</guid>
+      <description>回溯算法解题总结  一、什么是回溯？  回溯算法实际上就是一个类似于枚举的搜索尝试过程，主要就是在搜索尝试的过程中寻找问题的解，当
+ 发现已不满足求解条件的时候，就“回溯”返回，尝试别的路径。
+ 用一句通俗的话来说就是：从一条路向前走，能进则进，不能进则退回来，换一条路再走
+ 二、解决回溯问题的通用模板  解决一个回溯问题，实际上就是一个决策树的遍历过程，主要思考三个关键点
+   路径：也就是已经做出的选择
+  选择列表：也就是当前可以做的选择
+  结束条件：也就是到达决策树的底层，无法再做选择的条件
+   回溯算法的整体框架
+ result = [] def backtrack(路径,选择列表): if 满足结束条件: result.add(路径) return for 选择 in 选择列表: 做选择 backtrack(路径，选择列表) 撤销选择 #for循环的细节如下 for 选择 in 选择列表: //做选择 将该选择从选择列表中移除 路径.add(选择) backtrack(路径，选择列表) //撤销选择 路径.remove(选择) 将该选择再加入选择列表  其核心就是for循环里面的递归，在递归调用之前做选择，在递归调用之后撤销选择；这种递归前的选择和
+ 递归调用后的选择其实与树的前序遍历和后续遍历非常相似，而所谓的前序遍历和后续遍历可以理解为两个有
+用的时间点而已，前序遍历的代码在进入某一个节点之前的那个时间点进行，后续遍历代码在离开某个节点之
+后的那个时间节点执行。遍历和选择的示意图可以参考如下：
+ 回溯算法的时间复杂度是O(N!) ，因为穷举整颗决策树是无法避免的，不像动态规划存在重叠子问题
+ 回溯算法就是纯暴力穷举，复杂度一般都比较高
+三、典型例题（全排列和N皇后） 1.Leetcode 46 全排列  以全排列问题来示例回溯框架算法的使用</description>
+    </item>
+    
+    <item>
+      <title>动态规划解题思想总结</title>
+      <link>https://qmr0925.github.io/leetcode/dp/</link>
+      <pubDate>Tue, 03 Dec 2019 22:26:15 +0800</pubDate>
+      
+      <guid>https://qmr0925.github.io/leetcode/dp/</guid>
+      <description>动态规划解题思想总结  一、动态规划和递归、分治的关系 1.递归  关于递归其实就是一个函数调用它自己，它和分治和回溯等算法没有完全隔离开来，它们都可以看做是
+ 描述一个问题的不同方面。使用递归方法解题时都是有模板的：
+public void recur(int level,int param){ //terminator  if(level &amp;gt; MAX_LEVEL){ //process result  return; } //process current logic  process(level,param); //drill down  recur(level:level + 1,newParam) //restore current status }  这里上一道经典的使用递归解决的算法题来说明这个框架的使用
+  经典的汉诺塔问题：原题链接
+ public void hanota(List&amp;lt;Integer&amp;gt; A, List&amp;lt;Integer&amp;gt; B, List&amp;lt;Integer&amp;gt; C) { int len = A.size(); //汉诺塔的数量  Hanota(len,A,B,C); } //递归函数 public void Hanota(int n,List&amp;lt;Integer&amp;gt; X,List&amp;lt;Integer&amp;gt; Y,List&amp;lt;Integer&amp;gt; Z){ if(n == 1){ //终止条件  Z.</description>
+    </item>
+    
+    <item>
+      <title>Java和Python中如何使用大顶堆</title>
+      <link>https://qmr0925.github.io/program/javapqueue/</link>
+      <pubDate>Tue, 03 Dec 2019 21:14:28 +0800</pubDate>
+      
+      <guid>https://qmr0925.github.io/program/javapqueue/</guid>
+      <description>Java和Python中如何使用大顶堆  在数据结构之容器的那篇文章中，我们对于优先队列即堆这种数据结构的底层实现进行了剖析，在实际的
+ 应用中我们不必自己去实现一个堆，主流的编程语言都提供了相关的集合模块，比如Java中的PriorityQueue
+类，Python中的heapq模块。但是这两种语言中实现的堆都是小顶堆（根节点的元素小于左右节点元素的值），
+当需要使用大顶堆时该如何解决呢？比如典型的最大的K个元素需要用小顶堆解决，但是最小的K个元素不就
+是需要使用一个大顶堆来解决了吗！
+ 具体的解决方案如下：
+ 一、通用的方法: 取反  通用的解决方法就是跟语言没有关系的解法，想要构造一个大顶堆，只要保证根节点大于左右节点即可，
+ 所以我们可以将数据取成相反数再添加到小顶堆中去，取出时再对数据进行取反即可实现大顶堆的效果
+二、针对Java的方法  优先队列中存放的是基本数据类型的包装类（Integer、Long）或者自定义的包装类。对于基本数据类型
+ 的包装器类，优先队列中元素默认排列顺序是升序排列的，也就是说是小顶堆，但是既然是默认的就可以进
+行更改。此外，对于自定义的类来说，需要自己定义比较器，比如：
+//自定义比较器，降序排列 public static Comparator&amp;lt;Integer&amp;gt; cmp = new Comparator&amp;lt;Integer&amp;gt;(){ public int compare(Integer e1,Integer e2){ return e2 - e1; } } //声明对象时 Queue&amp;lt;Integer&amp;gt; pqueue = new PriorityQueue&amp;lt;Integer&amp;gt;(); //不使用比较器，默认升序排列，即小顶堆 Queue&amp;lt;Integer&amp;gt; pqueue = new PriorityQueue&amp;lt;Integer&amp;gt;(cmp); //使用比较器，降序排列，即为大顶堆  //比较器升降序的声明 Comparator&amp;lt;Object&amp;gt; cmp = new Comparator&amp;lt;Object&amp;gt;(){ public int compare(Object o1,Object o2){ return o1 - o2 //升序  return o2 - o1 //降序  } }  所以在实际解决问题的过程中如果需要使用大顶堆可以这样声明</description>
+    </item>
+    
+    <item>
+      <title>贪心算法集锦</title>
+      <link>https://qmr0925.github.io/leetcode/greedy/</link>
+      <pubDate>Mon, 02 Dec 2019 22:26:15 +0800</pubDate>
+      
+      <guid>https://qmr0925.github.io/leetcode/greedy/</guid>
+      <description>贪心算法解题总结 一、引例  某天你在超市购物后，总共消费了782元，这时假设你有1元、5元、10元、20元、100元和200元的钞票
+ 无穷多张，那么最少需要多少张钞票足够支付？
+ 直觉告诉我们：要尽可能多地使用面值较大的钞票，其实这就是一种贪心的思想
+ 二、贪心算法简介  由引例我们已经大概了解了什么是贪心，在这儿对它下个定义：贪心算法是指在对问题求解时，总是做
+ 出在当前看来是最好的选择；也就是说不从整体最优上加以考虑，它所做出的是在某种意义上的局部最优解
+ 贪心算法不是对所有的问题都能得到整体的最优解，关键是贪心策略的选择，具体的贪心策略中某个状
+ 态以前的过程不会影响以后的状态，只与当前的状态有关
+三、Leetcode典型例题 1.455分发饼干  (1) 题目描述
+  假设你是一位很棒的家长，想要给你的孩子们一些小饼干。但是，每个孩子最多只能给一块饼干。对每
+ 个孩子 i ，都有一个胃口值 gi ，这是能让孩子们满足胃口的饼干的最小尺寸；并且每块饼干 j ，都有一个尺
+寸 sj 。如果 sj &amp;gt;= gi ，我们可以将这个饼干 j 分配给孩子 i ，这个孩子会得到满足。你的目标是尽可能满足
+越多数量的孩子，并输出这个最大数值。一个小朋友最多能拥有一块饼干
+ (2)解题思想
+  根据让更多的孩子得到满足这个目标，可以分析出如下贪心规律：
+   某块饼干不能满足某个孩子的胃口，则它也一定不能满足胃口更大的孩子
+  某个孩子的胃口可以用更小的饼干来满足，则没有必要用更大的饼干满足，更大的饼干留给胃口更大的孩子
+  孩子的胃口越小，则其更容易被满足，所以优先从胃口小的孩子尝试
+   (3)算法思路
+   按照胃口大小和饼干大小对两个数组进行从小到大的排序
+  按照从小到大的顺序用饼干来尝试是否可以满足某个孩子的胃口，每个饼干只尝试一次，如能够满足，接着</description>
+    </item>
+    
+    <item>
+      <title>BFS &amp; DFS算法</title>
+      <link>https://qmr0925.github.io/datastructure/bfs-dfs/</link>
+      <pubDate>Thu, 28 Nov 2019 17:01:10 +0800</pubDate>
+      
+      <guid>https://qmr0925.github.io/datastructure/bfs-dfs/</guid>
+      <description>深度优先和广度优先算法详解  一、DFS 和 BFS 算法概述 1.什么是DFS和BFS？  DFS （Depth-First-Search）,称为深度优先搜索；BFS（Breadth-First-Search），称为广度优先搜索。
+ 这二者都是在树和图的遍历中应用非常广泛的算法，那么再来看下遍历的定义：从初始点出发，按照某种
+搜索方法对树或图中的每个节点均做一次且仅做一次的访问，访问具体节点所做的操作依赖于具体的问题。
+ 在树的遍历算法中，我们经常会看到前序遍历、中序遍历、后续遍历、层序遍历等方法，其实前序遍历
+ 就是深度优先搜索的一种实现，层序遍历就是对广度优先搜索的一种实现。树也可以看做是一种特殊的图，
+树和图的遍历主要的区别就是树有根节点（指定的），而图需要我们自身指定开始遍历的节点。
+2.DFS和BFS算法的核心思想  BFS和DFS都是图的遍历方法。它们具有一些共性的问题，比如都要避免节点的重复访问，具体的实践
+ 中可以设置一个访问数组，数组中的每个元素代表一个节点，当节点被访问后数组中对应的元素赋一个特定
+的值进行标记即可
+ DFS的搜索过程是这样的：
+   先访问初始节点V
+  从V未被访问的邻接点中选取一个W，从W出发进行DFS
+  重复上述步骤即可
+   BFS的搜索过程是这样的：
+   先访问图的初始节点V
+  依次访问V节点的所有邻接节点V1，V2，V3&amp;hellip;
+  按照V1，V2，V3被访问的次序依次访问与它们相邻接的未被访问的节点
+  重复上述过程
+  3.DFS和BFS算法效率分析  DFS和BFS的时间复杂度只与数据的底层存储结构相关，而与搜索的路径无关。当使用邻接矩阵存
+ 储时，对于每一个被访问的节点，都要循环检测矩阵中的整整一行（n个元素），时间复杂度为O（n^2）
+当使用邻接表来存储时，有2e个表节点，但只需要扫描e个节点即可完成遍历，加上访问n个头节点的
+时间，时间复杂度为O（n+e）
+ DFS和BFS算法的空间复杂度相同，都是借用了堆栈或队列，为O（n）。递归在本质上也属于栈
+ 二、DFS 和BFS 的算法实现  图在底层都是以邻接表或者邻接矩阵的方式来存储的，在Java、C++都可以使用表或者矩阵来进行定义</description>
+    </item>
+    
+    <item>
+      <title>数据结构之容器</title>
+      <link>https://qmr0925.github.io/datastructure/container/</link>
+      <pubDate>Thu, 28 Nov 2019 17:01:10 +0800</pubDate>
+      
+      <guid>https://qmr0925.github.io/datastructure/container/</guid>
+      <description>一、概述 1.什么是数据结构中的容器？  容器是一种把多个元素组织在一起的数据结构，也可以理解为一种可以包含其他类型对象作为元素的
+ 的对象。容器是仅仅用来存放数据的，本身没有取出元素这种能力，大多数情况下是通过可迭代对象来
+操作容器
+ 容器这种数据结构在各种编程语言中都有相应的实现，比如我们经常会比较熟悉的C++的标准模板库
+ （Standard Template Library，STL）、Java的集合框架（Java Collections Framework，JCF）、而在
+Python中更是将容器类型的数据结构作为其基本数据类型、Go语言也有内建的容器和相应的标准库，
+本篇博客便是在总结各种容器使用及原理的基础上，对Java、Python中相同的类型的容器做一个横向的
+对比，以便于日后的总结和复习
+2.Java集合框架简介  （1）泛型的机制
+  Java中的容器就是可以容纳其他Java对象的对象，且Java容器中只能存放对象，对于一些基本的数据
+ 类型（比如int、long、float、double等），需要将其包装成对象类型之后（Interger、Long、Float、Double
+等）才能放到容器里，很多时候拆包装和解包装使能够自动完成的
+ Java容器能够容纳任何类型的对象，表面上是通过泛型机制完成的。事实上，所有容器的内部存放的都
+ 是Object类的对象，所有的对象都是Object类型的子类。泛型机制只是简化了编程，由编译器自动帮助我们
+完成了强制类型的转换而已，示例代码如下
+ArrayList&amp;lt;String&amp;gt; list = new ArrayList&amp;lt;String&amp;gt;(); //参数化类型 list.add(new String(&amp;#34;csuyzz&amp;#34;)); String name = list,get(0); //容器中存放的Object类的对象隐式转换成为String类型的对象  此外，Java里的对象都在堆上，且对象只能通过引用（reference）来访问，容器里存放的其实是对
+ 象的引用而不是对象的本身
+ （2）接口和实现（Interfaces and Implementations）
+  在Java 的集合框架中共定义了14种容器的接口，关系图如下所示，Map接口没有继承自Collection的
+ 接口，因为Map接口是关联式的容器而不是集合，但也可以从Map转换到Coolection；Stack已经被Deque
+所取代
+
+ 接口的实现如下表所示
+  迭代器为我们提供了遍历容器中元素的方法，它只能通过容器本身来得到，迭代器是我们更加方便地去操作
+ 容器，下面是示例：
+ArrayList&amp;lt;String&amp;gt; list = new ArrayList&amp;lt;String&amp;gt;(); list.</description>
+    </item>
+    
+    <item>
+      <title>布隆过滤器的原理及使用</title>
+      <link>https://qmr0925.github.io/datastructure/bloomfilter/</link>
+      <pubDate>Sun, 24 Nov 2019 17:01:10 +0800</pubDate>
+      
+      <guid>https://qmr0925.github.io/datastructure/bloomfilter/</guid>
+      <description>布隆过滤器的原理及使用  一、BloomFilter简介  BloomFilter是大数据领域中经常使用到的算法，主要用于在海量的数据中判断一个数据是否已经存在，但
+ 如果不存在，判断结果一定是正确的。如果存在判断结果可能出现错误；这种数据结构的速度是非常快的，内
+存消耗得比较小，使用很方便，在各种编程语言中都有对应实现的类库
+二、Bloom的原理  BloomFilter本身是一个非常长的二进制向量（可以看成一个位数组）和一个映射函数。这个位数组初始情
+ 况下内部全部是0，长度是m；对于每个新增的项，我们使用K种不同的hash算法对他计算hash值，可以得到K
+个hash值，再使用这些hash值对m取模映射到数组范围内，假设取模后的结果是x，便会把x值对应的位置标记
+为1，过程图如下：
+ 但是当插入的数据大幅提升的时候，位数组中大部分的元素就会被置成１。此时如果查询一个元素，通过
+ 哈希函数映射到的位置可能已经被标记了，这时候就会出现误判；但是如果所有映射的位置中出现未被标记的
+位置，那么这个元素一定是不存在的，原理示意图如下：
+ 我们可以使用Python将Bloomfilter实现的原理用代码实现：
+ #插入元素 def BloomFilter(filter,value,hash_functions): m = len(filter) for func in hash_functions: idx = func(value) % m #哈希映射取模 filter[idx] = True #对应的位置进行标记 return filter #判断元素 def MemberInFilter(filter,value,hash_functions): m = len(filter) for func in hash_functions: idx = func(value) % m if not filter[idx]: return False return True  　通过上面的代码实现我们可以看到BloomFilter插入数据和查询数据时的时间复杂度都是O（k）,其中k是哈</description>
+    </item>
+    
+    <item>
+      <title>从尾到头打印链表</title>
+      <link>https://qmr0925.github.io/leetcode/printlistreverse/</link>
+      <pubDate>Fri, 15 Nov 2019 14:01:10 +0800</pubDate>
+      
+      <guid>https://qmr0925.github.io/leetcode/printlistreverse/</guid>
+      <description>反转链表专题  No.1 问题描述  输入一个链表，从尾到头的顺序返回一个ArrayList
+ 解题思路 1.使用递归法 //1.解法一 public ArrayList&amp;lt;Integer&amp;gt; printListReverse(ListNode listnode){ ArrayList&amp;lt;Integer&amp;gt; arrayList = new ArrayList&amp;lt;Integer&amp;gt;(); if(listnode != null){ arrayList.addAll(printListReverse(listnode.next)); arrayList.add(listnode.val); } return arrayList; } //分析：时间复杂度为O（n）,相当于将每个元素均遍历了一遍 //空间复杂度为O（n^2）,创建的列表的合计元素个数1+2+3+4+n-1 //拓展内容：ArrayList中的addAll(Collection&amp;lt;? extends E&amp;gt; c) 方法 按照指定collection容器返回元素的 //顺序将所有的元素添加到列表的尾部 2.使用栈（推荐解法） //Java实现 public ArrayList&amp;lt;Integer&amp;gt; printListReverse(ListNode listnode){ ArrayDeque&amp;lt;Integer&amp;gt; stack = ArrayDeque&amp;lt;Integer&amp;gt;(); while(listnode != null){ stack.addFirst(listnode.val); listnode = listnode.next; } ArrayList&amp;lt;Integer&amp;gt; arrayList = new ArrayList&amp;lt;Integer&amp;gt;(); while(stack.pollFirst()) arrayList.add(stack.pollFirst()) return arrayList; } //Java中推荐使用ArrayDeque来实现一个栈 //当压栈时，调用addFirst()方法; 出栈时调用pollFirst()方法 //分析：时间复杂度O(n)，空间复杂度也是O（n） #基于Python的实现 class Solution: def printListReverse(self,listnode): if not listnode: return [] result = [] while listnode: result.</description>
+    </item>
+    
+    <item>
+      <title>常见数据结构的定义</title>
+      <link>https://qmr0925.github.io/datastructure/defindatastructure/</link>
+      <pubDate>Fri, 15 Nov 2019 14:01:10 +0800</pubDate>
+      
+      <guid>https://qmr0925.github.io/datastructure/defindatastructure/</guid>
+      <description>常见数据结构的定义 一、链表（以singly-linked list为例） 1.Java public class ListNode{ int val; ListNode next; //如果是双向链表，则会为left or right  ListNode(int x) { val = x; next = null; } } 2.Python class ListNode: def __init__(self,x): self.val = x self.next = Node 3.C struct ListNode{ int val; struct ListNode *next; }; 4.Go type ListNode struct{ Val int Next *ListNode } 二、二叉树（Binary Tree Node） 1.Java //Definition for a binary tree node public class TreeNode{ int val; TreeNode left; TreeNode right; TreeNode(int x){val = x;} } 2.</description>
+    </item>
+    
+    <item>
+      <title>环形链表</title>
+      <link>https://qmr0925.github.io/leetcode/circlelist/</link>
+      <pubDate>Fri, 15 Nov 2019 14:01:10 +0800</pubDate>
+      
+      <guid>https://qmr0925.github.io/leetcode/circlelist/</guid>
+      <description>环形链表专题 一、问题1  给定一个链表，判断一个链表中是否有环
+ 1.算法思路  （1）判断是否存在重复节点
+  通过检查一个节点此前是否被访问来判断是否为环形链表，可以使用哈希表来存储访问过的节点
+  （2）快慢指针
+  通过快慢指针遍历链表，慢指针每次移动一步，而快指针每次移动两步；如果链表中不存在环，最终快
+ 指针将会最先达到尾部，此时返回Fasle即可；如果链表中存在环，最终快慢指针一定会相遇
+2.代码实现 //元素判重法 public boolean hasCycle(ListNode head) { Set&amp;lt;ListNode&amp;gt; visited = new HashSet&amp;lt;ListNode&amp;gt;(); while (head != null) { if (visited.contains(head)) { return true; } else { visited.add(head); } head = head.next; } return false; } //分析，时间复杂度是O（n），对链表中的每个元素最多访问一次，向哈希表中添加一个元素为O(1) //空间复杂度为O（n）,最多将链表中的所有元素均添加到哈希表中 //快慢指针法 public boolean hasCycle(ListNode head) { if (head == null || head.next == null) { return false; } ListNode slow = head; ListNode fast = head.</description>
+    </item>
+    
+  </channel>
+</rss>

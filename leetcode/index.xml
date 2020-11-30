@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Leetcodes on Your title</title>
+    <link>https://qmr0925.github.io/leetcode/</link>
+    <description>Recent content in Leetcodes on Your title</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 10 Mar 2020 19:19:05 +0800</lastBuildDate>
+    
+	<atom:link href="https://qmr0925.github.io/leetcode/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Subseq</title>
+      <link>https://qmr0925.github.io/leetcode/subseq/</link>
+      <pubDate>Tue, 10 Mar 2020 19:19:05 +0800</pubDate>
+      
+      <guid>https://qmr0925.github.io/leetcode/subseq/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>编辑距离</title>
+      <link>https://qmr0925.github.io/leetcode/distance/</link>
+      <pubDate>Mon, 23 Dec 2019 22:26:15 +0800</pubDate>
+      
+      <guid>https://qmr0925.github.io/leetcode/distance/</guid>
+      <description>从编辑距离问题学字符串的动态规划   解决两个字符串的动态规划问题，一般都是使用两个指针分别指向两个字符串的最后，然后一步一步地
+ 向前走，不断地缩小问题的规模，进而找出最优解，下面先看题吧：
+一、问题描述  Leetcode 72 编辑距离 ，题目简述如下
+  两个单词 word1 和 word2，计算出将 word1 转换成 word2 所使用的最少操作数步数，你可以对一个单
+ 词进行如下三种操作：
+  插入一个字符
+  删除一个字符
+  替换一个字符
+   我想大部分人看到这个问题后，思考的方式和我是一样的，就是如何在word1中找到尽可能多的出现在
+ word2中的字符，并尽可能保留住；但实际上单是找到重复的字符还是不够的，我们还必须关注它们出现的
+顺序，顺序不一样该删就删，毫不留情。实际上我们所关注的只是步数，删除、插入和替换都是一样的
+ 其实这个问题已经露出了动态规划的马脚了，因为它给了我们三个选择，就是在比较两个字符串的字母
+ 时如何选择策略，那当然是哪种策略的转化步数最小就是哪种了，这不就是在寻找最优子问题嘛
+二、算法思想的描述  1.初始化两个指针分别指向两个字符串的末尾
+  2.比较两个指针所指字符，如果字符相同，说明这个位置对编辑距离的结果不会造成影响
+  如果不相同，那么就选择3种策略中，所需转化步数最小的那种
+  3.还会出现两种基本的情况：
+    指针已经遍历完word1时，word2还没有被遍历完，只能不断地向word1中插入元素了       指针已经遍历完word2时，word1还没有被遍历完，只能不断地删除word1中的元素了    三、代码实现  我们假设 i , j指针分别指向word1和word2中的最后一个字符，代码可以这样写的</description>
+    </item>
+    
+    <item>
+      <title>从LRU开始学习缓存</title>
+      <link>https://qmr0925.github.io/leetcode/cache/</link>
+      <pubDate>Sun, 15 Dec 2019 14:01:10 +0800</pubDate>
+      
+      <guid>https://qmr0925.github.io/leetcode/cache/</guid>
+      <description>从LRU开始学习缓存   缓存相信大家已经不陌生了，用个通俗的比方来说一下就是，如果把你的家比作一个仓库，那么你每天出
+ 门时背的包就是你的缓存，你会把最近经常使用的东西放入到背包中，如果背包中没有你需要的，就只能回家
+去拿了。
+ 这篇文章从一道Leetcode的题目开始引入缓存的设计方式，然后介绍一些常见的缓存策略，最后简单介绍
+ 一些经典的缓存系统和经常遇到的缓存问题
+一、Leetcode 146 LRU缓存机制 1.题目描述  设计一个LRU缓存机制，支持获取数据get和写入数据put，具体含义如下：
+   获取数据get：如果key存在于缓存中，获取key的值value并且将这个数据放到数据结构的最前面，否则返回-1
+  写入数据put：如果key不存在，写入数据值，并且将新写入的数据放到数据结构的最前面；如果缓存的容量已
+   经达到了上限，应该在写入新数据之前删除最近最少使用的数据值，这也是LRU的核心思想,这里我们可以
+  将排在数据结构最后的位置的元素视为最近最少使用的元素
+  get和put操作的时间复杂度要求是O（1）   如果还没有明白，可以看看这个缓存是怎么工作的
+ //假设这个缓存的容量为2 LRUCache cache = new LRUCache(2); //先将cache理解成一个数组，左边是头部，右边是尾部，最近使用的排在对头，最久未使用的排在队尾 cache.put(1,1); //此时缓存中的数据是[(1,1)] cache.put(2,2); //此时缓存中的数据是[(2,2),(1,1)] 新加入的数据应该放在头部 cache.get(1); //查询key为1的值，返回1，最近访问了键1，移动到头部,缓存中的数据是[(1,1),(2,2)] cache.put(3,3) //缓存已满，出去尾部元素(2,2)，[(3,3),(1,1)] cache.get(2) //未找到该元素，返回-1 2.解题思路  要想在O(1)的时间复杂度内完成上述操作，存储缓存的数据结构应该具备这样的特点：查找是O(1)、插入
+ 是O（1）、删除是O（1）、而且元素之间还要有一定的顺序；查找O(1)和删除O(1)这个比较好办，哈希表就
+可以满足了，但是它没有顺序啊，实际在应用的时候需要将数据插入头部和从尾部进行删除，这是哈希表无法
+做到的；这个时候就轮到链表上场了，链表是有顺序的，只需将哈希表和链表结合即可
+ 但是这个时候又有问题了，链表是使用单向链表还是双向链表呢？我们可以从删除操作的执行过程来分析
+ 单向链表要想删除一个节点，必须要知道它的前驱节点，也就是多用一个指针，你可以通过哈希表来找到当前
+节点，但是如何找到前一个节点，但是如何找找到前一个节点呢？所以只能使用双向链表，最终我们将这种数
+剧结构称为哈希链表，话不多说，赶紧上图
+3.缓存使用的数据结构  Python和Java都有内置的哈希链表和类似LRU功能的库函数，比如Java中的LinkedHashMap，关于</description>
+    </item>
+    
+    <item>
+      <title>使用堆解决常见TOPK问题</title>
+      <link>https://qmr0925.github.io/leetcode/topkheap/</link>
+      <pubDate>Wed, 11 Dec 2019 14:01:10 +0800</pubDate>
+      
+      <guid>https://qmr0925.github.io/leetcode/topkheap/</guid>
+      <description>使用堆解决常见的TOK问题   关于常见的TOPK问题，都可以使用堆这种数据结构来巧妙的解决，除了去统计最大的或者最小的K个元素
+ 之外，还有一些变形的问题，比如统计出现频率TOPK的问题，这种问题一般需要进行排序。下面列出leetcode
+上一些典型的例题：
+  数组中的第K最大的元素
+  根据字符出现的频率进行排序（堆排序）
+  前K个高频元素 leetcode 347
+  前K个高频单词 leetcode 692
+   理解了堆的特点后，解决这些问题并不难，但是我们要熟悉一些堆的基本操作，比如如何生成一个堆、对
+ 堆中的元素进行排序等。此外，在满足复杂度要求的前提下，如何写出更加简练的代码也是一个关注点。毫无
+疑问的是在对数据的处理上，python比Java有着先天的优势，在代码编写方面会更加简洁，下面是例题
+一、前K个高频元素  给定一个非空的整数数组，返回其中出现频率前 *k* 高的元素
+  对于这种求TOPK频率的问题，与以往的求最大的K个元素不同，我们需要用哈希表来存放每个元素及其出
+ 现的频率，再用堆这种数据结构去按照升序排列，代码如下：
+//构建一个哈希表用来存放每个元素及其出现的频率 private HashMap&amp;lt;Integer,Integer&amp;gt; map = new HashMap(); //构建一个小顶堆，并且该堆要对map中的元素出现的频率进行排序 private PriorityQueue&amp;lt;Integer&amp;gt; heap = new PriorityQueue&amp;lt;&amp;gt;((n1,n2) -&amp;gt; map.get(n1) map.get(n2)); //返回的列表 private List&amp;lt;Integer&amp;gt; topK = new LinkedList(); public List&amp;lt;Integer&amp;gt; topKFrequent(int[] nums, int k) { //先统计每个元素及其出现的频率，当然还有更简单的写法，请看拓展内容  for(int n : nums){ if(map.</description>
+    </item>
+    
+    <item>
+      <title>滑动窗口解题总结</title>
+      <link>https://qmr0925.github.io/leetcode/slidingwind/</link>
+      <pubDate>Mon, 09 Dec 2019 15:50:27 +0800</pubDate>
+      
+      <guid>https://qmr0925.github.io/leetcode/slidingwind/</guid>
+      <description>滑动窗口解题总结  一、算法简介  滑动窗口是一种高级双指针技巧的算法框架，代码模板可以按照如下表示
+ int left = 0,right = 0; //1.初始化双指针，建立一个索引闭区间，也就是窗口 	//2.定义求解目标的初始值 while(right &amp;lt; s.length()){ window.add(s[right]); //3.通过增加right指针不断地扩大窗口 （找到可行解）  //并同时更新求解的目标值  right++; while(valid){ //4.判断当前窗口是否满足要求  window.remove(s[left]); //5.停止增加right指针，转而增加left指针，直至窗口中的数据不符合要求  // 并同时更新求解的目标值  left++; //6.继续循环  } }  其中的window的数据类型一般为哈希表，当然在存储英文字母时也可以使用数组；代码的关键点如何判断
+ 滑动窗口是有效的
+二、典型例题 1.Leetcode 3  给定一个字符串，找出其中不含有重复字符的最长子串的长度
+ class Solution { private Map&amp;lt;Character,Integer&amp;gt; window = new HashMap&amp;lt;&amp;gt;(); //定义存储元素出现次数的哈希表  public int lengthOfLongestSubstring(String s) { if(s.length() == 0) return 0; int left = 0,right = 0; //初始化左右指针  int maxLen = 0; //初始化最大长度  while(right &amp;lt; s.</description>
+    </item>
+    
+    <item>
+      <title>回溯算法解题总结</title>
+      <link>https://qmr0925.github.io/leetcode/backtrack/</link>
+      <pubDate>Thu, 05 Dec 2019 22:26:15 +0800</pubDate>
+      
+      <guid>https://qmr0925.github.io/leetcode/backtrack/</guid>
+      <description>回溯算法解题总结  一、什么是回溯？  回溯算法实际上就是一个类似于枚举的搜索尝试过程，主要就是在搜索尝试的过程中寻找问题的解，当
+ 发现已不满足求解条件的时候，就“回溯”返回，尝试别的路径。
+ 用一句通俗的话来说就是：从一条路向前走，能进则进，不能进则退回来，换一条路再走
+ 二、解决回溯问题的通用模板  解决一个回溯问题，实际上就是一个决策树的遍历过程，主要思考三个关键点
+   路径：也就是已经做出的选择
+  选择列表：也就是当前可以做的选择
+  结束条件：也就是到达决策树的底层，无法再做选择的条件
+   回溯算法的整体框架
+ result = [] def backtrack(路径,选择列表): if 满足结束条件: result.add(路径) return for 选择 in 选择列表: 做选择 backtrack(路径，选择列表) 撤销选择 #for循环的细节如下 for 选择 in 选择列表: //做选择 将该选择从选择列表中移除 路径.add(选择) backtrack(路径，选择列表) //撤销选择 路径.remove(选择) 将该选择再加入选择列表  其核心就是for循环里面的递归，在递归调用之前做选择，在递归调用之后撤销选择；这种递归前的选择和
+ 递归调用后的选择其实与树的前序遍历和后续遍历非常相似，而所谓的前序遍历和后续遍历可以理解为两个有
+用的时间点而已，前序遍历的代码在进入某一个节点之前的那个时间点进行，后续遍历代码在离开某个节点之
+后的那个时间节点执行。遍历和选择的示意图可以参考如下：
+ 回溯算法的时间复杂度是O(N!) ，因为穷举整颗决策树是无法避免的，不像动态规划存在重叠子问题
+ 回溯算法就是纯暴力穷举，复杂度一般都比较高
+三、典型例题（全排列和N皇后） 1.Leetcode 46 全排列  以全排列问题来示例回溯框架算法的使用</description>
+    </item>
+    
+    <item>
+      <title>动态规划解题思想总结</title>
+      <link>https://qmr0925.github.io/leetcode/dp/</link>
+      <pubDate>Tue, 03 Dec 2019 22:26:15 +0800</pubDate>
+      
+      <guid>https://qmr0925.github.io/leetcode/dp/</guid>
+      <description>动态规划解题思想总结  一、动态规划和递归、分治的关系 1.递归  关于递归其实就是一个函数调用它自己，它和分治和回溯等算法没有完全隔离开来，它们都可以看做是
+ 描述一个问题的不同方面。使用递归方法解题时都是有模板的：
+public void recur(int level,int param){ //terminator  if(level &amp;gt; MAX_LEVEL){ //process result  return; } //process current logic  process(level,param); //drill down  recur(level:level + 1,newParam) //restore current status }  这里上一道经典的使用递归解决的算法题来说明这个框架的使用
+  经典的汉诺塔问题：原题链接
+ public void hanota(List&amp;lt;Integer&amp;gt; A, List&amp;lt;Integer&amp;gt; B, List&amp;lt;Integer&amp;gt; C) { int len = A.size(); //汉诺塔的数量  Hanota(len,A,B,C); } //递归函数 public void Hanota(int n,List&amp;lt;Integer&amp;gt; X,List&amp;lt;Integer&amp;gt; Y,List&amp;lt;Integer&amp;gt; Z){ if(n == 1){ //终止条件  Z.</description>
+    </item>
+    
+    <item>
+      <title>贪心算法集锦</title>
+      <link>https://qmr0925.github.io/leetcode/greedy/</link>
+      <pubDate>Mon, 02 Dec 2019 22:26:15 +0800</pubDate>
+      
+      <guid>https://qmr0925.github.io/leetcode/greedy/</guid>
+      <description>贪心算法解题总结 一、引例  某天你在超市购物后，总共消费了782元，这时假设你有1元、5元、10元、20元、100元和200元的钞票
+ 无穷多张，那么最少需要多少张钞票足够支付？
+ 直觉告诉我们：要尽可能多地使用面值较大的钞票，其实这就是一种贪心的思想
+ 二、贪心算法简介  由引例我们已经大概了解了什么是贪心，在这儿对它下个定义：贪心算法是指在对问题求解时，总是做
+ 出在当前看来是最好的选择；也就是说不从整体最优上加以考虑，它所做出的是在某种意义上的局部最优解
+ 贪心算法不是对所有的问题都能得到整体的最优解，关键是贪心策略的选择，具体的贪心策略中某个状
+ 态以前的过程不会影响以后的状态，只与当前的状态有关
+三、Leetcode典型例题 1.455分发饼干  (1) 题目描述
+  假设你是一位很棒的家长，想要给你的孩子们一些小饼干。但是，每个孩子最多只能给一块饼干。对每
+ 个孩子 i ，都有一个胃口值 gi ，这是能让孩子们满足胃口的饼干的最小尺寸；并且每块饼干 j ，都有一个尺
+寸 sj 。如果 sj &amp;gt;= gi ，我们可以将这个饼干 j 分配给孩子 i ，这个孩子会得到满足。你的目标是尽可能满足
+越多数量的孩子，并输出这个最大数值。一个小朋友最多能拥有一块饼干
+ (2)解题思想
+  根据让更多的孩子得到满足这个目标，可以分析出如下贪心规律：
+   某块饼干不能满足某个孩子的胃口，则它也一定不能满足胃口更大的孩子
+  某个孩子的胃口可以用更小的饼干来满足，则没有必要用更大的饼干满足，更大的饼干留给胃口更大的孩子
+  孩子的胃口越小，则其更容易被满足，所以优先从胃口小的孩子尝试
+   (3)算法思路
+   按照胃口大小和饼干大小对两个数组进行从小到大的排序
+  按照从小到大的顺序用饼干来尝试是否可以满足某个孩子的胃口，每个饼干只尝试一次，如能够满足，接着</description>
+    </item>
+    
+    <item>
+      <title>从尾到头打印链表</title>
+      <link>https://qmr0925.github.io/leetcode/printlistreverse/</link>
+      <pubDate>Fri, 15 Nov 2019 14:01:10 +0800</pubDate>
+      
+      <guid>https://qmr0925.github.io/leetcode/printlistreverse/</guid>
+      <description>反转链表专题  No.1 问题描述  输入一个链表，从尾到头的顺序返回一个ArrayList
+ 解题思路 1.使用递归法 //1.解法一 public ArrayList&amp;lt;Integer&amp;gt; printListReverse(ListNode listnode){ ArrayList&amp;lt;Integer&amp;gt; arrayList = new ArrayList&amp;lt;Integer&amp;gt;(); if(listnode != null){ arrayList.addAll(printListReverse(listnode.next)); arrayList.add(listnode.val); } return arrayList; } //分析：时间复杂度为O（n）,相当于将每个元素均遍历了一遍 //空间复杂度为O（n^2）,创建的列表的合计元素个数1+2+3+4+n-1 //拓展内容：ArrayList中的addAll(Collection&amp;lt;? extends E&amp;gt; c) 方法 按照指定collection容器返回元素的 //顺序将所有的元素添加到列表的尾部 2.使用栈（推荐解法） //Java实现 public ArrayList&amp;lt;Integer&amp;gt; printListReverse(ListNode listnode){ ArrayDeque&amp;lt;Integer&amp;gt; stack = ArrayDeque&amp;lt;Integer&amp;gt;(); while(listnode != null){ stack.addFirst(listnode.val); listnode = listnode.next; } ArrayList&amp;lt;Integer&amp;gt; arrayList = new ArrayList&amp;lt;Integer&amp;gt;(); while(stack.pollFirst()) arrayList.add(stack.pollFirst()) return arrayList; } //Java中推荐使用ArrayDeque来实现一个栈 //当压栈时，调用addFirst()方法; 出栈时调用pollFirst()方法 //分析：时间复杂度O(n)，空间复杂度也是O（n） #基于Python的实现 class Solution: def printListReverse(self,listnode): if not listnode: return [] result = [] while listnode: result.</description>
+    </item>
+    
+    <item>
+      <title>环形链表</title>
+      <link>https://qmr0925.github.io/leetcode/circlelist/</link>
+      <pubDate>Fri, 15 Nov 2019 14:01:10 +0800</pubDate>
+      
+      <guid>https://qmr0925.github.io/leetcode/circlelist/</guid>
+      <description>环形链表专题 一、问题1  给定一个链表，判断一个链表中是否有环
+ 1.算法思路  （1）判断是否存在重复节点
+  通过检查一个节点此前是否被访问来判断是否为环形链表，可以使用哈希表来存储访问过的节点
+  （2）快慢指针
+  通过快慢指针遍历链表，慢指针每次移动一步，而快指针每次移动两步；如果链表中不存在环，最终快
+ 指针将会最先达到尾部，此时返回Fasle即可；如果链表中存在环，最终快慢指针一定会相遇
+2.代码实现 //元素判重法 public boolean hasCycle(ListNode head) { Set&amp;lt;ListNode&amp;gt; visited = new HashSet&amp;lt;ListNode&amp;gt;(); while (head != null) { if (visited.contains(head)) { return true; } else { visited.add(head); } head = head.next; } return false; } //分析，时间复杂度是O（n），对链表中的每个元素最多访问一次，向哈希表中添加一个元素为O(1) //空间复杂度为O（n）,最多将链表中的所有元素均添加到哈希表中 //快慢指针法 public boolean hasCycle(ListNode head) { if (head == null || head.next == null) { return false; } ListNode slow = head; ListNode fast = head.</description>
+    </item>
+    
+  </channel>
+</rss>

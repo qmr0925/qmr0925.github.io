@@ -1,0 +1,840 @@
+<!doctype html>
+<html lang="en-us">
+  <head>
+    <title>Linux系统性能分析命令总结 // Your title</title>
+    <meta charset="utf-8" />
+    <meta name="generator" content="Hugo 0.62.2" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="John Doe" />
+    <meta name="description" content="" />
+    <link rel="stylesheet" href="https://qmr0925.github.io/css/main.min.88e7083eff65effb7485b6e6f38d10afbec25093a6fac42d734ce9024d3defbd.css" />
+
+    
+    <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Linux系统性能分析命令总结"/>
+<meta name="twitter:description" content="一、概述  操作系统的资源主要包括以下几种：CPU、内存、硬盘IO、网络IO，熟练地对这些资
+ 源的使用进行分析可以帮助我们排查一些服务器使用过程中遇到的问题
+二、CPU使用分析 1、CPU性能指标简介  CPU使用时间主要分为用户态时间、系统态时间和空闲态时间，分别表示CPU处于用
+ 户态执行的时间、系统内核执行的时间和空闲系统进程执行的时间，三者之和就是CPU的
+总时间。
+ 当用户没有用户进程和系统进程需要执行的时候，CPU就执行系统缺省的空闲进程,
+ CPU的利用率就是指非空闲进程占用时间的比例，即CPU执行非空闲进程 / CPU总的执行
+时间
+ CPU方面的主要性能指标如下几项：
+   CPU的使用率
+  上下文切换
+  运行队列长度
+   下面分别介绍几个CPU的性能指标
+ 1、CPU_IDLE  CPU_IDLE就是基于/proc/stat计算出来的，运行cat /proc/stat后的结果如下：
+  可以看出cpu的核数，比如cpu0-cpu7便是表是系统有8个核，截取cpu0的参数
+ 如下：cpu0 32736 0 51047 48473626 33879 0 142 0 0 0，这些参数含义分别为：
+  user(32736) 系统从启动开始累计到当前时刻，用户态的CPU时间，不包含nice值为负
+ 的进程
+   nice(0) : 系统从启动开始累计到当前时刻，nice值为负的进程所占用的CPU时间
+  sysytem(51047) 系统启动开始累计到当前时刻，内核时间"/>
+
+    <meta property="og:title" content="Linux系统性能分析命令总结" />
+<meta property="og:description" content="一、概述  操作系统的资源主要包括以下几种：CPU、内存、硬盘IO、网络IO，熟练地对这些资
+ 源的使用进行分析可以帮助我们排查一些服务器使用过程中遇到的问题
+二、CPU使用分析 1、CPU性能指标简介  CPU使用时间主要分为用户态时间、系统态时间和空闲态时间，分别表示CPU处于用
+ 户态执行的时间、系统内核执行的时间和空闲系统进程执行的时间，三者之和就是CPU的
+总时间。
+ 当用户没有用户进程和系统进程需要执行的时候，CPU就执行系统缺省的空闲进程,
+ CPU的利用率就是指非空闲进程占用时间的比例，即CPU执行非空闲进程 / CPU总的执行
+时间
+ CPU方面的主要性能指标如下几项：
+   CPU的使用率
+  上下文切换
+  运行队列长度
+   下面分别介绍几个CPU的性能指标
+ 1、CPU_IDLE  CPU_IDLE就是基于/proc/stat计算出来的，运行cat /proc/stat后的结果如下：
+  可以看出cpu的核数，比如cpu0-cpu7便是表是系统有8个核，截取cpu0的参数
+ 如下：cpu0 32736 0 51047 48473626 33879 0 142 0 0 0，这些参数含义分别为：
+  user(32736) 系统从启动开始累计到当前时刻，用户态的CPU时间，不包含nice值为负
+ 的进程
+   nice(0) : 系统从启动开始累计到当前时刻，nice值为负的进程所占用的CPU时间
+  sysytem(51047) 系统启动开始累计到当前时刻，内核时间" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://qmr0925.github.io/linux/perfcommand/" />
+<meta property="article:published_time" content="2020-04-24T00:43:15+08:00" />
+<meta property="article:modified_time" content="2020-04-24T00:43:15+08:00" />
+
+
+  </head>
+  <body>
+    <header class="app-header">
+      <a href="https://qmr0925.github.io"><img class="app-header-avatar" src="/1.png" alt="John Doe" /></a>
+      <h1>Your title</h1>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vehicula turpis sit amet elit pretium.</p>
+      <div class="app-header-social">
+        
+          <a target="_blank" href="https://github.com/gohugoio" rel="noreferrer noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-github">
+  <title>github</title>
+  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+</svg></a>
+        
+          <a target="_blank" href="mailto:csuyzz@foxmail.com" rel="noreferrer noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-mail">
+  <title>mail</title>
+  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline>
+</svg></a>
+        
+          <a target="_blank" href="https://cn.linkedin.com/in/csuyzz" rel="noreferrer noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-linkedin">
+  <title>linkedin</title>
+  <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle>
+</svg></a>
+        
+          <a target="_blank" href="https://twitter.com/gohugoio" rel="noreferrer noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-twitter">
+  <title>twitter</title>
+  <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path>
+</svg></a>
+        
+      </div>
+      <h3><a href="/" title="首页">首页</a></h3>
+      <h3><a href="/category/content/" title="首页">分类目录</a></h3>
+      <h3><a href="/personal/introduce/" title="首页">个人简介</a></h3>
+    </header>
+    <main class="app-container">
+      
+  <article class="post">
+    <header class="post-header">
+      <h1 class ="post-title">Linux系统性能分析命令总结</h1>
+      <div class="post-meta">
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-calendar">
+  <title>calendar</title>
+  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line>
+</svg>
+          Apr 24, 2020
+        </div>
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-clock">
+  <title>clock</title>
+  <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
+</svg>
+          5 min read
+        </div>
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tag">
+  <title>tag</title>
+  <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7" y2="7"></line>
+</svg>
+              <a class="tag" href="https://qmr0925.github.io/tags/linux/">Linux</a>
+        </div>
+      </div>
+    </header>
+    <div class="post-content">
+      <hr>
+<h3 id="一概述">一、概述</h3>
+<blockquote>
+<p>操作系统的资源主要包括以下几种：CPU、内存、硬盘IO、网络IO，熟练地对这些资</p>
+</blockquote>
+<p>源的使用进行分析可以帮助我们排查一些服务器使用过程中遇到的问题</p>
+<h3 id="二cpu使用分析">二、CPU使用分析</h3>
+<h4 id="1cpu性能指标简介">1、CPU性能指标简介</h4>
+<blockquote>
+<p>CPU使用时间主要分为用户态时间、系统态时间和空闲态时间，分别表示CPU处于用</p>
+</blockquote>
+<p>户态执行的时间、系统内核执行的时间和空闲系统进程执行的时间，三者之和就是CPU的</p>
+<p>总时间。</p>
+<blockquote>
+<p>当用户没有用户进程和系统进程需要执行的时候，CPU就执行系统缺省的空闲进程,</p>
+</blockquote>
+<p>CPU的利用率就是指非空闲进程占用时间的比例，即CPU执行非空闲进程 / CPU总的执行</p>
+<p>时间</p>
+<blockquote>
+<p>CPU方面的主要性能指标如下几项：</p>
+</blockquote>
+<ul>
+<li>
+<p>CPU的使用率</p>
+</li>
+<li>
+<p>上下文切换</p>
+</li>
+<li>
+<p>运行队列长度</p>
+</li>
+</ul>
+<blockquote>
+<p>下面分别介绍几个CPU的性能指标</p>
+</blockquote>
+<h4 id="1cpu_idle">1、CPU_IDLE</h4>
+<blockquote>
+<p>CPU_IDLE就是基于/proc/stat计算出来的，运行cat /proc/stat后的结果如下：</p>
+</blockquote>
+<p><!-- raw HTML omitted --></p>
+<blockquote>
+<p>可以看出cpu的核数，比如cpu0-cpu7便是表是系统有8个核，截取cpu0的参数</p>
+</blockquote>
+<p>如下：cpu0 32736 0 51047 48473626 33879 0 142 0 0 0，这些参数含义分别为：</p>
+<ul>
+<li>
+<p>user(32736)  系统从启动开始累计到当前时刻，用户态的CPU时间，不包含nice值为负</p>
+<blockquote>
+<p>的进程</p>
+</blockquote>
+</li>
+<li>
+<p>nice(0)   : 系统从启动开始累计到当前时刻，nice值为负的进程所占用的CPU时间</p>
+</li>
+<li>
+<p>sysytem(51047) 系统启动开始累计到当前时刻，内核时间</p>
+</li>
+<li>
+<p>IDLE(48473626)   从系统启动开始累计到当前时刻，除IO等待时间以外其它等待时间</p>
+</li>
+<li>
+<p>iowait(33879)   系统启动开始累计到当前时刻，IO等待时间</p>
+</li>
+<li>
+<p>irp(0)         从系统启动开始累计到当前时刻，硬中断时间</p>
+</li>
+<li>
+<p>softirp(142)   从系统启动开始累计到当前时刻,软中断时间</p>
+</li>
+<li>
+<p>stealstolen(0) 当一台物理机有多个虚拟机时，该CPU在其他虚拟机运行时间</p>
+</li>
+<li>
+<p>guest(0)  在cpu内核控制下，提供给在其上面运行的虚拟机占用的时间</p>
+</li>
+</ul>
+<blockquote>
+<p>其他参数的主要含义：</p>
+</blockquote>
+<ul>
+<li>
+<p>ctxt 419730186   CPU上下文切换的次数</p>
+</li>
+<li>
+<p>btime 1587041854  系统从启动到当前的时间</p>
+</li>
+<li>
+<p>processes 1305938  自启动以来创建的任务个数</p>
+</li>
+<li>
+<p>procs_running 1    当前运行的任务个数</p>
+</li>
+<li>
+<p>procs_blocked 0    阻塞的任务个数</p>
+</li>
+</ul>
+<blockquote>
+<p>CPU即使利用率的计算公式：</p>
+</blockquote>
+<ul>
+<li>
+<p>CPU在t1到t2时间段总的使用时间 = t2时刻cpu之和-t1时刻CPU使用之和</p>
+</li>
+<li>
+<p>CPU在t1到t2时间段空闲使用时间  = idle2 - idle1</p>
+</li>
+<li>
+<p>CPU在t1到t2时间段及时利用率  = 1 - CPU空闲使用时间/Cpu总的使用时间</p>
+</li>
+<li>
+<p>CPU的平均利用率的计算公式  =  1-  (当前时间对应的cpu.idle值)/(当前时间对用的</p>
+<blockquote>
+<p>cpu.total值)，cpu.total就是cpu那一行所有项之和</p>
+</blockquote>
+</li>
+</ul>
+<blockquote>
+<p>每一个进程在/proc下都对应一个以进程号为目录名的目录/proc/pid，它们都是读取进程</p>
+</blockquote>
+<p>信息的窗口；此外，/proc/pid目录中有一个task目录，/proc/pid/task 目录中也有一些以该</p>
+<p>进程所拥有的线程的线程号命名的目录，/proc/pid/task/tid，这是读取线程信息的窗口，</p>
+<p>Linux中轻量级进程lwp即为线程，对应tid</p>
+<blockquote>
+<p>计算某一个进程和某一个线程的CPU利用率类似，读取/proc/pid/stat或者读取</p>
+</blockquote>
+<p>/proc/pid/task/stat中的参数来进行计算即可</p>
+<h4 id="2cpu的负载">2、CPU的负载</h4>
+<blockquote>
+<p>系统平均负载定义为在特定时间间隔内运行队列中的平均进程数，如果一个进程满足</p>
+</blockquote>
+<p>以下条件则其就位于等待队列中</p>
+<ul>
+<li>
+<p>该进程没有在等待IO操作的结果</p>
+</li>
+<li>
+<p>该进程没有主动进入等待状态</p>
+</li>
+<li>
+<p>没有被停止</p>
+</li>
+</ul>
+<blockquote>
+<p>Linux中进程可分为三种状态，一种是阻塞进程、一种是可运行的进程、另外就是正</p>
+</blockquote>
+<p>在运行的进程。进程可运行状态时，它处在一个运行队列中，与其他可运行进程争夺CPU</p>
+<p>时间，系统的load是指正在运行和准备好运行进程的总数，比如现在系统有2个正在运行</p>
+<p>的进程，3个可运行的进程，那么系统的load就是5</p>
+<blockquote>
+<p>cpu.load是基于/proc/loadavg来计算的，cat /proc/loadavg命令后的结果如下：</p>
+</blockquote>
+<p>0.00 0.02 0.07 1/326 7192，前三个分别指1、5、15分钟内的平均进程数，后面两个表示</p>
+<p>正在运行的进程数 / 进程总数 和 最近运行的PID号。此外通过load average还可以了解到</p>
+<p>当前服务器的负载的变化趋势：</p>
+<blockquote>
+<p>如果1分钟的CPU负载 &gt; 5分钟的CPU负载  &gt; 15分钟的负载说明目前CPU处在负载</p>
+</blockquote>
+<p>的高峰期，反之说明CPU的负载高峰期已经过去了，理想情况下，CPU不空闲，此时</p>
+<p>cpu.load/cores = 1,负载过大表示有部分线程正在等待CPU资源，过小则表示CpuZ资源</p>
+<p>比较空闲cpu.load/cores 为1是最理想的状态</p>
+<h4 id="3cpu性能分析常用命令">3、CPU性能分析常用命令</h4>
+<blockquote>
+<p>top、sar、vmstat、mpstat、ps、uptime、tload</p>
+</blockquote>
+<h3 id="三内存使用分析">三、内存使用分析</h3>
+<h4 id="1性能指标简介">1、性能指标简介</h4>
+<ul>
+<li>
+<p>活动虚拟内存总量，等于实际内存和交换空间的大小之和</p>
+</li>
+<li>
+<p>调页率：反映了采用了调页内存技术对内存进行操作的程度</p>
+</li>
+<li>
+<p>交换率：反映了交换技术对内存进行操作的程度</p>
+</li>
+</ul>
+<h4 id="2常用分析命令">2、常用分析命令</h4>
+<blockquote>
+<p>内存分析主要可以利用：free、vmstat、swspon</p>
+</blockquote>
+<h4 id="3内存分析命令总结">3、内存分析命令总结</h4>
+<ul>
+<li>
+<p>系统内存的使用情况：/proc/meminfo</p>
+</li>
+<li>
+<p>进程的内存使用情况：/proc/pid/status</p>
+</li>
+<li>
+<p>查询内存的总使用率 : free</p>
+</li>
+<li>
+<p>查询进程的内存使用占比 : top</p>
+</li>
+<li>
+<p>虚拟内存的统计 :  vmstat</p>
+</li>
+<li>
+<p>进程消耗内存占比和排序： ps aux -sort -rss</p>
+</li>
+<li>
+<p>释放系统内存缓存：/proc/sys/vm/drop_caches</p>
+</li>
+</ul>
+<h3 id="四磁盘io">四、磁盘IO</h3>
+<h4 id="1磁盘主要性能指标">1、磁盘主要性能指标</h4>
+<blockquote>
+<p>磁盘IO主要的性能指标有：IOPS、数据吞吐量、平均IO数据尺寸、磁盘活动时间</p>
+</blockquote>
+<p>百分比、服务时间、IO等待队列长度、等待时间等</p>
+<ul>
+<li>
+<p>IOPS：Input/Output Per Second即是每秒的输入输出量或者读写次数</p>
+</li>
+<li>
+<p>数据吞吐量(Throughput)：单位时间内可以成功传输的数据数量</p>
+</li>
+<li>
+<p>平均IO数据尺寸：平均IO数据尺寸等于吞吐量除以IO数目，如果平均IO数据尺寸小于32K，</p>
+<blockquote>
+<p>可以磁盘使用模式以随机存取为主；如果平均每次IO数据尺寸大于32K，可认</p>
+</blockquote>
+<blockquote>
+<p>为磁盘使用模式以顺序存储为主</p>
+</blockquote>
+</li>
+<li>
+<p>磁盘活动时间百分比，及磁盘利用率(Utilization) %util：磁盘在数据传输和处理命令</p>
+<blockquote>
+<p>(如寻道)处于活动状态</p>
+</blockquote>
+</li>
+<li>
+<p>服务时间(Service Time) svctm ： 指磁盘读或者写操作执行的时间，包括寻道、旋转时</p>
+<blockquote>
+<p>延和数据传输的时间。大小一般和磁盘的性能有关，CPU/内存的负荷也会对</p>
+</blockquote>
+<blockquote>
+<p>其有影响，请求过多也会导致服务时间的增加如果改值超过20ms，一般可能</p>
+</blockquote>
+<blockquote>
+<p>对上层应用产生影响</p>
+</blockquote>
+</li>
+<li>
+<p>IO等待队列的长度(Queue Length)：指待处理的IO请求的数目，如果IO请求压力持续超出</p>
+<blockquote>
+<p>磁盘处理的能力，改值会增加</p>
+</blockquote>
+</li>
+<li>
+<p>等待时间(Wait time)：指磁盘读或者写操作等待执行的时间，即在队列中排队的时间。</p>
+<blockquote>
+<p>如果IO请求持续超过磁盘处理能力，即意味着IO请求不得不在队列中等到较长的</p>
+</blockquote>
+<blockquote>
+<p>时间</p>
+</blockquote>
+</li>
+</ul>
+<h4 id="2常见的命令">2、常见的命令</h4>
+<blockquote>
+<p>经常使用的命令是vmstat、iostat、sar、fdisk等</p>
+</blockquote>
+<h3 id="五网络io">五、网络IO</h3>
+<blockquote>
+<p>网路IO方面的主要性能指标有：网络延时、网络带宽</p>
+</blockquote>
+<blockquote>
+<p>常用命令：ping、tracert、 netstat、iptables等​</p>
+</blockquote>
+<h3 id="六常用分析命令简介">六、常用分析命令简介</h3>
+<blockquote>
+<p>了解一些系统资源的常见指标之后，就可以使用基本的命令进行分析了，在这里主要</p>
+</blockquote>
+<p>简述了自己之前不太熟悉的命令，像ps、top、netstat、iostat经常使用的命令并没有写，</p>
+<p>重点记录了vmstat、mpstat、sar等命令</p>
+<h4 id="1vmstat">1、vmstat</h4>
+<blockquote>
+<p>Virtual Memory Statistics(虚拟内存统计) ，vmstat主要反映了进程、内存、调度、</p>
+</blockquote>
+<p>IO阻塞以及CPU活动的信息</p>
+<blockquote>
+<p>语法格式为：vmstat [-V] [-n] [delay[count]]</p>
+</blockquote>
+<blockquote>
+<p>常用参数如下：</p>
+</blockquote>
+<ul>
+<li>
+<p>-V 表示打印出版本信息</p>
+</li>
+<li>
+<p>-n表示在周期性循环输出时，输出的头部信息仅显示一次</p>
+</li>
+<li>
+<p>delay 是两次输出之间的延迟时间</p>
+</li>
+<li>
+<p>count 是按照这个时间间隔统计的次数</p>
+</li>
+</ul>
+<blockquote>
+<p>执行vmstat运行的结果如下：</p>
+</blockquote>
+<p><!-- raw HTML omitted --></p>
+<blockquote>
+<p>图中包含的信息主要有如下几项：</p>
+</blockquote>
+<h5 id="1进程信息">(1)进程信息</h5>
+<ul>
+<li>
+<p>r:运行队列中进程的数量(running)</p>
+</li>
+<li>
+<p>b:等待IO的进程数量(Blocked)</p>
+</li>
+</ul>
+<h5 id="2memoey内存">(2)Memoey(内存)</h5>
+<ul>
+<li>
+<p>swpd:使用的虚拟内存大小（KB）</p>
+</li>
+<li>
+<p>free:可用内存大小（KB）</p>
+</li>
+<li>
+<p>buff:用作缓冲的内存大小（KB）</p>
+</li>
+<li>
+<p>cache:用作缓存的大小</p>
+</li>
+</ul>
+<h5 id="3交换分区">(3)交换分区</h5>
+<ul>
+<li>
+<p>si:每秒从交换区写到内存的大小</p>
+</li>
+<li>
+<p>so:每秒写入交换区的大小</p>
+</li>
+</ul>
+<h5 id="4io">(4)IO</h5>
+<ul>
+<li>
+<p>bi:每秒读取的块数</p>
+</li>
+<li>
+<p>bo:每秒写入的块数</p>
+</li>
+</ul>
+<h5 id="5system">(5)system</h5>
+<ul>
+<li>
+<p>in:每秒中断数，包括时钟中断</p>
+</li>
+<li>
+<p>cs:每秒上下文切换数</p>
+</li>
+</ul>
+<h5 id="6cpu百分比">(6)CPU(百分比)</h5>
+<ul>
+<li>
+<p>us:用户进程执行时间</p>
+</li>
+<li>
+<p>sy:系统进程执行时间</p>
+</li>
+<li>
+<p>id:空闲时间(包括IO等待时间)</p>
+</li>
+<li>
+<p>wa:等待IO时间</p>
+</li>
+</ul>
+<h4 id="2mpstat">2、mpstat</h4>
+<h5 id="1用途简介">（1）用途简介</h5>
+<blockquote>
+<p>mpstat的全称是Multiprocessor Statistics，实时系统监控工具，反映了CPU的相关统计</p>
+</blockquote>
+<p>信息，这些信息都存放在/proc/stat文件中</p>
+<h5 id="2-命令格式">(2) 命令格式</h5>
+<blockquote>
+<p>常用的命令格式是：mpstat [-P {cpu | ALL}] [ -V ] [interval[count]]</p>
+</blockquote>
+<blockquote>
+<p>​    参数含义：</p>
+</blockquote>
+<ul>
+<li>
+<p>-P 后跟参数表示将要统计的cpu信息 参数为特定的cpu编号和ALL</p>
+</li>
+<li>
+<p>-V 表示该软件的版本</p>
+</li>
+<li>
+<p>interval为统计的时间段，count统计次数</p>
+</li>
+</ul>
+<h5 id="3-使用示例">(3) 使用示例</h5>
+<blockquote>
+<p>​    在命令行中执行命令之后会出现以下结果：</p>
+</blockquote>
+<p><!-- raw HTML omitted --></p>
+<blockquote>
+<p>参数信息如下：</p>
+</blockquote>
+<ol>
+<li>
+<p>CPU :处理器ID</p>
+</li>
+<li>
+<p>User：用户态CPU的时间，不包含nice值为负的进程</p>
+</li>
+<li>
+<p>nice：nice值为负进程的CPU时间  ，比较nice值(NI值)和PRI值的区别：</p>
+</li>
+</ol>
+<blockquote>
+<p>PRI是进程的优先级，PRI越小，优先级越高，nice表示进程可被执行的优先级的</p>
+</blockquote>
+<p>修正数值，也即nice不是进程的优先级，但是会影响进程优先级的变化；真正的</p>
+<p>PRI(NEW) = PRI(old) + nice,所以nice为负值的时候，该程序的PRI变小，优先级</p>
+<p>越高</p>
+<ol start="4">
+<li>
+<p>sys: 系统内核进程时间</p>
+</li>
+<li>
+<p>iowait：硬盘IO等待时间</p>
+</li>
+<li>
+<p>irp：硬中断的时间</p>
+</li>
+<li>
+<p>soft：软中断的时间</p>
+</li>
+<li>
+<p>steal:该CPU在其他虚拟机运行时间</p>
+</li>
+<li>
+<p>guest：虚拟机占用的时间</p>
+</li>
+<li>
+<p>idle:CPU的空闲时间</p>
+</li>
+</ol>
+<h4 id="3sar">3、sar</h4>
+<h5 id="1用途简介-1">（1）用途简介</h5>
+<blockquote>
+<p>Sar的全称是：System Activity Repoter。sar工具连续对系统进行取样，获取大量</p>
+</blockquote>
+<p>的取样数据，它可以追溯过去的数据，也可以周期性的查看当前数据。这个性能工具</p>
+<p>可以从文件的读写情况、系统的使用情况、串口、CPU效率、内存使状况、进程活动</p>
+<blockquote>
+<p>sar工具可以追溯过去的数据也可以周期性地查看当前的数据</p>
+</blockquote>
+<h5 id="2常用示例">（2）常用示例</h5>
+<ul>
+<li>
+<p>sar -u：查看CPU的使用率信息</p>
+</li>
+<li>
+<p>sar -q：查看平均负载，参数含义如下：</p>
+</li>
+</ul>
+<blockquote>
+<p>runq-sz:运行队列的长度</p>
+</blockquote>
+<blockquote>
+<p>plist-sz:进程列表中进程和线程的数量</p>
+</blockquote>
+<blockquote>
+<p>ldavg-1/5/15 过去15分钟的平均负载</p>
+</blockquote>
+<ul>
+<li>
+<p>sar -r:查看内存的使用状况，参数含义如下:</p>
+<blockquote>
+<p>kbmemfree:剩余空间  类似于free中的free</p>
+</blockquote>
+<blockquote>
+<p>kbmemused:已用空间  类似于free中的used值</p>
+</blockquote>
+<blockquote>
+<p>%memused:物理内存使用率， = kbmemused/内存总量</p>
+</blockquote>
+<blockquote>
+<p>kbbuffers:free中的buffer</p>
+</blockquote>
+<blockquote>
+<p>kbcache:buffer中的cache</p>
+</blockquote>
+<blockquote>
+<p>kbcommit:保证当前系统所需要的内存，为了确保不溢出而需要的内存(RAM+SWAP)</p>
+</blockquote>
+<blockquote>
+<p>%commit:这个值是kbcommit与内存总量的百分比</p>
+</blockquote>
+</li>
+<li>
+<p>sar -W：查看页面交换发生的情况，参数含义如下:</p>
+<blockquote>
+<p>pswpin/s：每秒系统换入的交换界面数量</p>
+</blockquote>
+<blockquote>
+<p>pswpout/s:每秒系统换出的交换界面数量</p>
+</blockquote>
+<blockquote>
+<p>当页面发生交换时，服务器的吞吐量会大幅下降；服务器状况不良的时候，如果</p>
+</blockquote>
+<p>怀疑因为内存不足而导致了页面交换的发生，可以使用这个命令来确定是否发生了大</p>
+<p>量的交换</p>
+</li>
+</ul>
+<h4 id="4free">4、free</h4>
+<blockquote>
+<p>free用来查看内存的使用情况</p>
+</blockquote>
+<blockquote>
+<p>命令格式为：free [-b | -k | -m] [-o]  [-s delay] [-t] [-V]</p>
+</blockquote>
+<blockquote>
+<p>free输出的信息如下：</p>
+</blockquote>
+<p><img src="https://s1.ax1x.com/2020/04/24/JDV5RO.png" alt="JDV5RO.png"></p>
+<blockquote>
+<p>free输出的信息是一个表格：横向指标为： 总量、使用量、剩余量、共享量、缓</p>
+</blockquote>
+<p>冲/缓存 可用内存；纵向指标信息为：Mem内存  Swap交换分区  Total合计</p>
+<h4 id="5strace">5、strace</h4>
+<h5 id="1用途简介-2">（1）用途简介</h5>
+<blockquote>
+<p>strace经常被用来对应用的系统调用过程和信号传递的跟踪结果进行分析，可以帮助</p>
+</blockquote>
+<p>我们去了解系统应用的工作过程。这个命令最简单的用法就是执行一个指定命令，命令结</p>
+<p>束后自动退出，在命令执行的过程中，strace会记录和解析命令进程的所有系统调用以及</p>
+<p>这个进程所接收到的所有的信号值</p>
+<h5 id="2命令格式">（2）命令格式</h5>
+<blockquote>
+<p>strace [-cfopTs] [-expr] [command] [arg&hellip;..]</p>
+</blockquote>
+<h5 id="3---常用参数">(3)   常用参数</h5>
+<ul>
+<li>
+<p>-c:统计每一次系统调用所执行的时间，次数和出错的次数</p>
+</li>
+<li>
+<p>-f:跟踪由fork调用所产生的子进程</p>
+</li>
+<li>
+<p>-o:将strace的结果输出到文件中</p>
+</li>
+<li>
+<p>-p:跟踪一个特定的进程</p>
+</li>
+<li>
+<p>-T：将每个系统调用所花费的时间打印出来</p>
+</li>
+<li>
+<p>-t:在输出的每一行之前加上时间信息，精确到秒级</p>
+</li>
+<li>
+<p>-tt:在输出的每一行之前加上时间信息，精确到微妙级</p>
+</li>
+<li>
+<p>-ttt:在输出的每一行之前加上时间信息，时间表示为UNIX时间戳</p>
+</li>
+<li>
+<p>-s:指定trace结果的每一行输出的字符串的长度</p>
+<blockquote>
+<p>-e expr 指定一个表达式，用来控制如何跟踪，例如</p>
+</blockquote>
+</li>
+<li>
+<p>-e trace=set : 只跟踪指定的系统调用</p>
+</li>
+<li>
+<p>-e trace=file: 只跟踪有关文件操作写系统调用</p>
+</li>
+<li>
+<p>-e trace=process 只跟踪有关进程控制的系统调用</p>
+</li>
+<li>
+<p>-e trace=network 只跟踪有关网络的系统调用</p>
+</li>
+<li>
+<p>-e trace=signal  跟踪与系统信号有关的系统调用</p>
+</li>
+<li>
+<p>-e trace=ipc : 跟踪进程通讯有关的系统调用</p>
+</li>
+</ul>
+<h5 id="4使用示例">（4）使用示例</h5>
+<blockquote>
+<p>测试前提：在Linux下创建一个test.c的文件，程序如下：</p>
+</blockquote>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>(){
+ 	<span style="color:#66d9ef">int</span> a;
+	scanf(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">%d</span><span style="color:#e6db74">&#34;</span>,<span style="color:#f92672">&amp;</span>a);
+	printf(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">%09d</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>,a);
+	<span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+}
+</code></pre></div><blockquote>
+<p>编译：gcc -o test test.c</p>
+</blockquote>
+<p><strong>a、跟踪系统调用</strong></p>
+<blockquote>
+<p>运行：strace ./test，会出现如下结果：</p>
+</blockquote>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">execve<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;./test&#34;</span>, <span style="color:#f92672">[</span><span style="color:#e6db74">&#34;./test&#34;</span><span style="color:#f92672">]</span>, <span style="color:#f92672">[</span>/* <span style="color:#ae81ff">28</span> vars */<span style="color:#f92672">]</span><span style="color:#f92672">)</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>    <span style="color:#75715e">#开始执行</span>
+brk<span style="color:#f92672">(</span>0<span style="color:#f92672">)</span> <span style="color:#f92672">=</span> 0xacd000 <span style="color:#75715e">#程序的初始化操作</span>
+mmap<span style="color:#f92672">(</span>NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0<span style="color:#f92672">)</span> <span style="color:#f92672">=</span> 0x7ffa0992c000
+access<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;/etc/ld.so.preload&#34;</span>, R_OK<span style="color:#f92672">)</span>      <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+open<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;/etc/ld.so.preload&#34;</span>, O_RDONLY|O_CLOEXEC<span style="color:#f92672">)</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">3</span>
+fstat<span style="color:#f92672">(</span>3, <span style="color:#f92672">{</span>st_mode<span style="color:#f92672">=</span>S_IFREG|0644, st_size<span style="color:#f92672">=</span>18, ...<span style="color:#f92672">}</span><span style="color:#f92672">)</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+mmap<span style="color:#f92672">(</span>NULL, 18, PROT_READ|PROT_WRITE, MAP_PRIVATE, 3, 0<span style="color:#f92672">)</span> <span style="color:#f92672">=</span> 0x7ffa0992b000
+close<span style="color:#f92672">(</span>3<span style="color:#f92672">)</span>                                <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+readlink<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;/proc/self/exe&#34;</span>, <span style="color:#e6db74">&#34;/home/test&#34;</span>, 4096<span style="color:#f92672">)</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">10</span>
+open<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;/lib64/libonion.so&#34;</span>, O_RDONLY|O_CLOEXEC<span style="color:#f92672">)</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">3</span>
+read<span style="color:#f92672">(</span>3, <span style="color:#e6db74">&#34;\177ELF\2\1\1\0\0\0\0\0\0\0\0\0\3\0&gt;\0\1\0\0\0`\20\0\0\0\0\0\0&#34;</span>..., 832<span style="color:#f92672">)</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">832</span>
+fstat<span style="color:#f92672">(</span>3, <span style="color:#f92672">{</span>st_mode<span style="color:#f92672">=</span>S_IFREG|0755, st_size<span style="color:#f92672">=</span>42880, ...<span style="color:#f92672">}</span><span style="color:#f92672">)</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+mmap<span style="color:#f92672">(</span>NULL, 1072448, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_DENYWRITE, 3, 0<span style="color:#f92672">)</span> <span style="color:#f92672">=</span> 0x7ffa09825000
+mprotect<span style="color:#f92672">(</span>0x7ffa09828000, 1048576, PROT_NONE<span style="color:#f92672">)</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+mmap<span style="color:#f92672">(</span>0x7ffa09928000, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x3000<span style="color:#f92672">)</span> <span style="color:#f92672">=</span> 0x7ffa09928000
+mmap<span style="color:#f92672">(</span>0x7ffa09929000, 7488, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_ANONYMOUS, -1, 0<span style="color:#f92672">)</span> <span style="color:#f92672">=</span> 0x7ffa09929000
+close<span style="color:#f92672">(</span>3<span style="color:#f92672">)</span>                                <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+munmap<span style="color:#f92672">(</span>0x7ffa0992b000, 18<span style="color:#f92672">)</span>              <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+open<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;/etc/ld.so.cache&#34;</span>, O_RDONLY|O_CLOEXEC<span style="color:#f92672">)</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">3</span>
+fstat<span style="color:#f92672">(</span>3, <span style="color:#f92672">{</span>st_mode<span style="color:#f92672">=</span>S_IFREG|0644, st_size<span style="color:#f92672">=</span>72821, ...<span style="color:#f92672">}</span><span style="color:#f92672">)</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+mmap<span style="color:#f92672">(</span>NULL, 72821, PROT_READ, MAP_PRIVATE, 3, 0<span style="color:#f92672">)</span> <span style="color:#f92672">=</span> 0x7ffa09813000
+close<span style="color:#f92672">(</span>3<span style="color:#f92672">)</span>                                <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+open<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;/lib64/libc.so.6&#34;</span>, O_RDONLY|O_CLOEXEC<span style="color:#f92672">)</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">3</span>
+read<span style="color:#f92672">(</span>3, <span style="color:#e6db74">&#34;\177ELF\2\1\1\3\0\0\0\0\0\0\0\0\3\0&gt;\0\1\0\0\0\20\35\2\0\0\0\0\0&#34;</span>..., 832<span style="color:#f92672">)</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">832</span>
+fstat<span style="color:#f92672">(</span>3, <span style="color:#f92672">{</span>st_mode<span style="color:#f92672">=</span>S_IFREG|0755, st_size<span style="color:#f92672">=</span>2122016, ...<span style="color:#f92672">}</span><span style="color:#f92672">)</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+mmap<span style="color:#f92672">(</span>NULL, 3944896, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_DENYWRITE, 3, 0<span style="color:#f92672">)</span> <span style="color:#f92672">=</span> 0x7ffa09348000
+mprotect<span style="color:#f92672">(</span>0x7ffa09502000, 2093056, PROT_NONE<span style="color:#f92672">)</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+mmap<span style="color:#f92672">(</span>0x7ffa09701000, 24576, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x1b9000<span style="color:#f92672">)</span> <span style="color:#f92672">=</span> 0x7ffa09701000
+mmap<span style="color:#f92672">(</span>0x7ffa09707000, 16832, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_ANONYMOUS, -1, 0<span style="color:#f92672">)</span> <span style="color:#f92672">=</span> 0x7ffa09707000
+    close<span style="color:#f92672">(</span>3<span style="color:#f92672">)</span>                                <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+open<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;/lib64/libdl.so.2&#34;</span>, O_RDONLY|O_CLOEXEC<span style="color:#f92672">)</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">3</span>
+read<span style="color:#f92672">(</span>3, <span style="color:#e6db74">&#34;\177ELF\2\1\1\0\0\0\0\0\0\0\0\0\3\0&gt;\0\1\0\0\0`\16\0\0\0\0\0\0&#34;</span>..., 832<span style="color:#f92672">)</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">832</span>
+fstat<span style="color:#f92672">(</span>3, <span style="color:#f92672">{</span>st_mode<span style="color:#f92672">=</span>S_IFREG|0755, st_size<span style="color:#f92672">=</span>19344, ...<span style="color:#f92672">}</span><span style="color:#f92672">)</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+mmap<span style="color:#f92672">(</span>NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0<span style="color:#f92672">)</span> <span style="color:#f92672">=</span> 0x7ffa0992b000
+mmap<span style="color:#f92672">(</span>NULL, 2109744, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_DENYWRITE, 3, 0<span style="color:#f92672">)</span> <span style="color:#f92672">=</span> 0x7ffa09144000
+mprotect<span style="color:#f92672">(</span>0x7ffa09146000, 2097152, PROT_NONE<span style="color:#f92672">)</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+mmap<span style="color:#f92672">(</span>0x7ffa09346000, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x2000<span style="color:#f92672">)</span> <span style="color:#f92672">=</span> 0x7ffa09346000
+    close<span style="color:#f92672">(</span>3<span style="color:#f92672">)</span>                                <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+mmap<span style="color:#f92672">(</span>NULL, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0<span style="color:#f92672">)</span> <span style="color:#f92672">=</span> 0x7ffa09811000
+arch_prctl<span style="color:#f92672">(</span>ARCH_SET_FS, 0x7ffa09811740<span style="color:#f92672">)</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+mprotect<span style="color:#f92672">(</span>0x7ffa09701000, 16384, PROT_READ<span style="color:#f92672">)</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+mprotect<span style="color:#f92672">(</span>0x7ffa09346000, 4096, PROT_READ<span style="color:#f92672">)</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+mprotect<span style="color:#f92672">(</span>0x600000, 4096, PROT_READ<span style="color:#f92672">)</span>     <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+mprotect<span style="color:#f92672">(</span>0x7ffa0992d000, 4096, PROT_READ<span style="color:#f92672">)</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+munmap<span style="color:#f92672">(</span>0x7ffa09813000, 72821<span style="color:#f92672">)</span>           <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+fstat<span style="color:#f92672">(</span>0, <span style="color:#f92672">{</span>st_mode<span style="color:#f92672">=</span>S_IFCHR|0620, st_rdev<span style="color:#f92672">=</span>makedev<span style="color:#f92672">(</span>136, 0<span style="color:#f92672">)</span>, ...<span style="color:#f92672">}</span><span style="color:#f92672">)</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+mmap<span style="color:#f92672">(</span>NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0<span style="color:#f92672">)</span> <span style="color:#f92672">=</span> 0x7ffa09824000
+read<span style="color:#f92672">(</span>0, 99<span style="color:#e6db74">&#34;99\n&#34;</span>, 1024<span style="color:#f92672">)</span> <span style="color:#f92672">=</span> 3#程序停顿，从控制台读取数据
+fstat<span style="color:#f92672">(</span>1, <span style="color:#f92672">{</span>st_mode<span style="color:#f92672">=</span>S_IFCHR|0620, st_rdev<span style="color:#f92672">=</span>makedev<span style="color:#f92672">(</span>136, 0<span style="color:#f92672">)</span>, ...<span style="color:#f92672">}</span><span style="color:#f92672">)</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+mmap<span style="color:#f92672">(</span>NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0<span style="color:#f92672">)</span> <span style="color:#f92672">=</span> 0x7ffa09823000
+write<span style="color:#f92672">(</span>1, <span style="color:#e6db74">&#34;000000099\n&#34;</span>, 10000000099<span style="color:#f92672">)</span><span style="color:#f92672">=</span> <span style="color:#ae81ff">10</span>
+<span style="color:#75715e">#系统调用write函数将格式化后的数字显示至屏幕</span>
+exit_group<span style="color:#f92672">(</span>0<span style="color:#f92672">)</span><span style="color:#f92672">=</span> ?  <span style="color:#75715e">#exit_group退出执行</span>
++++ exited with <span style="color:#ae81ff">0</span> +++
+</code></pre></div><p><strong>b、跟踪信号传递</strong></p>
+<blockquote>
+<p>在当前程序运行至读入数据时，另外开一个窗口输入命令： killall test 原窗口会出</p>
+</blockquote>
+<p>现如下结果</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">fstat<span style="color:#f92672">(</span>0, <span style="color:#f92672">{</span>st_mode<span style="color:#f92672">=</span>S_IFCHR|0620, st_rdev<span style="color:#f92672">=</span>makedev<span style="color:#f92672">(</span>136, 0<span style="color:#f92672">)</span>, ...<span style="color:#f92672">}</span><span style="color:#f92672">)</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+mmap<span style="color:#f92672">(</span>NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0<span style="color:#f92672">)</span> <span style="color:#f92672">=</span> 0x7f42f8fe9000
+read<span style="color:#f92672">(</span>0, 0x7f42f8fe9000, 1024<span style="color:#f92672">)</span><span style="color:#f92672">=</span> ? ERESTARTSYS <span style="color:#f92672">(</span>To be restarted <span style="color:#66d9ef">if</span> SA_RESTART is set<span style="color:#f92672">)</span>
+--- SIGTERM <span style="color:#f92672">{</span>si_signo<span style="color:#f92672">=</span>SIGTERM, si_code<span style="color:#f92672">=</span>SI_USER, si_pid<span style="color:#f92672">=</span>22809, si_uid<span style="color:#f92672">=</span>0<span style="color:#f92672">}</span> ---
++++ killed by SIGTERM +++  <span style="color:#75715e">#进程被终止</span>
+</code></pre></div><p><strong>c、系统调用统计</strong></p>
+<blockquote>
+<p>执行命令 strace -c ./test,输出如下结果</p>
+</blockquote>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#f92672">[</span>root@Sinyang /home<span style="color:#f92672">]</span><span style="color:#75715e"># strace -c ./test</span>
+000012217% time     seconds  usecs/call     calls    errors syscall
+------ ----------- ----------- --------- --------- ----------------
+0.00    0.000000           <span style="color:#ae81ff">0</span>         <span style="color:#ae81ff">3</span>           read
+0.00    0.000000           <span style="color:#ae81ff">0</span>         <span style="color:#ae81ff">1</span>           write
+0.00    0.000000           <span style="color:#ae81ff">0</span>         <span style="color:#ae81ff">5</span>           open
+0.00    0.000000           <span style="color:#ae81ff">0</span>         <span style="color:#ae81ff">5</span>           close
+0.00    0.000000           <span style="color:#ae81ff">0</span>         <span style="color:#ae81ff">6</span>           fstat
+0.00    0.000000           <span style="color:#ae81ff">0</span>        <span style="color:#ae81ff">14</span>           mmap
+0.00    0.000000           <span style="color:#ae81ff">0</span>         <span style="color:#ae81ff">7</span>           mprotect
+0.00    0.000000           <span style="color:#ae81ff">0</span>         <span style="color:#ae81ff">2</span>           munmap
+0.00    0.000000           <span style="color:#ae81ff">0</span>         <span style="color:#ae81ff">1</span>           brk
+0.00    0.000000           <span style="color:#ae81ff">0</span>         <span style="color:#ae81ff">1</span>           access
+0.00    0.000000           <span style="color:#ae81ff">0</span>         <span style="color:#ae81ff">1</span>           execve
+0.00    0.000000           <span style="color:#ae81ff">0</span>         <span style="color:#ae81ff">1</span>           readlink
+0.00    0.000000           <span style="color:#ae81ff">0</span>         <span style="color:#ae81ff">1</span>           arch_prctl
+------ ----------- ----------- --------- --------- ---------------
+100.00    0.000000                    <span style="color:#ae81ff">48</span>           total
+</code></pre></div><blockquote>
+<p>这里就比较清楚的说明了调用了哪些系统函数，调用次数多少，消耗了多长时间</p>
+</blockquote>
+<p><strong>d、使用strace追踪现有的进程</strong></p>
+<blockquote>
+<p>​     strace -p pid</p>
+</blockquote>
+<hr>
+
+    </div>
+    <div class="post-footer">
+      
+    </div>
+  </article>
+
+    </main>
+  </body>
+</html>

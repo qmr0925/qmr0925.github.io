@@ -1,0 +1,344 @@
+<!doctype html>
+<html lang="en-us">
+  <head>
+    <title>TiDB-调度原理简介 // Your title</title>
+    <meta charset="utf-8" />
+    <meta name="generator" content="Hugo 0.62.2" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="John Doe" />
+    <meta name="description" content="" />
+    <link rel="stylesheet" href="https://qmr0925.github.io/css/main.min.88e7083eff65effb7485b6e6f38d10afbec25093a6fac42d734ce9024d3defbd.css" />
+
+    
+    <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="TiDB-调度原理简介"/>
+<meta name="twitter:description" content="一、TiKV概述  TiKV是TiDB的数据库的分布式存储引擎，数据以Region为单位进行复制和管理，每个
+ Region为单位进行复制和管理
+ 每个Region会有多个Replica，这些Replica会分布在不同的TiKV节点上，其中leader负
+ 责读和写，Follower负责同步Leader发过来的Raft log
+二、关键问题   如何保证同一个Region的多个Replica分布在不同的节点上？一台机器上启动多个TiKV
+ 的实例存在的问题？
+   TiKV集群进行跨机房部署用于容灾的时候，如果一个机房掉线，如何保证不会丢失Raft
+ Group的多个Replica?
+   添加一个节点进入TiKV集群之后，如何将其他节点的数据搬过来？
+  如果一个节点短暂掉线时如何处理，如果节点长时间掉线，如何处理？
+  如何调接Replica副本的个数
+  并不是所有的Region都被经常访问，可能热点数据只在少数的几个Region上
+  集群在做负载均衡的时候，需要搬迁数据，这种数据的迁移能否不占用大量的网络带
+   宽、磁盘IO和CPU
+ 三、系统调度需求 1、分布式高可用存储系统的要求   副本数量不能多也不能少
+  副本需要分布在不同的机器上
+  新增加节点之后，其他节点上的副本如何迁移过来
+  节点下线时，需要将该节点的数据迁移走
+   满足这些需求后系统具有多副本的容错、动态的扩容/缩容、容忍节点掉线和自动故
+ 障恢复的功能
+2、需要优化的需求   整个集群leader的均匀分布
+  维持每个节点的存储容量均匀"/>
+
+    <meta property="og:title" content="TiDB-调度原理简介" />
+<meta property="og:description" content="一、TiKV概述  TiKV是TiDB的数据库的分布式存储引擎，数据以Region为单位进行复制和管理，每个
+ Region为单位进行复制和管理
+ 每个Region会有多个Replica，这些Replica会分布在不同的TiKV节点上，其中leader负
+ 责读和写，Follower负责同步Leader发过来的Raft log
+二、关键问题   如何保证同一个Region的多个Replica分布在不同的节点上？一台机器上启动多个TiKV
+ 的实例存在的问题？
+   TiKV集群进行跨机房部署用于容灾的时候，如果一个机房掉线，如何保证不会丢失Raft
+ Group的多个Replica?
+   添加一个节点进入TiKV集群之后，如何将其他节点的数据搬过来？
+  如果一个节点短暂掉线时如何处理，如果节点长时间掉线，如何处理？
+  如何调接Replica副本的个数
+  并不是所有的Region都被经常访问，可能热点数据只在少数的几个Region上
+  集群在做负载均衡的时候，需要搬迁数据，这种数据的迁移能否不占用大量的网络带
+   宽、磁盘IO和CPU
+ 三、系统调度需求 1、分布式高可用存储系统的要求   副本数量不能多也不能少
+  副本需要分布在不同的机器上
+  新增加节点之后，其他节点上的副本如何迁移过来
+  节点下线时，需要将该节点的数据迁移走
+   满足这些需求后系统具有多副本的容错、动态的扩容/缩容、容忍节点掉线和自动故
+ 障恢复的功能
+2、需要优化的需求   整个集群leader的均匀分布
+  维持每个节点的存储容量均匀" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://qmr0925.github.io/database/tidbschedu/" />
+<meta property="article:published_time" content="2020-04-24T00:53:48+08:00" />
+<meta property="article:modified_time" content="2020-04-24T00:53:48+08:00" />
+
+
+  </head>
+  <body>
+    <header class="app-header">
+      <a href="https://qmr0925.github.io"><img class="app-header-avatar" src="/1.png" alt="John Doe" /></a>
+      <h1>Your title</h1>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vehicula turpis sit amet elit pretium.</p>
+      <div class="app-header-social">
+        
+          <a target="_blank" href="https://github.com/gohugoio" rel="noreferrer noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-github">
+  <title>github</title>
+  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+</svg></a>
+        
+          <a target="_blank" href="mailto:csuyzz@foxmail.com" rel="noreferrer noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-mail">
+  <title>mail</title>
+  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline>
+</svg></a>
+        
+          <a target="_blank" href="https://cn.linkedin.com/in/csuyzz" rel="noreferrer noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-linkedin">
+  <title>linkedin</title>
+  <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle>
+</svg></a>
+        
+          <a target="_blank" href="https://twitter.com/gohugoio" rel="noreferrer noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-twitter">
+  <title>twitter</title>
+  <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path>
+</svg></a>
+        
+      </div>
+      <h3><a href="/" title="首页">首页</a></h3>
+      <h3><a href="/category/content/" title="首页">分类目录</a></h3>
+      <h3><a href="/personal/introduce/" title="首页">个人简介</a></h3>
+    </header>
+    <main class="app-container">
+      
+  <article class="post">
+    <header class="post-header">
+      <h1 class ="post-title">TiDB-调度原理简介</h1>
+      <div class="post-meta">
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-calendar">
+  <title>calendar</title>
+  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line>
+</svg>
+          Apr 24, 2020
+        </div>
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-clock">
+  <title>clock</title>
+  <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
+</svg>
+          1 min read
+        </div>
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tag">
+  <title>tag</title>
+  <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7" y2="7"></line>
+</svg>
+              <a class="tag" href="https://qmr0925.github.io/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a>
+              <a class="tag" href="https://qmr0925.github.io/tags/%E5%88%86%E5%B8%83%E5%BC%8F/">分布式</a>
+        </div>
+      </div>
+    </header>
+    <div class="post-content">
+      <hr>
+<h3 id="一tikv概述">一、TiKV概述</h3>
+<blockquote>
+<p>TiKV是TiDB的数据库的分布式存储引擎，数据以Region为单位进行复制和管理，每个</p>
+</blockquote>
+<p>Region为单位进行复制和管理</p>
+<blockquote>
+<p>每个Region会有多个Replica，这些Replica会分布在不同的TiKV节点上，其中leader负</p>
+</blockquote>
+<p>责读和写，Follower负责同步Leader发过来的Raft log</p>
+<h3 id="二关键问题">二、关键问题</h3>
+<ul>
+<li>
+<p>如何保证同一个Region的多个Replica分布在不同的节点上？一台机器上启动多个TiKV</p>
+<blockquote>
+<p>的实例存在的问题？</p>
+</blockquote>
+</li>
+<li>
+<p>TiKV集群进行跨机房部署用于容灾的时候，如果一个机房掉线，如何保证不会丢失Raft</p>
+<blockquote>
+<p>Group的多个Replica?</p>
+</blockquote>
+</li>
+<li>
+<p>添加一个节点进入TiKV集群之后，如何将其他节点的数据搬过来？</p>
+</li>
+<li>
+<p>如果一个节点短暂掉线时如何处理，如果节点长时间掉线，如何处理？</p>
+</li>
+<li>
+<p>如何调接Replica副本的个数</p>
+</li>
+<li>
+<p>并不是所有的Region都被经常访问，可能热点数据只在少数的几个Region上</p>
+</li>
+<li>
+<p>集群在做负载均衡的时候，需要搬迁数据，这种数据的迁移能否不占用大量的网络带</p>
+</li>
+</ul>
+<blockquote>
+<p>宽、磁盘IO和CPU</p>
+</blockquote>
+<h3 id="三系统调度需求">三、系统调度需求</h3>
+<h4 id="1分布式高可用存储系统的要求">1、分布式高可用存储系统的要求</h4>
+<ul>
+<li>
+<p>副本数量不能多也不能少</p>
+</li>
+<li>
+<p>副本需要分布在不同的机器上</p>
+</li>
+<li>
+<p>新增加节点之后，其他节点上的副本如何迁移过来</p>
+</li>
+<li>
+<p>节点下线时，需要将该节点的数据迁移走</p>
+</li>
+</ul>
+<blockquote>
+<p>满足这些需求后系统具有多副本的容错、动态的扩容/缩容、容忍节点掉线和自动故</p>
+</blockquote>
+<p>障恢复的功能</p>
+<h4 id="2需要优化的需求">2、需要优化的需求</h4>
+<ul>
+<li>
+<p>整个集群leader的均匀分布</p>
+</li>
+<li>
+<p>维持每个节点的存储容量均匀</p>
+</li>
+<li>
+<p>维持热点分布均匀</p>
+</li>
+<li>
+<p>管理节点的状态，手动上线/下线节点、自动下线失效节点</p>
+</li>
+</ul>
+<blockquote>
+<p>满足这些需求后，系统的负载更加均匀，且更加方便的管理</p>
+</blockquote>
+<h3 id="四系统调度的方案">四、系统调度的方案</h3>
+<blockquote>
+<p>满足3.2中的各种需求首先要收集一些信息、比如每个节点的状态，每个Raft Group</p>
+</blockquote>
+<p>的消息，业务访问的统计</p>
+<h4 id="1调度的基本操作">1、调度的基本操作</h4>
+<ul>
+<li>
+<p>增加一个Replica</p>
+</li>
+<li>
+<p>删除一个Replica</p>
+</li>
+<li>
+<p>将leader角色在一个Raft Group的不同Replica转换</p>
+</li>
+</ul>
+<blockquote>
+<p>恰好，Raft协议能够满足这三种需求，AddReplica、RemoveReplica、TransferLeader</p>
+</blockquote>
+<p>三个基本操作丢被支持</p>
+<h4 id="2信息的收集">2、信息的收集</h4>
+<h5 id="1每个tikv的节点会定期向pd汇报节点的整体信息">（1）每个TiKV的节点会定期向PD汇报节点的整体信息</h5>
+<blockquote>
+<p>Store与PD直接存在心跳包，一方面 PD通过心跳包检测每个Store是否存活和是否有</p>
+</blockquote>
+<p>新加入的Store信息</p>
+<blockquote>
+<p>心跳包中会包含整个节点的Store信息，具体有如下几项：</p>
+</blockquote>
+<ul>
+<li>
+<p>总磁盘容量</p>
+</li>
+<li>
+<p>可用磁盘容量</p>
+</li>
+<li>
+<p>承载的Region的数量</p>
+</li>
+<li>
+<p>数据写入的速度</p>
+</li>
+<li>
+<p>发送接收SnapShot的数量，Replica之间会通过SnapShot同步数据</p>
+</li>
+<li>
+<p>节点是否过载等等</p>
+</li>
+</ul>
+<h5 id="2每个raft的group的leader会定期向pd汇报信息">(2)每个Raft的Group的leader会定期向PD汇报信息</h5>
+<blockquote>
+<p>每个Raft Group和Leader之间存在心跳包，心跳包的具体信息如下Leader的位置、</p>
+</blockquote>
+<p>Followers的位置、掉线的Replica的数目数据写入或者读取的速度</p>
+<h4 id="3调度的策略">3、调度的策略</h4>
+<h5 id="1一个region的replica数量正确">(1)一个Region的Replica数量正确</h5>
+<blockquote>
+<p>当PD通过某个Region Leader的心跳包发现这个Region的Replica数量不满足要求时，</p>
+</blockquote>
+<p>需要通过Add/Remove Replica操作Replica数量,出现这种情况的原因是:</p>
+<ul>
+<li>
+<p>某个节点掉线，数据丢失，导致一些Region的数量不足</p>
+</li>
+<li>
+<p>某个掉线节点又恢复业务，自动接入集群，但是之前已经补充了Replica</p>
+</li>
+<li>
+<p>副本策略被调整，修改了最大Replica的配置</p>
+</li>
+</ul>
+<h5 id="2一个raft-group中的多个replica不在同一个位置">(2)一个Raft Group中的多个Replica不在同一个位置</h5>
+<ul>
+<li>
+<p>多个Replica不会在同一个节点上，避免单个节点的失效导致多个Replica丢失</p>
+</li>
+<li>
+<p>多个节点部署在同一台物理机器上</p>
+</li>
+<li>
+<p>TiKV节点分布在多个机架上，当单个机架掉电时，能够保证系统可用性</p>
+</li>
+<li>
+<p>TiKV节点分布在多个IDC中，在单个机房掉电时，也能保证系统可用</p>
+</li>
+</ul>
+<h5 id="3副本在store之间的均匀分布">(3)副本在Store之间的均匀分布</h5>
+<blockquote>
+<p>副本数量的均衡会使得总体的负载更均衡</p>
+</blockquote>
+<h5 id="4leader数量在store之间的均匀分布">(4)Leader数量在Store之间的均匀分布</h5>
+<blockquote>
+<p>Raft协议尧要读取和写入都通过Leader进行，计算负载主要在Leader上面，PD尽</p>
+</blockquote>
+<p>可能将leader分散开</p>
+<h5 id="5访问的热点数据在store时间均匀分布">(5)访问的热点数据在Store时间均匀分布</h5>
+<blockquote>
+<p>每个Store以及Region Leader在上报信息的时候携带了当前访问负载的信息，PD会</p>
+</blockquote>
+<p>检测出访问热点且将其在节点之间分散开</p>
+<h5 id="6各store的存储空间占用大致相同">(6)各Store的存储空间占用大致相同</h5>
+<blockquote>
+<p>每个Store启动的时候都会制定一个Capacity参数，表明这个Store的存储空间上限PD</p>
+</blockquote>
+<p>在做调度的时候会考虑节点的剩余空间</p>
+<h5 id="7控制调度的速度避免影响正产业务">(7)控制调度的速度，避免影响正产业务</h5>
+<blockquote>
+<p>调度操作比较耗费CPU、内存、磁盘IO和网络带宽。一般情况下会对速度进行控制，</p>
+</blockquote>
+<p>当然也可以加快调度的速度</p>
+<h5 id="8支持手动下线节点">(8)支持手动下线节点</h5>
+<blockquote>
+<p>当通过pd-ctl手动下线节点后，PD会在一定的速率控制下，将节点上的数据调度走。</p>
+</blockquote>
+<p>当调度完成后便会将这个节点置为下线状态</p>
+<h4 id="4调度实现的具体过程">4、调度实现的具体过程</h4>
+<blockquote>
+<p>PD不断的通过Store或者Leader的心跳包收信息，获得整个集群的数据，根据这些信息</p>
+</blockquote>
+<p>以及调度策略生成调度操作系列，将需要进行的操作返回给Region leader，并在后面的心</p>
+<p>跳包中检测结果</p>
+<hr>
+
+    </div>
+    <div class="post-footer">
+      
+    </div>
+  </article>
+
+    </main>
+  </body>
+</html>

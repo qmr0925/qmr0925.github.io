@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>数据库 on Your title</title>
+    <link>https://qmr0925.github.io/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/</link>
+    <description>Recent content in 数据库 on Your title</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 24 Apr 2020 00:53:48 +0800</lastBuildDate>
+    
+	<atom:link href="https://qmr0925.github.io/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>TiDB-调度原理简介</title>
+      <link>https://qmr0925.github.io/database/tidbschedu/</link>
+      <pubDate>Fri, 24 Apr 2020 00:53:48 +0800</pubDate>
+      
+      <guid>https://qmr0925.github.io/database/tidbschedu/</guid>
+      <description>一、TiKV概述  TiKV是TiDB的数据库的分布式存储引擎，数据以Region为单位进行复制和管理，每个
+ Region为单位进行复制和管理
+ 每个Region会有多个Replica，这些Replica会分布在不同的TiKV节点上，其中leader负
+ 责读和写，Follower负责同步Leader发过来的Raft log
+二、关键问题   如何保证同一个Region的多个Replica分布在不同的节点上？一台机器上启动多个TiKV
+ 的实例存在的问题？
+   TiKV集群进行跨机房部署用于容灾的时候，如果一个机房掉线，如何保证不会丢失Raft
+ Group的多个Replica?
+   添加一个节点进入TiKV集群之后，如何将其他节点的数据搬过来？
+  如果一个节点短暂掉线时如何处理，如果节点长时间掉线，如何处理？
+  如何调接Replica副本的个数
+  并不是所有的Region都被经常访问，可能热点数据只在少数的几个Region上
+  集群在做负载均衡的时候，需要搬迁数据，这种数据的迁移能否不占用大量的网络带
+   宽、磁盘IO和CPU
+ 三、系统调度需求 1、分布式高可用存储系统的要求   副本数量不能多也不能少
+  副本需要分布在不同的机器上
+  新增加节点之后，其他节点上的副本如何迁移过来
+  节点下线时，需要将该节点的数据迁移走
+   满足这些需求后系统具有多副本的容错、动态的扩容/缩容、容忍节点掉线和自动故
+ 障恢复的功能
+2、需要优化的需求   整个集群leader的均匀分布
+  维持每个节点的存储容量均匀</description>
+    </item>
+    
+    <item>
+      <title>TiDB-存储原理简介</title>
+      <link>https://qmr0925.github.io/database/tidbstorage/</link>
+      <pubDate>Fri, 24 Apr 2020 00:53:20 +0800</pubDate>
+      
+      <guid>https://qmr0925.github.io/database/tidbstorage/</guid>
+      <description>一、数据存储的要求 1、数据库应该怎么存储数据  数据库最根本的功能就是把数据存下来，保存数据的方法有很多
+ （1）直接使用数组  最简单的就是在内存中直接构建一个数据结构（比如可以使用一个数组），保存用户
+ 发来的数据。这个方案非常简单，性能也是非常好的。但是存在很大的缺点：数据完全在
+内存中，一旦停机或者服务重启，数据就永远丢失
+（2）数据丢失如何解决  为了解决数据丢失的问题，可以将数据存储在非易失性的介质中，比如硬盘这时我们
+ 可以在磁盘上创建一个文件，收到一条数据就在文件中Append一行，这样持久化存储
+数据
+（3）磁盘出现故障如何解决  为了防止磁盘出现坏道，我们可以做RAID,单机冗余存储
+ （4）单机出现故障如何解决  但是如果机器挂了呢？我们还可以将存储改为网络存储，或者是通过硬件或者软件
+ 进行存储复制，数据安全了
+2、数据存储的其他需求   跨数据中心的容灾
+  写入速度如何提高
+  数据保存下来后是否方便读取
+  保存的数据如何修改，如何支持并发的修改
+  原子性地修改多条记录
+  二、TiKV的设计思想 1、TiKV的数据存储模型  TiDB是Key-Value的模型，并且提供有序遍历的方法，TiKV的主要特点就是:
+   TiKV可以看做一个巨大的Map
+  这个Map中的Key-Value是按照Key的二进制顺序有序排列的
+   我们可以找到某一个Key的位置，然后不断的调用Next方法以递增的顺序获取比这
+ 个Key大的Key-Value。这里的存储模型和SQL中的Table无关，TiKV是一个巨大的分
+布式Map
+2、TiKV数据的持久化机制  TiKV没有选择直接向磁盘上写数据，而是将数据保存在RocksDB中，具体的数据落
+ 地由RocksDB完成。RocksDB是一个非常优秀的开源的单机存储引擎，通过使用它TiKV
+已经实现了高效可靠的本地存储
+ 但是如何保证单机失效的情况下，数据不会丢失和出错，所以我们需要将数据复制</description>
+    </item>
+    
+    <item>
+      <title>TiDB-计算原理</title>
+      <link>https://qmr0925.github.io/database/tidbcompute/</link>
+      <pubDate>Fri, 24 Apr 2020 00:53:05 +0800</pubDate>
+      
+      <guid>https://qmr0925.github.io/database/tidbcompute/</guid>
+      <description>一、关系表到KV存储的映射 1、原理  TiDB的存储引擎是一个全局有序的分布式Key-Value引擎TiDB对于每一个表分配一
+ 个TableID,每一个索引都会分配一个IndexID,每一行分配一个RowID，TableID在整个集
+群中唯一，IndexID/RowID在表内唯一，这些ID都是int64类型
+2、具体实现 （1）每行数据按照如下规则进行编码 Key:tablePrefix{tableID}_recordPrefixSep{rowID} Value:[col1,col2,col3,col4] #tablePrefix和recordPrefixSep都是特定的字符串常量 #用于在KV空间中 区分其他的 （2）Unique Index数据的编码 Key:tablePrefix{tableID}_indexPrefixSep{indexID}_indexedColumnsValue (3)对于非Unique Index的编码  可能有多行数据的ColumnsValue一样，所以应该这样去编码：
+ Key:tablePrefix{tableID}_indexPrefixSep{IndexID}_indexedColumnsValue_rowID Value:null #Key里面的Prefix都是字符串常量，作用都是区分命名空间， #以避免不同类型数据之间的相互冲突  每一个Table内部的所有Row都有相同的前缀，一个Index的数据也是有相同的数据的
+ 所以可以非常方便的将Row或者Index数据有序的保存在TiKV中，即一个表中的所有Row
+数据就会按照RowID的顺序排列在TiKV的Key空间中，某一个Index的数据也会按照Index
+的顺序排列在Key空间内
+3、元信息的管理  Database/Table都有元信息，就是表的定义和各项属性，这些信息需要持久化的存
+ 储在TiKV中，每个Database/Table都被分配了一个唯一的ID。这个ID作为唯一的标识，
+并且在编码为Key-Value，这个ID都会编码到Key中。这样可以构造出一个Key信息，
+Value存储的是序列化后的元信息。除此之外，还有一个专门的Key-Value来存储当前
+的Schema信息
+二、TiDB的整体结构 1、TiKV Cluster  主要的作用就是作为KV引擎存储数据
+ 2、TiDB Servers  这一层就是无状态的节点，本身并不会去存储数据，节点之间完全对等；TiDB
+ Server这一层主要是处理用户的请求，执行SQL逻辑运算
+三、SQL层运算  TiDB将SQL查询映射为KV的查询，再通过KV的接口获取对应的数据
+ 1、查询方案的简介  以select count(*) from user where name = &amp;ldquo;TiDB&amp;quot;为例
+   构造Key Range:一个表中所有的RowID都在[0,MaxInt64]这个范围内，那么我们可以根</description>
+    </item>
+    
+    <item>
+      <title>TiDB架构原理简介</title>
+      <link>https://qmr0925.github.io/database/tidbinfr/</link>
+      <pubDate>Fri, 24 Apr 2020 00:52:37 +0800</pubDate>
+      
+      <guid>https://qmr0925.github.io/database/tidbinfr/</guid>
+      <description>一、TiDB主要特性  TiDB是一个开源分布式关系型数据库，它主要用来应用在全部的OLTP的场景和大部
+ 分的OLAP场景。TiDB作为一个开源的分布式数据库主要有以下特点：
+1、高度兼容MySQL  MySQL迁移到TiDB是非常容易的，无论是单机迁移还是集群的迁移
+ 2、支持无限的水平弹性扩展  新增节点实现TiDB的水平扩展，轻松地应对高并发、海量数据的场景
+ 3、强一致性和高可用  基于Raft的多数派选举协议可以提供100%的数据强一致性，可以实现故障的自动恢复
+ 4、分布式事务  支持ACID事务
+  TiDB这些特性使它成为业界认可的优秀数据库产品，但是我们要想深入理解这些特性，
+ 还要从架构原理的角度学习
+二、TiDB的架构原理简介  TiDB集群主要包括三个核心组件：TiDB Server,PD Server,TiKV Server
+  具体的架构原理图如下所示：
+ 1、TiDB Server  TiDB Server 负责接收SQL请求，处理SQL相关的逻辑，并通过PD找到存储计算所需
+ 数据的TiKV地址，与TiKV交互数据，最终返回结果。
+ TiDB Server 是无状态的，其本身并不存储数据，只负责计算，可以无限水平扩展，
+ 可通过负载均衡的组件(LVS、HAProxy或者F5)对外提供统一的接入地址
+2、PD Server(Placement Driver)  PD是整个集群的管理模块，具体的工作职能是：
+   存储这个集群的原信息(某个Key具体存储在哪个TiKV的节点)
+  对TiKV集群进行调度和负载均衡(数据迁移、Raft Group leader)
+  分配全局唯一且递增的事物ID
+   PD通过Raft协议保证数据的安全性,Raft的leader Server负责处理所有操作，其余的PD</description>
+    </item>
+    
+  </channel>
+</rss>

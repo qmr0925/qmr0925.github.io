@@ -1,0 +1,216 @@
+<!doctype html>
+<html lang="en-us">
+  <head>
+    <title>Python中的sort()和sorted // Your title</title>
+    <meta charset="utf-8" />
+    <meta name="generator" content="Hugo 0.62.2" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="John Doe" />
+    <meta name="description" content="" />
+    <link rel="stylesheet" href="https://qmr0925.github.io/css/main.min.88e7083eff65effb7485b6e6f38d10afbec25093a6fac42d734ce9024d3defbd.css" />
+
+    
+    <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Python中的sort()和sorted"/>
+<meta name="twitter:description" content="Python中sort和sorted的区别和使用 一、函数介绍  sort函数和sorted函数的功能是非常强大的，在有些leetcode题目中，使用了这些函数，几行代码就可以
+ 搞定了（只要你不怕被面试官打死），下面我们先看看这两个函数的介绍吧
+&gt;&gt;&gt; help(list.sort) Help on method_descriptor: sort(self, /, *, key=None, reverse=False) Stable sort *IN PLACE*. #inplace &gt;&gt;&gt; help(sorted) Help on built-in function sorted in module builtins: sorted(iterable, /, *, key=None, reverse=False) Return a new list containing all items from the iterable in ascending order. #new list A custom key function can be supplied to customize the sort order, and the reverse flag can be set to request the result in descending order."/>
+
+    <meta property="og:title" content="Python中的sort()和sorted" />
+<meta property="og:description" content="Python中sort和sorted的区别和使用 一、函数介绍  sort函数和sorted函数的功能是非常强大的，在有些leetcode题目中，使用了这些函数，几行代码就可以
+ 搞定了（只要你不怕被面试官打死），下面我们先看看这两个函数的介绍吧
+&gt;&gt;&gt; help(list.sort) Help on method_descriptor: sort(self, /, *, key=None, reverse=False) Stable sort *IN PLACE*. #inplace &gt;&gt;&gt; help(sorted) Help on built-in function sorted in module builtins: sorted(iterable, /, *, key=None, reverse=False) Return a new list containing all items from the iterable in ascending order. #new list A custom key function can be supplied to customize the sort order, and the reverse flag can be set to request the result in descending order." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://qmr0925.github.io/program/sort_sorted/" />
+<meta property="article:published_time" content="2019-11-28T21:14:28+08:00" />
+<meta property="article:modified_time" content="2019-11-28T21:14:28+08:00" />
+
+
+  </head>
+  <body>
+    <header class="app-header">
+      <a href="https://qmr0925.github.io"><img class="app-header-avatar" src="/1.png" alt="John Doe" /></a>
+      <h1>Your title</h1>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vehicula turpis sit amet elit pretium.</p>
+      <div class="app-header-social">
+        
+          <a target="_blank" href="https://github.com/gohugoio" rel="noreferrer noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-github">
+  <title>github</title>
+  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+</svg></a>
+        
+          <a target="_blank" href="mailto:csuyzz@foxmail.com" rel="noreferrer noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-mail">
+  <title>mail</title>
+  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline>
+</svg></a>
+        
+          <a target="_blank" href="https://cn.linkedin.com/in/csuyzz" rel="noreferrer noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-linkedin">
+  <title>linkedin</title>
+  <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle>
+</svg></a>
+        
+          <a target="_blank" href="https://twitter.com/gohugoio" rel="noreferrer noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-twitter">
+  <title>twitter</title>
+  <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path>
+</svg></a>
+        
+      </div>
+      <h3><a href="/" title="首页">首页</a></h3>
+      <h3><a href="/category/content/" title="首页">分类目录</a></h3>
+      <h3><a href="/personal/introduce/" title="首页">个人简介</a></h3>
+    </header>
+    <main class="app-container">
+      
+  <article class="post">
+    <header class="post-header">
+      <h1 class ="post-title">Python中的sort()和sorted</h1>
+      <div class="post-meta">
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-calendar">
+  <title>calendar</title>
+  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line>
+</svg>
+          Nov 28, 2019
+        </div>
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-clock">
+  <title>clock</title>
+  <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
+</svg>
+          1 min read
+        </div>
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tag">
+  <title>tag</title>
+  <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7" y2="7"></line>
+</svg>
+              <a class="tag" href="https://qmr0925.github.io/tags/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/">编程语言</a>
+              <a class="tag" href="https://qmr0925.github.io/tags/python/">Python</a>
+        </div>
+      </div>
+    </header>
+    <div class="post-content">
+      <h2 id="python中sort和sorted的区别和使用">Python中sort和sorted的区别和使用</h2>
+<h3 id="一函数介绍">一、函数介绍</h3>
+<blockquote>
+<p>sort函数和sorted函数的功能是非常强大的，在有些leetcode题目中，使用了这些函数，几行代码就可以</p>
+</blockquote>
+<p>搞定了（只要你不怕被面试官打死），下面我们先看看这两个函数的介绍吧</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">&gt;&gt;&gt; help<span style="color:#f92672">(</span>list.sort<span style="color:#f92672">)</span>
+Help on method_descriptor:
+sort<span style="color:#f92672">(</span>self, /, *, key<span style="color:#f92672">=</span>None, reverse<span style="color:#f92672">=</span>False<span style="color:#f92672">)</span>
+    Stable sort *IN PLACE*.      <span style="color:#75715e">#inplace</span>
+    
+&gt;&gt;&gt; help<span style="color:#f92672">(</span>sorted<span style="color:#f92672">)</span>
+Help on built-in <span style="color:#66d9ef">function</span> sorted in module builtins:
+sorted<span style="color:#f92672">(</span>iterable, /, *, key<span style="color:#f92672">=</span>None, reverse<span style="color:#f92672">=</span>False<span style="color:#f92672">)</span>
+    Return a new list containing all items from the iterable in ascending order.  <span style="color:#75715e">#new list</span>
+    A custom key <span style="color:#66d9ef">function</span> can be supplied to customize the sort order, and the
+    reverse flag can be set to request the result in descending order.
+</code></pre></div><blockquote>
+<p>抓住最主要的关键词就可以看出区别了，<strong>sort()是在原位重新排列列表、sorted()是产生新列表</strong></p>
+</blockquote>
+<h3 id="二函数的主要功能">二、函数的主要功能</h3>
+<blockquote>
+<p>sort（）方法的语法：sort（cmp = None，reverse = False），注意只有列表才有sort()方法</p>
+</blockquote>
+<blockquote>
+<p>主要的参数含义如下：</p>
+</blockquote>
+<ul>
+<li>
+<p><strong>key</strong>  : 主要用来比较的元素，只有一个参数（取自于可迭代的对象）</p>
+</li>
+<li>
+<p><strong>reverse</strong> : 是排序的规则，reverse = True是降序的，reverse = False升序（默认）</p>
+</li>
+</ul>
+<blockquote>
+<p>sorted（）方法的语法：sorted（iterable，cmp = None，key = None，reverse = False）</p>
+</blockquote>
+<blockquote>
+<p>其中key参数和reverse参数与sort（）相同，其他参数含义如下，任何可迭代的类型均可使用sorted()</p>
+</blockquote>
+<ul>
+<li>
+<p><strong>iterable</strong>： 是可迭代的数据类型</p>
+</li>
+<li>
+<p><strong>cmp</strong> : 用于比较的函数，比较什么由key决定，有默认值，是迭代集合中的一项，cmp和key可以使用lambda</p>
+</li>
+<li>
+<p><strong>返回值</strong>：函数的返回值是一个经过排序的可迭代类型，与iterable一样</p>
+</li>
+</ul>
+<h3 id="三基本使用">三、基本使用</h3>
+<blockquote>
+<p>默认情况下sort（）和sorted（）函数会优先排序第一个元素，然后再排序第二个元素；大写字母会排在</p>
+</blockquote>
+<p>小写字母的前面，默认是按照从小到大的顺序进行排列</p>
+<h4 id="1sort函数的使用">1.sort函数的使用</h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e">#获取列表中的第二个元素</span>
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">takeSecond</span>(element):
+    <span style="color:#66d9ef">return</span> element[<span style="color:#ae81ff">1</span>]
+<span style="color:#75715e">#元素为元组的列表</span>
+random <span style="color:#f92672">=</span> [(<span style="color:#ae81ff">2</span>,<span style="color:#ae81ff">3</span>),(<span style="color:#ae81ff">4</span>,<span style="color:#ae81ff">5</span>),(<span style="color:#ae81ff">4</span>,<span style="color:#ae81ff">3</span>)]
+random<span style="color:#f92672">.</span>sort(key <span style="color:#f92672">=</span> takeSecond)  <span style="color:#75715e">#指定第二个元素进行排序</span>
+</code></pre></div><h4 id="2sorted函数的使用">2.sorted（）函数的使用</h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e">#Sorted cmp</span>
+random <span style="color:#f92672">=</span> [(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;</span>,<span style="color:#ae81ff">3</span>),(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">a</span><span style="color:#e6db74">&#39;</span>,<span style="color:#ae81ff">5</span>),(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">d</span><span style="color:#e6db74">&#39;</span>,<span style="color:#ae81ff">3</span>),(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">c</span><span style="color:#e6db74">&#39;</span>,<span style="color:#ae81ff">2</span>)]
+sorted(random,cmp <span style="color:#f92672">=</span> <span style="color:#66d9ef">lambda</span> x,y:cmp(x[<span style="color:#ae81ff">1</span>],y[<span style="color:#ae81ff">1</span>])) <span style="color:#75715e">#先按照每个元组的第二个元素排序，再按照第一个元素排序</span>
+
+<span style="color:#75715e">#Sorted key</span>
+random <span style="color:#f92672">=</span> [(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;</span>,<span style="color:#ae81ff">3</span>),(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">a</span><span style="color:#e6db74">&#39;</span>,<span style="color:#ae81ff">5</span>),(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">d</span><span style="color:#e6db74">&#39;</span>,<span style="color:#ae81ff">3</span>),(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">c</span><span style="color:#e6db74">&#39;</span>,<span style="color:#ae81ff">2</span>)]
+sorted(random,key <span style="color:#f92672">=</span> <span style="color:#66d9ef">lambda</span> x:x[<span style="color:#ae81ff">1</span>])  <span style="color:#75715e">#对列表中每个元组的第二个元素排序</span>
+sorted(random,key <span style="color:#f92672">=</span> <span style="color:#66d9ef">lambda</span> x:(x[<span style="color:#ae81ff">1</span>],x[<span style="color:#ae81ff">0</span>])) <span style="color:#75715e">#先按照每个元组的第二个元素排序，再按照第一个元素排序</span>
+
+<span style="color:#75715e">#在效率上，key&gt;cmp</span>
+
+<span style="color:#75715e">#更加高级的排序结构，当列表中元素是字典时</span>
+message <span style="color:#f92672">=</span> [{<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">name</span><span style="color:#e6db74">&#39;</span>:<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">yzz</span><span style="color:#e6db74">&#39;</span>,<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">age</span><span style="color:#e6db74">&#39;</span>:<span style="color:#ae81ff">18</span>},{<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">name</span><span style="color:#e6db74">&#39;</span>:<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">zjn</span><span style="color:#e6db74">&#39;</span>,<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">age</span><span style="color:#e6db74">&#39;</span>:<span style="color:#ae81ff">20</span>},{<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">name</span><span style="color:#e6db74">&#39;</span>:<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">ldd</span><span style="color:#e6db74">&#39;</span>,<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">age</span><span style="color:#e6db74">&#39;</span>:<span style="color:#ae81ff">19</span>}]
+sorted(message,key <span style="color:#f92672">=</span> <span style="color:#66d9ef">lambda</span> x : (x[<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">name</span><span style="color:#e6db74">&#39;</span>],x[<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">age</span><span style="color:#e6db74">&#39;</span>]))  <span style="color:#75715e">#对于每一个字典，先按照name,再按照age进行排序</span>
+sorted(message,key <span style="color:#f92672">=</span> <span style="color:#66d9ef">lambda</span> x : (x[<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">name</span><span style="color:#e6db74">&#39;</span>],<span style="color:#f92672">-</span>x[<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">age</span><span style="color:#e6db74">&#39;</span>]))  <span style="color:#75715e">#对age进行逆序排序</span>
+
+<span style="color:#75715e">#使用sorted()函数对字典的key或者value进行排序</span>
+dic <span style="color:#f92672">=</span> {<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">yzz</span><span style="color:#e6db74">&#39;</span>:<span style="color:#ae81ff">45</span>,<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">cxx</span><span style="color:#e6db74">&#39;</span>:<span style="color:#ae81ff">23</span>,<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">xvv</span><span style="color:#e6db74">&#39;</span>:<span style="color:#ae81ff">90</span>}
+sorted(dic<span style="color:#f92672">.</span>keys())  <span style="color:#75715e">#对字典的键进行排序</span>
+sorted(dic<span style="color:#f92672">.</span>values())  <span style="color:#75715e">#对字典中所有的值排序</span>
+sorted(dic<span style="color:#f92672">.</span>items()) <span style="color:#75715e">#将字典转化为可迭代对象，iterms()方法将字典的元素转换成元组，排序后为列表</span>
+</code></pre></div><h3 id="四其他数据类型的排序">四、其他数据类型的排序</h3>
+<blockquote>
+<p>在python的基本数据类型中，只有列表和元组是有序的，字典和集合都是无序的，但是在一些扩展的库中</p>
+</blockquote>
+<p>也提供了有序的集合或者字典</p>
+<h4 id="1增强的集合">1.增强的集合</h4>
+<blockquote>
+<p>pydu的set模块中，有OrderedSet() 可以保持插入元素是有序的集合</p>
+</blockquote>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> pydu.set <span style="color:#f92672">import</span> OrderedSet
+
+origin <span style="color:#f92672">=</span> {<span style="color:#ae81ff">2</span>,<span style="color:#ae81ff">3</span>,<span style="color:#ae81ff">4</span>,<span style="color:#ae81ff">5</span>,<span style="color:#ae81ff">2</span>,<span style="color:#ae81ff">1</span>,<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">ddf</span><span style="color:#e6db74">&#34;</span>}
+origin<span style="color:#f92672">.</span>add(<span style="color:#ae81ff">5</span>)
+origin<span style="color:#f92672">.</span>add(<span style="color:#ae81ff">6</span>)
+origin<span style="color:#f92672">.</span>add(<span style="color:#ae81ff">90</span>)
+origin<span style="color:#f92672">.</span>add(<span style="color:#ae81ff">29384</span>)
+<span style="color:#66d9ef">print</span>(origin)   <span style="color:#75715e">#每次运行的结果顺序不同</span>
+
+new <span style="color:#f92672">=</span> OrderedSet([<span style="color:#ae81ff">3</span>,<span style="color:#ae81ff">4</span>,<span style="color:#ae81ff">5</span>,<span style="color:#ae81ff">7</span>,<span style="color:#ae81ff">1</span>,<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">r45454</span><span style="color:#e6db74">&#34;</span>])  
+new<span style="color:#f92672">.</span>add(<span style="color:#ae81ff">289</span>)
+new<span style="color:#f92672">.</span>add(<span style="color:#ae81ff">9898</span>)
+new<span style="color:#f92672">.</span>add(<span style="color:#ae81ff">889379</span>)
+<span style="color:#66d9ef">print</span>(list(new))   <span style="color:#75715e">#每次运行的结果顺序相同</span>
+</code></pre></div><h4 id="2字典到底是有序的还是无序的">2.字典到底是有序的还是无序的？</h4>
+<blockquote>
+<p>Python 3.6改写了dict的内部算法，使得dict是有序的，在此版本之前均是无需的，在之前的话可以通过</p>
+</blockquote>
+<p>使用Collections库中的orderDict来保证插入的元素是有序的</p>
+
+    </div>
+    <div class="post-footer">
+      
+    </div>
+  </article>
+
+    </main>
+  </body>
+</html>

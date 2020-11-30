@@ -3,6 +3,141 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://qmr0925.github.io/linux/text/</loc>
+    <lastmod>2020-04-24T19:55:33+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://qmr0925.github.io/database/tidbschedu/</loc>
+    <lastmod>2020-04-24T00:53:48+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://qmr0925.github.io/database/tidbstorage/</loc>
+    <lastmod>2020-04-24T00:53:20+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://qmr0925.github.io/database/tidbcompute/</loc>
+    <lastmod>2020-04-24T00:53:05+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://qmr0925.github.io/database/tidbinfr/</loc>
+    <lastmod>2020-04-24T00:52:37+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://qmr0925.github.io/linux/filesys/</loc>
+    <lastmod>2020-04-24T00:45:56+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://qmr0925.github.io/linux/perfcommand/</loc>
+    <lastmod>2020-04-24T00:43:15+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://qmr0925.github.io/datastructure/sort/</loc>
+    <lastmod>2020-04-04T23:04:00+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://qmr0925.github.io/post/server/</loc>
+    <lastmod>2020-02-26T15:59:05+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://qmr0925.github.io/post/redisrpc/</loc>
+    <lastmod>2020-02-24T16:59:37+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://qmr0925.github.io/post/ditrirpc/</loc>
+    <lastmod>2020-02-24T15:59:05+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://qmr0925.github.io/post/rpcjiaohu/</loc>
+    <lastmod>2020-02-23T14:22:56+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://qmr0925.github.io/post/distri_client/</loc>
+    <lastmod>2020-02-21T16:08:30+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://qmr0925.github.io/post/skipwall/</loc>
+    <lastmod>2020-02-20T22:31:32+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://qmr0925.github.io/post/intro_rpc/</loc>
+    <lastmod>2020-02-19T16:08:30+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://qmr0925.github.io/post/consistency/</loc>
+    <lastmod>2020-02-17T08:04:41+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://qmr0925.github.io/post/docker-image/</loc>
+    <lastmod>2020-02-02T22:17:53+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://qmr0925.github.io/program/beauty/</loc>
+    <lastmod>2020-02-01T16:08:30+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://qmr0925.github.io/post/%E5%AE%B9%E5%99%A8%E6%8A%80%E6%9C%AF%E7%9A%84%E5%8F%91%E5%B1%95/</loc>
+    <lastmod>2020-02-01T03:23:01+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://qmr0925.github.io/post/docker%E5%85%A5%E9%97%A8%E5%AD%A6%E4%B9%A0/</loc>
+    <lastmod>2020-02-01T03:22:01+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://qmr0925.github.io/post/%E4%BA%91%E8%AE%A1%E7%AE%97%E5%92%8C%E8%99%9A%E6%8B%9F%E5%8C%96%E6%8A%80%E6%9C%AF/</loc>
+    <lastmod>2020-01-31T19:21:17+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://qmr0925.github.io/post/messagequ/</loc>
+    <lastmod>2020-01-28T01:22:22+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://qmr0925.github.io/post/git/</loc>
+    <lastmod>2020-01-27T00:52:28+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://qmr0925.github.io/post/distri/</loc>
+    <lastmod>2020-01-27T00:44:13+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://qmr0925.github.io/post/syn/</loc>
+    <lastmod>2020-01-26T21:35:45+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://qmr0925.github.io/post/virtualnetwork/</loc>
+    <lastmod>2020-01-31T12:00:31+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://qmr0925.github.io/post/hugo/</loc>
+    <lastmod>2020-01-07T14:08:20+08:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://qmr0925.github.io/post/first/</loc>
     <lastmod>2020-11-28T13:27:48+08:00</lastmod>
   </url>
@@ -18,11 +153,387 @@
   </url>
   
   <url>
-    <loc>https://qmr0925.github.io/categories/</loc>
+    <loc>https://qmr0925.github.io/network/</loc>
+    <lastmod>2020-08-02T15:44:42+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://qmr0925.github.io/tags/</loc>
+    <lastmod>2020-08-02T15:44:42+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://qmr0925.github.io/tags/%E4%BA%8C%E5%B1%82%E4%BA%A4%E6%8D%A2/</loc>
+    <lastmod>2020-08-02T15:44:42+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://qmr0925.github.io/network/dataframe/</loc>
+    <lastmod>2020-08-02T15:44:42+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://qmr0925.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/</loc>
+    <lastmod>2020-08-02T15:44:42+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://qmr0925.github.io/tags/linux/</loc>
+    <lastmod>2020-04-24T19:55:33+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://qmr0925.github.io/linux/</loc>
+    <lastmod>2020-04-24T19:55:33+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://qmr0925.github.io/database/</loc>
+    <lastmod>2020-04-24T00:53:48+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://qmr0925.github.io/tags/%E5%88%86%E5%B8%83%E5%BC%8F/</loc>
+    <lastmod>2020-04-24T00:53:48+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://qmr0925.github.io/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/</loc>
+    <lastmod>2020-04-24T00:53:48+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://qmr0925.github.io/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/</loc>
+    <lastmod>2020-04-24T00:45:56+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://qmr0925.github.io/datastructure/</loc>
+    <lastmod>2020-04-04T23:04:00+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://qmr0925.github.io/tags/leetcode/</loc>
+    <lastmod>2020-04-04T23:04:00+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://qmr0925.github.io/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/</loc>
+    <lastmod>2020-04-04T23:04:00+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://qmr0925.github.io/datastructure/trie/</loc>
+    <lastmod>2020-03-20T12:41:41+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://qmr0925.github.io/leetcode/</loc>
+    <lastmod>2020-03-10T19:19:05+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://qmr0925.github.io/leetcode/subseq/</loc>
+    <lastmod>2020-03-10T19:19:05+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://qmr0925.github.io/tags/rpc/</loc>
+    <lastmod>2020-02-26T15:59:05+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://qmr0925.github.io/tags/%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F/</loc>
+    <lastmod>2020-02-24T16:59:37+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://qmr0925.github.io/tags/docker/</loc>
+    <lastmod>2020-02-02T22:17:53+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://qmr0925.github.io/tags/%E4%BA%91%E8%AE%A1%E7%AE%97/</loc>
+    <lastmod>2020-02-02T22:17:53+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://qmr0925.github.io/tags/%E8%99%9A%E6%8B%9F%E5%8C%96/</loc>
+    <lastmod>2020-02-02T22:17:53+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://qmr0925.github.io/program/</loc>
+    <lastmod>2020-02-01T16:08:30+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://qmr0925.github.io/tags/python/</loc>
+    <lastmod>2020-02-01T16:08:30+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://qmr0925.github.io/tags/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/</loc>
+    <lastmod>2020-02-01T16:08:30+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://qmr0925.github.io/tags/git/</loc>
+    <lastmod>2020-01-28T17:10:44+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://qmr0925.github.io/post/git%E8%BF%9E%E6%8E%A5github%E5%A4%B1%E8%B4%A5/</loc>
+    <lastmod>2020-01-28T17:10:44+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://qmr0925.github.io/tags/%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3/</loc>
+    <lastmod>2020-01-28T17:10:44+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://qmr0925.github.io/tags/%E9%9A%8F%E7%AC%94/</loc>
+    <lastmod>2020-01-28T17:10:44+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://qmr0925.github.io/tags/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/</loc>
+    <lastmod>2020-01-28T01:22:22+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://qmr0925.github.io/post/mapreduce/</loc>
+    <lastmod>2020-01-27T00:54:15+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://qmr0925.github.io/post/bigtable/</loc>
+    <lastmod>2020-01-27T00:53:53+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://qmr0925.github.io/post/gfs/</loc>
+    <lastmod>2020-01-27T00:53:42+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://qmr0925.github.io/post/go/</loc>
+    <lastmod>2020-01-27T00:53:21+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://qmr0925.github.io/tags/%E6%A1%86%E6%9E%B6%E4%BD%BF%E7%94%A8/</loc>
+    <lastmod>2020-01-07T14:08:20+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://qmr0925.github.io/program/pycollect/</loc>
+    <lastmod>2019-12-28T20:44:56+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://qmr0925.github.io/program/magic/</loc>
+    <lastmod>2019-12-24T21:14:28+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://qmr0925.github.io/leetcode/distance/</loc>
+    <lastmod>2019-12-23T22:26:15+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://qmr0925.github.io/tags/java/</loc>
+    <lastmod>2019-12-22T21:14:28+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://qmr0925.github.io/program/javaintf/</loc>
+    <lastmod>2019-12-22T21:14:28+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://qmr0925.github.io/program/package/</loc>
+    <lastmod>2019-12-21T21:14:28+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://qmr0925.github.io/program/abstract/</loc>
+    <lastmod>2019-12-21T21:14:28+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://qmr0925.github.io/datastructure/summay/</loc>
+    <lastmod>2019-12-21T14:01:10+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://qmr0925.github.io/category/</loc>
+    <lastmod>2019-12-20T21:48:36+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://qmr0925.github.io/category/content/</loc>
+    <lastmod>2019-12-20T21:48:36+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://qmr0925.github.io/program/oop/</loc>
+    <lastmod>2019-12-20T21:14:28+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://qmr0925.github.io/program/javaoop/</loc>
+    <lastmod>2019-12-20T00:14:28+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://qmr0925.github.io/personal/</loc>
+    <lastmod>2019-12-18T21:47:34+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://qmr0925.github.io/tags/%E4%B8%AA%E4%BA%BA%E9%9A%8F%E7%AC%94/</loc>
+    <lastmod>2019-12-18T21:47:34+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://qmr0925.github.io/personal/introduce/</loc>
+    <lastmod>2019-12-18T21:47:34+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://qmr0925.github.io/datastructure/concurrent/</loc>
+    <lastmod>2019-12-17T16:05:44+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://qmr0925.github.io/leetcode/cache/</loc>
+    <lastmod>2019-12-15T14:01:10+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://qmr0925.github.io/leetcode/topkheap/</loc>
+    <lastmod>2019-12-11T14:01:10+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://qmr0925.github.io/datastructure/deque_linked/</loc>
+    <lastmod>2019-12-10T16:10:36+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://qmr0925.github.io/leetcode/slidingwind/</loc>
+    <lastmod>2019-12-09T15:50:27+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://qmr0925.github.io/leetcode/backtrack/</loc>
+    <lastmod>2019-12-05T22:26:15+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://qmr0925.github.io/leetcode/dp/</loc>
+    <lastmod>2019-12-03T22:26:15+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://qmr0925.github.io/program/javapqueue/</loc>
+    <lastmod>2019-12-03T21:14:28+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://qmr0925.github.io/leetcode/greedy/</loc>
+    <lastmod>2019-12-02T22:26:15+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://qmr0925.github.io/program/sort_sorted/</loc>
+    <lastmod>2019-11-28T21:14:28+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://qmr0925.github.io/datastructure/bfs-dfs/</loc>
+    <lastmod>2019-11-28T17:01:10+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://qmr0925.github.io/datastructure/container/</loc>
+    <lastmod>2019-11-28T17:01:10+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://qmr0925.github.io/tags/%E7%AE%97%E6%B3%95/</loc>
+    <lastmod>2019-11-28T17:01:10+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://qmr0925.github.io/datastructure/bloomfilter/</loc>
+    <lastmod>2019-11-24T17:01:10+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://qmr0925.github.io/leetcode/printlistreverse/</loc>
+    <lastmod>2019-11-15T14:01:10+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://qmr0925.github.io/datastructure/defindatastructure/</loc>
+    <lastmod>2019-11-15T14:01:10+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://qmr0925.github.io/leetcode/circlelist/</loc>
+    <lastmod>2019-11-15T14:01:10+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://qmr0925.github.io/os/</loc>
+    <lastmod>2019-11-02T21:50:12+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://qmr0925.github.io/os/deadlock/</loc>
+    <lastmod>2019-11-02T21:50:12+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://qmr0925.github.io/tags/cdn/</loc>
+    <lastmod>2019-10-10T12:05:48+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://qmr0925.github.io/network/cdn/</loc>
+    <lastmod>2019-10-10T12:05:48+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://qmr0925.github.io/network/portlink/</loc>
+    <lastmod>2019-08-07T21:26:25+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://qmr0925.github.io/network/stp/</loc>
+    <lastmod>2019-08-06T16:12:20+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://qmr0925.github.io/network/vxlan/</loc>
+    <lastmod>2019-08-06T15:45:16+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://qmr0925.github.io/tags/vlan/</loc>
+    <lastmod>2019-08-02T14:06:13+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://qmr0925.github.io/network/vlan/</loc>
+    <lastmod>2019-08-02T14:06:13+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://qmr0925.github.io/categories/</loc>
   </url>
   
 </urlset>
