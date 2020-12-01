@@ -6,7 +6,7 @@
     <description>Recent content on Your title</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 01 Dec 2020 10:24:53 +0800</lastBuildDate>
+    <lastBuildDate>Tue, 01 Dec 2020 10:43:22 +0800</lastBuildDate>
     
 	<atom:link href="https://qmr0925.github.io/index.xml" rel="self" type="application/rss+xml" />
     
@@ -835,10 +835,10 @@ MapReduce(离线处理)&amp;mdash;&amp;ndash;》Spark(高性能批处理技术)&
     
     <item>
       <title>Refection</title>
-      <link>https://qmr0925.github.io/java/refection/</link>
-      <pubDate>Tue, 01 Dec 2020 10:24:53 +0800</pubDate>
+      <link>https://qmr0925.github.io/program/refection/</link>
+      <pubDate>Tue, 01 Dec 2020 10:43:22 +0800</pubDate>
       
-      <guid>https://qmr0925.github.io/java/refection/</guid>
+      <guid>https://qmr0925.github.io/program/refection/</guid>
       <description>一、TiDB主要特性  TiDB是一个开源分布式关系型数据库，它主要用来应用在全部的OLTP的场景和大部
  分的OLAP场景。TiDB作为一个开源的分布式数据库主要有以下特点：
 1、高度兼容MySQL  MySQL迁移到TiDB是非常容易的，无论是单机迁移还是集群的迁移
@@ -1215,7 +1215,7 @@ public abstract class Employee{ public abstract int getMsg();//抽象方法 }  �
       <pubDate>Fri, 20 Dec 2019 21:48:36 +0800</pubDate>
       
       <guid>https://qmr0925.github.io/category/content/</guid>
-      <description>  计算机网络  应用层协议、二层交换、三层路由、TCP/UDP，网络编程，运维  操作系统 数据结构与算法  leetcode、剑指offer；贪心、回溯、动态规划、分治、递归；树，图，堆、队列、栈、链表、数组；  数据库技术  MySQL、Redis、MongoDB、TiDB  编程语言  Python、Java、Go  java Linux  Shell、运维  云计算  Docker、K8s、云原生  分布式  6.824、分布式数据库、分布式消息队列、分布式计算  个人随笔  技术之路、个人经历、生活体会  </description>
+      <description>  计算机网络  应用层协议、二层交换、三层路由、TCP/UDP，网络编程，运维  操作系统 数据结构与算法  leetcode、剑指offer；贪心、回溯、动态规划、分治、递归；树，图，堆、队列、栈、链表、数组；  数据库技术  MySQL、Redis、MongoDB、TiDB  编程语言  Python、Java、Go  Linux  Shell、运维  云计算  Docker、K8s、云原生  分布式  6.824、分布式数据库、分布式消息队列、分布式计算  个人随笔  技术之路、个人经历、生活体会  </description>
     </item>
     
     <item>
