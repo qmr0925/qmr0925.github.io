@@ -6,7 +6,7 @@
     <description>Recent content on Your title</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 28 Nov 2020 13:27:48 +0800</lastBuildDate>
+    <lastBuildDate>Tue, 01 Dec 2020 09:18:12 +0800</lastBuildDate>
     
 	<atom:link href="https://qmr0925.github.io/index.xml" rel="self" type="application/rss+xml" />
     
@@ -831,6 +831,15 @@ MapReduce(离线处理)&amp;mdash;&amp;ndash;》Spark(高性能批处理技术)&
    注册Github官网（已有账号请忽略）
   2.生成个人站点 （1）在终端执行命令 C:\Users\Administrator&amp;gt;hugo new site E:\hugo\Sites\myblog  出现以下提示信息表示创建成功：
  C:\Users\Administrator&amp;gt;hugo new site E:\hugo\Sites\myblog Congratulations! Your new Hugo site is created in E:\hugo\Sites\myblog.</description>
+    </item>
+    
+    <item>
+      <title>Refection</title>
+      <link>https://qmr0925.github.io/java/refection/</link>
+      <pubDate>Tue, 01 Dec 2020 09:18:12 +0800</pubDate>
+      
+      <guid>https://qmr0925.github.io/java/refection/</guid>
+      <description></description>
     </item>
     
     <item>
