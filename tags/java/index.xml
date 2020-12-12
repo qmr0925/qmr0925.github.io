@@ -13,133 +13,17 @@
     
     <item>
       <title>Refection</title>
-      <link>https://qmr0925.github.io/program/refection/</link>
+      <link>https://qmr0925.github.io/program/reflection/</link>
       <pubDate>Tue, 01 Dec 2020 10:43:22 +0800</pubDate>
       
-      <guid>https://qmr0925.github.io/program/refection/</guid>
-      <description>一、TiDB主要特性  TiDB是一个开源分布式关系型数据库，它主要用来应用在全部的OLTP的场景和大部
- 分的OLAP场景。TiDB作为一个开源的分布式数据库主要有以下特点：
-1、高度兼容MySQL  MySQL迁移到TiDB是非常容易的，无论是单机迁移还是集群的迁移
- 2、支持无限的水平弹性扩展  新增节点实现TiDB的水平扩展，轻松地应对高并发、海量数据的场景
- 3、强一致性和高可用  基于Raft的多数派选举协议可以提供100%的数据强一致性，可以实现故障的自动恢复
- 4、分布式事务  支持ACID事务
-  TiDB这些特性使它成为业界认可的优秀数据库产品，但是我们要想深入理解这些特性，
- 还要从架构原理的角度学习
-二、TiDB的架构原理简介  TiDB集群主要包括三个核心组件：TiDB Server,PD Server,TiKV Server
-  具体的架构原理图如下所示：
- 1、TiDB Server  TiDB Server 负责接收SQL请求，处理SQL相关的逻辑，并通过PD找到存储计算所需
- 数据的TiKV地址，与TiKV交互数据，最终返回结果。
- TiDB Server 是无状态的，其本身并不存储数据，只负责计算，可以无限水平扩展，
- 可通过负载均衡的组件(LVS、HAProxy或者F5)对外提供统一的接入地址
-2、PD Server(Placement Driver)  PD是整个集群的管理模块，具体的工作职能是：
-   存储这个集群的原信息(某个Key具体存储在哪个TiKV的节点)
-  对TiKV集群进行调度和负载均衡(数据迁移、Raft Group leader)
-  分配全局唯一且递增的事物ID
-   PD通过Raft协议保证数据的安全性,Raft的leader Server负责处理所有操作，其余的PD</description>
-    </item>
-    
-    <item>
-      <title>Java面向对象之接口</title>
-      <link>https://qmr0925.github.io/program/javaintf/</link>
-      <pubDate>Sun, 22 Dec 2019 21:14:28 +0800</pubDate>
-      
-      <guid>https://qmr0925.github.io/program/javaintf/</guid>
-      <description>Java面向对象和接口   在Java编程语言中接口是一个抽象类型，是抽象方法的结合，一个类通过继承接口的方法来继承接口的
- 抽象方法；除非实现接口的类是抽象类，否则该类要实现接口中的所有方法；接口无法被实例化，但是可以
-被实现；在Java中，接口类型可以用来声明一个变量
-一、接口和类的异同 1.接口和类的相似点   一个接口可以有多个方法
-  接口文件保存在.java文件中，文件名使用接口名
-  接口的字节码文件保存在.class文件中
-  接口相应的字节码文件必须在与包名称匹配的目录中
-  2.接口和类的主要区别   接口不能用于实例化对象
-  接口没有构造方法
-  接口的所有方法必须是抽象方法
-  接口不能包含成员变量，除了static和final变量
-  接口可以被类继承或者实现
-  3.接口特性   接口中的方法会被隐式地指定为public abstract
-  接口可以含有变量，但是会被隐式地指定为public static final
-  接口中的方法是不能在接口中实现的，只能由实现接口的类来实现
-  二、接口的操作 1.接口的声明 [可见度] interface 接口名称 [extends 其他的接口名]{ //声明变量  //声明方法 } 2.接口的实现  类使用implements关键字来实现接口，类声明中，implements关键字放在class声明后</description>
-    </item>
-    
-    <item>
-      <title>Java中的包(Package)</title>
-      <link>https://qmr0925.github.io/program/package/</link>
-      <pubDate>Sat, 21 Dec 2019 21:14:28 +0800</pubDate>
-      
-      <guid>https://qmr0925.github.io/program/package/</guid>
-      <description>Java中的包（Package） 一、Java中包的作用  在Java中为了更好的组织类，提供了包机制，可以看成是区别类名的命名空间，主要作用如下：
-   把功能相似或者相关的类或接口组织在同一个包中，方便类的查找和使用
-  包采用了类似文件夹一样的树形目录的存储方式，同一个包中类的名字是不同的，不同包中类的名字可以是
-   相同的，当同时调用不同包中相同类名的类时，应该加上包名加以区分，避免冲突
-  包限定了访问权限，拥有包访问权限的类才能访问某个包中的类  二、包的使用 1.包语句的格式  包语句的语法格式为
- package pkg1[.pkg2[.pkg3]] //示例如下 package net.java.util; //注意包声明语句后有分号 public class Test{} //那么这个文件的保存路径应该是这样的：net/java/util/Test.java  一个包可以定义为一组相互联系的类型，为这些类型提供访问保护和命名空间管理的功能；在实际的应用
- 中，可以将自己完成的一组类或者接口等打包，方便管理和使用
-2.创建包  包声明应该在源文件的第一行，每个源文件只能有一个包的声明，这个文件中的每个类型都应用于它；如
- 果一个源文件没有包的声明，那么其中的类都将被放到一个无名的包中，创建包的包名应该最好使用小写的
-3.使用包  为了能够使用某一个包的成员，需要在Java程序中明确导入该包，使用import语句即可完成；
- 在Java源文件中的import语句应位于package语句之后，所有类的定义之前；格式如下：
-import package1[.package2...](classname|*);  如果在一个包中一个类想要使用本包中的任何一个类，包名是可以忽略的
-  值得注意的是import是导入包所包含的类，而不能导入包，通常情况下，我们也不是只导入包中的某个类
- 而是导入包下所有的类；Java编译器默认为所有的Java程序导入了JDK中java.lang包中的所有类，其中定义了
-一些常用的类，如Objetc、Math等，因此我们可以直接使用这些类而不必显示导入，当使用其他类时必须导入
- 并且import实际上导入的是每一个类的.class文件，并不是.java类型的文件
- 4.Java中类的搜索路径  在安装JDK时，我们已经设置了环境变量CLASSPATH，在Windos下的cmd中可以通过set命令查看
- #一个CLASSPATH可能包含好几个路径，多路径应该使用分割符进行分开 C:\Users\Administrator&amp;gt;set CLASSPATH CLASSPATH=.;C:\Program Files\Java\jdk1.8.0_91\lib; C:\Program Files\Java\jdk1.</description>
-    </item>
-    
-    <item>
-      <title>Java面向对象之抽象类</title>
-      <link>https://qmr0925.github.io/program/abstract/</link>
-      <pubDate>Sat, 21 Dec 2019 21:14:28 +0800</pubDate>
-      
-      <guid>https://qmr0925.github.io/program/abstract/</guid>
-      <description>Java面向对象之抽象类   面向对象的设计原因中所有的对象都是通过类来进行描绘的，但是并不是所有的类都是用来描述对象的，
- 如果一个类中没有包含足够的信息来描绘一个具体的对象，这样的就是抽象类
- 抽象类正常类最大的区别就是不能实例化对象，所以抽象类必须被继承，才能被使用；但是抽象类的其
- 它功能如：成员变量、成员方法和构造方法依然存在
-一、抽象类的定义和使用  在Java语言中使用abstract class来定义抽象类，而且只能通过其他类来继承抽象类
- //文件名为Test.java public abstract class Test{} //文件名为smallTest public class smallTest extends Test{} 二、抽象方法  抽象方法必须是一个特别的成员方法，该方法的具体实现是由它的子类确定的，那么可以在父类中声明
- 该方法是一个抽象方法；而且抽象方法所在的类一定是抽象类；
- abstract关键词同样可以用来声明抽象方法，抽象方法只包含一个方法名而没有方法体；抽象方法没有定
- 义，方法名后面直接跟上一个分号，而不是花括号
-public abstract class Employee{ public abstract int getMsg();//抽象方法 }  任何子类必须重写父类的抽象方法，或者声明自身是一个抽象类；
- 三、其他规定   抽象类中不一定包含抽象方法，但是有抽象方法的类必定是抽象类
-  抽象类中的抽象方法只是声明，不包含方法体，即不给出方法的具体实现
-  构造方法和类方法（用static方法修饰的方法）不能声明为抽象的方法
-  </description>
-    </item>
-    
-    <item>
-      <title>Java面向对象总结</title>
-      <link>https://qmr0925.github.io/program/javaoop/</link>
-      <pubDate>Fri, 20 Dec 2019 00:14:28 +0800</pubDate>
-      
-      <guid>https://qmr0925.github.io/program/javaoop/</guid>
-      <description>Java面向对象总结  一、类和对象  Java中的类可以包含局部变量、成员变量、类变量
-   局部变量：在方法、构造方法中定义的变量
-  成员变量：定义在类中，方法体之外的变量。可以被类中的各种方法使用
-  类变量：定义在各种类中，方法体之外。必须声明为static类型
-   构造方法 : 如果没有显式地为类定义构造方法，Java编译器会为该类提供一个默认的构造方法。在创
- 建一个对象的时候，至少要调用一个构造方法
- Java中import语句执行的过程，import语句主要是提供一个合理的路径，使得编译器能够找到某个类
-  Java中的类有若干访问级别：抽象类、final类、内部类、匿名类
-  Java中强制要求类名和文件名相同，是因为在引用其他类的时候无需显式的声明，在编译时会根据类
- 名去寻找同名文件
- Java中包的作用就是防止名字相同的类产生冲突。编译器在编译时直接根据package指定的信息直接
- 将生成的class文件生成到对应文件的目录中，比如package com.util.Test，编译器就将生成的.java文件
-放于./com/util/Test/这个目录下
- import的作用是为了简化使用package之后的实例化的代码，就是将new java.net.Socket()简化成
- new Socket（）
- 一个Java文件中只能包含一个Public的类
-  this是指向对象本身的指针，super是指向父类对象的一个指针
-  new关键字的一个作用，为对象分配内存空间、引起对象构造方法的调用，为对象返回一个引用
-  对象和引用的区别，对象是具体的一个实例，使用new创建一个对象时，是在堆内存中开辟一块空间
- 引用名称存放的对象的地址
-二、Java中的继承  在Java中可以通过extends关键字可以声明一个类是从另外一个类继承而来的
-  Java中不支持多继承，但是支持多重继承
-  子类可以拥有父类非private的属性和方法，子类可以用自己的方式实现父类的方法
-  Java中所有的类都是继承于java.lang.Object这个祖先类，如果一个类没有显示继承，则默认情况</description>
+      <guid>https://qmr0925.github.io/program/reflection/</guid>
+      <description>一、Java反射机制概述  被视为动态语言的关键，反射机制允许程序在执行期间，借助于Reflection API取得任何类的内部信息，并能直接操作任意操作对象的内部属性及方法。 原理解释：加载完类之后，在堆内存区产生了一个Class类型的对象（一个类只有一个Class对象），这个对象包含了完整的类的结构信息，我们可以通过这个对象看到类的结构。
+ 1、动态语言与静态语言  动态语言：在运行时可以改变其结构的语言。包括Object-C C#，Javascript，PHP，Python， 静态语言：运行时结构不可变的语言就是静态语言。包括Java，C，C++等 JAVA被称为“准动态语言”，因为Java可以利用反射机制，字节码操作等得到类似动态语言的特性。
+ 二、反射机制的作用  1、在运行时判断任意一个对象所属于的类 2、在运行时构造任意一个类的对象 3、在运行时判断或调用任意一个类所具有的成员变量和方法 4、在运行时获取泛型信息 5、在运行时处理注解 6、生成动态代理  二、反射相关的主要API  java.lang.Class:代表一个类 java.lang.reflect.Method:代表类的方法 java.lang.reflect.Field:代表类的成员变量 java.lang.reflect.Constructor:代表类的构造器 使用示例：   1、关于java.lang.Class类的理解 (1)类的加载过程： 程序经过javac.exe命令后，会生成一个或多个字节码文件（.class结尾）。java.exe命令对某个字节码文件进行解释运行。相当与将某个字节码文件加载到内存中，此过程称为类的加载。加载到内存中的类，我们就称为运行时类，就作为Class的一个实例。 换句话说，Class的实例就对应着一个运行时类 补充：java中的类也是对象，是Class的对象 加载到内存中的运行时类，会缓存一定的时间。在此时间之内，我们可以通过不同的方式来获取此运行时类（它们获取的是同一个运行时类）。
+  (2)获取Class的实例的方式： 调用运行时类的属性 .class 通过运行时类的对象 调用getClass 调用Class的静态方法：forName（String classPath） 补充：使用类的加载器：ClassLoader   (3)关于ClassLoader的理解： 作用：把类装载进入内存 分类：引导类加载器（复杂Java核心库的加载）、系统类加载器（最常用的加载器），扩展类加载器（加载jre/lib/ext目录下的jar包） 使用ClassLoader读取配置文件   (3)创建运行时类的对象： newInstance():调用此方法，创建对应运行时类的对象。内部调用了运行时类的空参的构造器。
+ 要想此方法正常创建运行时类的对象，要求：运行时类必须提供权限足够的空参构造器 在javaBean中要求提供一个public的空参构造器。&amp;raquo;原因：便于通过反射，创建运行时类的对象。便于子类继承此运行时类时，默认调用super()时，保证父类有次构造器。   三、反射机制的一些问题  1、反射机制与面向对象的封装性 两个技术不矛盾，封装性解决的是建议你是否使用私有方法。反射机制解决的是能不能调用的问题。
+2、在开发过程中什么时候使用new对象，什么时候使用反射的方式去调用公共的结构 编译的时候不知道使用哪一个类，使用反射的方式
+  ​</description>
     </item>
     
     <item>
@@ -159,26 +43,6 @@ public abstract class Employee{ public abstract int getMsg();//抽象方法 }  �
   当做队列或栈使用并且数据量很大时，使用LinkjedList，这样不用扩容对性能的影响
   当需要随机访问时，使用ArrayDeque，数组有先天的优势
   </description>
-    </item>
-    
-    <item>
-      <title>Java和Python中如何使用大顶堆</title>
-      <link>https://qmr0925.github.io/program/javapqueue/</link>
-      <pubDate>Tue, 03 Dec 2019 21:14:28 +0800</pubDate>
-      
-      <guid>https://qmr0925.github.io/program/javapqueue/</guid>
-      <description>Java和Python中如何使用大顶堆  在数据结构之容器的那篇文章中，我们对于优先队列即堆这种数据结构的底层实现进行了剖析，在实际的
- 应用中我们不必自己去实现一个堆，主流的编程语言都提供了相关的集合模块，比如Java中的PriorityQueue
-类，Python中的heapq模块。但是这两种语言中实现的堆都是小顶堆（根节点的元素小于左右节点元素的值），
-当需要使用大顶堆时该如何解决呢？比如典型的最大的K个元素需要用小顶堆解决，但是最小的K个元素不就
-是需要使用一个大顶堆来解决了吗！
- 具体的解决方案如下：
- 一、通用的方法: 取反  通用的解决方法就是跟语言没有关系的解法，想要构造一个大顶堆，只要保证根节点大于左右节点即可，
- 所以我们可以将数据取成相反数再添加到小顶堆中去，取出时再对数据进行取反即可实现大顶堆的效果
-二、针对Java的方法  优先队列中存放的是基本数据类型的包装类（Integer、Long）或者自定义的包装类。对于基本数据类型
- 的包装器类，优先队列中元素默认排列顺序是升序排列的，也就是说是小顶堆，但是既然是默认的就可以进
-行更改。此外，对于自定义的类来说，需要自己定义比较器，比如：
-//自定义比较器，降序排列 public static Comparator&amp;lt;Integer&amp;gt; cmp = new Comparator&amp;lt;Integer&amp;gt;(){ public int compare(Integer e1,Integer e2){ return e2 - e1; } } //声明对象时 Queue&amp;lt;Integer&amp;gt; pqueue = new PriorityQueue&amp;lt;Integer&amp;gt;(); //不使用比较器，默认升序排列，即小顶堆 Queue&amp;lt;Integer&amp;gt; pqueue = new PriorityQueue&amp;lt;Integer&amp;gt;(cmp); //使用比较器，降序排列，即为大顶堆  //比较器升降序的声明 Comparator&amp;lt;Object&amp;gt; cmp = new Comparator&amp;lt;Object&amp;gt;(){ public int compare(Object o1,Object o2){ return o1 - o2 //升序  return o2 - o1 //降序  } }  所以在实际解决问题的过程中如果需要使用大顶堆可以这样声明</description>
     </item>
     
     <item>

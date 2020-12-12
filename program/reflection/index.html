@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="en-us">
+  <head>
+    <title>Refection // Your title</title>
+    <meta charset="utf-8" />
+    <meta name="generator" content="Hugo 0.62.2" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="John Doe" />
+    <meta name="description" content="" />
+    <link rel="stylesheet" href="https://qmr0925.github.io/css/main.min.88e7083eff65effb7485b6e6f38d10afbec25093a6fac42d734ce9024d3defbd.css" />
+
+    
+    <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Refection"/>
+<meta name="twitter:description" content="一、Java反射机制概述  被视为动态语言的关键，反射机制允许程序在执行期间，借助于Reflection API取得任何类的内部信息，并能直接操作任意操作对象的内部属性及方法。 原理解释：加载完类之后，在堆内存区产生了一个Class类型的对象（一个类只有一个Class对象），这个对象包含了完整的类的结构信息，我们可以通过这个对象看到类的结构。
+ 1、动态语言与静态语言  动态语言：在运行时可以改变其结构的语言。包括Object-C C#，Javascript，PHP，Python， 静态语言：运行时结构不可变的语言就是静态语言。包括Java，C，C&#43;&#43;等 JAVA被称为“准动态语言”，因为Java可以利用反射机制，字节码操作等得到类似动态语言的特性。
+ 二、反射机制的作用  1、在运行时判断任意一个对象所属于的类 2、在运行时构造任意一个类的对象 3、在运行时判断或调用任意一个类所具有的成员变量和方法 4、在运行时获取泛型信息 5、在运行时处理注解 6、生成动态代理  二、反射相关的主要API  java.lang.Class:代表一个类 java.lang.reflect.Method:代表类的方法 java.lang.reflect.Field:代表类的成员变量 java.lang.reflect.Constructor:代表类的构造器 使用示例：   1、关于java.lang.Class类的理解 (1)类的加载过程： 程序经过javac.exe命令后，会生成一个或多个字节码文件（.class结尾）。java.exe命令对某个字节码文件进行解释运行。相当与将某个字节码文件加载到内存中，此过程称为类的加载。加载到内存中的类，我们就称为运行时类，就作为Class的一个实例。 换句话说，Class的实例就对应着一个运行时类 补充：java中的类也是对象，是Class的对象 加载到内存中的运行时类，会缓存一定的时间。在此时间之内，我们可以通过不同的方式来获取此运行时类（它们获取的是同一个运行时类）。
+  (2)获取Class的实例的方式： 调用运行时类的属性 .class 通过运行时类的对象 调用getClass 调用Class的静态方法：forName（String classPath） 补充：使用类的加载器：ClassLoader   (3)关于ClassLoader的理解： 作用：把类装载进入内存 分类：引导类加载器（复杂Java核心库的加载）、系统类加载器（最常用的加载器），扩展类加载器（加载jre/lib/ext目录下的jar包） 使用ClassLoader读取配置文件   (3)创建运行时类的对象： newInstance():调用此方法，创建对应运行时类的对象。内部调用了运行时类的空参的构造器。
+ 要想此方法正常创建运行时类的对象，要求：运行时类必须提供权限足够的空参构造器 在javaBean中要求提供一个public的空参构造器。&raquo;原因：便于通过反射，创建运行时类的对象。便于子类继承此运行时类时，默认调用super()时，保证父类有次构造器。   三、反射机制的一些问题  1、反射机制与面向对象的封装性 两个技术不矛盾，封装性解决的是建议你是否使用私有方法。反射机制解决的是能不能调用的问题。
+2、在开发过程中什么时候使用new对象，什么时候使用反射的方式去调用公共的结构 编译的时候不知道使用哪一个类，使用反射的方式
+  ​"/>
+
+    <meta property="og:title" content="Refection" />
+<meta property="og:description" content="一、Java反射机制概述  被视为动态语言的关键，反射机制允许程序在执行期间，借助于Reflection API取得任何类的内部信息，并能直接操作任意操作对象的内部属性及方法。 原理解释：加载完类之后，在堆内存区产生了一个Class类型的对象（一个类只有一个Class对象），这个对象包含了完整的类的结构信息，我们可以通过这个对象看到类的结构。
+ 1、动态语言与静态语言  动态语言：在运行时可以改变其结构的语言。包括Object-C C#，Javascript，PHP，Python， 静态语言：运行时结构不可变的语言就是静态语言。包括Java，C，C&#43;&#43;等 JAVA被称为“准动态语言”，因为Java可以利用反射机制，字节码操作等得到类似动态语言的特性。
+ 二、反射机制的作用  1、在运行时判断任意一个对象所属于的类 2、在运行时构造任意一个类的对象 3、在运行时判断或调用任意一个类所具有的成员变量和方法 4、在运行时获取泛型信息 5、在运行时处理注解 6、生成动态代理  二、反射相关的主要API  java.lang.Class:代表一个类 java.lang.reflect.Method:代表类的方法 java.lang.reflect.Field:代表类的成员变量 java.lang.reflect.Constructor:代表类的构造器 使用示例：   1、关于java.lang.Class类的理解 (1)类的加载过程： 程序经过javac.exe命令后，会生成一个或多个字节码文件（.class结尾）。java.exe命令对某个字节码文件进行解释运行。相当与将某个字节码文件加载到内存中，此过程称为类的加载。加载到内存中的类，我们就称为运行时类，就作为Class的一个实例。 换句话说，Class的实例就对应着一个运行时类 补充：java中的类也是对象，是Class的对象 加载到内存中的运行时类，会缓存一定的时间。在此时间之内，我们可以通过不同的方式来获取此运行时类（它们获取的是同一个运行时类）。
+  (2)获取Class的实例的方式： 调用运行时类的属性 .class 通过运行时类的对象 调用getClass 调用Class的静态方法：forName（String classPath） 补充：使用类的加载器：ClassLoader   (3)关于ClassLoader的理解： 作用：把类装载进入内存 分类：引导类加载器（复杂Java核心库的加载）、系统类加载器（最常用的加载器），扩展类加载器（加载jre/lib/ext目录下的jar包） 使用ClassLoader读取配置文件   (3)创建运行时类的对象： newInstance():调用此方法，创建对应运行时类的对象。内部调用了运行时类的空参的构造器。
+ 要想此方法正常创建运行时类的对象，要求：运行时类必须提供权限足够的空参构造器 在javaBean中要求提供一个public的空参构造器。&raquo;原因：便于通过反射，创建运行时类的对象。便于子类继承此运行时类时，默认调用super()时，保证父类有次构造器。   三、反射机制的一些问题  1、反射机制与面向对象的封装性 两个技术不矛盾，封装性解决的是建议你是否使用私有方法。反射机制解决的是能不能调用的问题。
+2、在开发过程中什么时候使用new对象，什么时候使用反射的方式去调用公共的结构 编译的时候不知道使用哪一个类，使用反射的方式
+  ​" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://qmr0925.github.io/program/reflection/" />
+<meta property="article:published_time" content="2020-12-01T10:43:22+08:00" />
+<meta property="article:modified_time" content="2020-12-01T10:43:22+08:00" />
+
+
+  </head>
+  <body>
+    <header class="app-header">
+      <a href="https://qmr0925.github.io"><img class="app-header-avatar" src="/1.png" alt="John Doe" /></a>
+      <h1>Your title</h1>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vehicula turpis sit amet elit pretium.</p>
+      <div class="app-header-social">
+        
+          <a target="_blank" href="https://github.com/gohugoio" rel="noreferrer noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-github">
+  <title>github</title>
+  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+</svg></a>
+        
+          <a target="_blank" href="mailto:csuyzz@foxmail.com" rel="noreferrer noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-mail">
+  <title>mail</title>
+  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline>
+</svg></a>
+        
+          <a target="_blank" href="https://cn.linkedin.com/in/csuyzz" rel="noreferrer noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-linkedin">
+  <title>linkedin</title>
+  <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle>
+</svg></a>
+        
+          <a target="_blank" href="https://twitter.com/gohugoio" rel="noreferrer noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-twitter">
+  <title>twitter</title>
+  <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path>
+</svg></a>
+        
+      </div>
+      <h3><a href="/" title="首页">首页</a></h3>
+      <h3><a href="/category/content/" title="首页">分类目录</a></h3>
+      <h3><a href="/personal/introduce/" title="首页">个人简介</a></h3>
+    </header>
+    <main class="app-container">
+      
+  <article class="post">
+    <header class="post-header">
+      <h1 class ="post-title">Refection</h1>
+      <div class="post-meta">
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-calendar">
+  <title>calendar</title>
+  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line>
+</svg>
+          Dec 1, 2020
+        </div>
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-clock">
+  <title>clock</title>
+  <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
+</svg>
+          1 min read
+        </div>
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tag">
+  <title>tag</title>
+  <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7" y2="7"></line>
+</svg>
+              <a class="tag" href="https://qmr0925.github.io/tags/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/">编程语言</a>
+              <a class="tag" href="https://qmr0925.github.io/tags/java/">Java</a>
+        </div>
+      </div>
+    </header>
+    <div class="post-content">
+      <hr>
+<h3 id="一java反射机制概述">一、Java反射机制概述</h3>
+<blockquote>
+<p>被视为动态语言的关键，反射机制允许程序在执行期间，借助于Reflection API取得任何类的内部信息，并能直接操作任意操作对象的内部属性及方法。
+原理解释：加载完类之后，在堆内存区产生了一个Class类型的对象（一个类只有一个Class对象），这个对象包含了完整的类的结构信息，我们可以通过这个对象看到类的结构。</p>
+</blockquote>
+<h4 id="1动态语言与静态语言">1、动态语言与静态语言</h4>
+<blockquote>
+<p>动态语言：在运行时可以改变其结构的语言。包括Object-C C#，Javascript，PHP，Python，
+静态语言：运行时结构不可变的语言就是静态语言。包括Java，C，C++等
+JAVA被称为“准动态语言”，因为Java可以利用反射机制，字节码操作等得到类似动态语言的特性。</p>
+</blockquote>
+<h4 id="二反射机制的作用">二、反射机制的作用</h4>
+<blockquote>
+<h4 id="1在运行时判断任意一个对象所属于的类">1、在运行时判断任意一个对象所属于的类</h4>
+<h4 id="2在运行时构造任意一个类的对象">2、在运行时构造任意一个类的对象</h4>
+<h4 id="3在运行时判断或调用任意一个类所具有的成员变量和方法">3、在运行时判断或调用任意一个类所具有的成员变量和方法</h4>
+<h4 id="4在运行时获取泛型信息">4、在运行时获取泛型信息</h4>
+<h4 id="5在运行时处理注解">5、在运行时处理注解</h4>
+<h4 id="6生成动态代理">6、生成动态代理</h4>
+</blockquote>
+<h4 id="二反射相关的主要api">二、反射相关的主要API</h4>
+<blockquote>
+<p>java.lang.Class:代表一个类
+java.lang.reflect.Method:代表类的方法
+java.lang.reflect.Field:代表类的成员变量
+java.lang.reflect.Constructor:代表类的构造器
+使用示例：
+<img src="https://img-blog.csdnimg.cn/20201201123909686.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzNjI2MzA5,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+</blockquote>
+<blockquote>
+<h4 id="1关于javalangclass类的理解">1、关于java.lang.Class类的理解</h4>
+<h5 id="1类的加载过程">(1)类的加载过程：</h5>
+<p>程序经过javac.exe命令后，会生成一个或多个字节码文件（.class结尾）。java.exe命令对某个字节码文件进行解释运行。相当与将某个字节码文件加载到内存中，此过程称为类的加载。加载到内存中的类，我们就称为运行时类，就作为Class的一个实例。
+<img src="https://img-blog.csdnimg.cn/20201202195208519.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzNjI2MzA5,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述">
+<img src="https://img-blog.csdnimg.cn/20201202195257173.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzNjI2MzA5,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述">
+换句话说，Class的实例就对应着一个运行时类
+补充：java中的类也是对象，是Class的对象
+加载到内存中的运行时类，会缓存一定的时间。在此时间之内，我们可以通过不同的方式来获取此运行时类（它们获取的是同一个运行时类）。</p>
+</blockquote>
+<blockquote>
+<h5 id="2获取class的实例的方式">(2)获取Class的实例的方式：</h5>
+<p>调用运行时类的属性 .class
+通过运行时类的对象 调用getClass
+调用Class的静态方法：forName（String classPath）
+<img src="https://img-blog.csdnimg.cn/20201202191923636.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzNjI2MzA5,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述">
+补充：使用类的加载器：ClassLoader
+<img src="https://img-blog.csdnimg.cn/20201202193233312.png" alt="在这里插入图片描述"></p>
+</blockquote>
+<blockquote>
+<h5 id="3关于classloader的理解">(3)关于ClassLoader的理解：</h5>
+<p>作用：把类装载进入内存
+分类：引导类加载器（复杂Java核心库的加载）、系统类加载器（最常用的加载器），扩展类加载器（加载jre/lib/ext目录下的jar包）
+使用ClassLoader读取配置文件
+<img src="https://img-blog.csdnimg.cn/20201203090713445.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzNjI2MzA5,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+</blockquote>
+<blockquote>
+<h5 id="3创建运行时类的对象">(3)创建运行时类的对象：</h5>
+<p>newInstance():调用此方法，创建对应运行时类的对象。内部调用了运行时类的空参的构造器。</p>
+<blockquote>
+<p>要想此方法正常创建运行时类的对象，要求：运行时类必须提供权限足够的空参构造器
+在javaBean中要求提供一个public的空参构造器。&raquo;原因：便于通过反射，创建运行时类的对象。便于子类继承此运行时类时，默认调用super()时，保证父类有次构造器。
+<img src="https://img-blog.csdnimg.cn/20201203092746118.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzNjI2MzA5,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+</blockquote>
+</blockquote>
+<h4 id="三反射机制的一些问题">三、反射机制的一些问题</h4>
+<blockquote>
+<h4 id="1反射机制与面向对象的封装性">1、反射机制与面向对象的封装性</h4>
+<p>两个技术不矛盾，封装性解决的是建议你是否使用私有方法。反射机制解决的是能不能调用的问题。</p>
+<h4 id="2在开发过程中什么时候使用new对象什么时候使用反射的方式去调用公共的结构">2、在开发过程中什么时候使用new对象，什么时候使用反射的方式去调用公共的结构</h4>
+<p>编译的时候不知道使用哪一个类，使用反射的方式</p>
+</blockquote>
+<hr>
+<p>​</p>
+
+    </div>
+    <div class="post-footer">
+      
+    </div>
+  </article>
+  <script src="https://utteranc.es/client.js"
+        repo="qmr/hugocomments"
+        issue-term="pathname"
+        theme="github-dark"  
+        crossorigin="anonymous"
+        async>
+</script>
+
+    </main>
+  </body>
+</html>
