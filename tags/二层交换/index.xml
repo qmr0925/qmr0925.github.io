@@ -6,10 +6,33 @@
     <description>Recent content in 二层交换 on Your title</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 02 Aug 2020 15:44:42 +0800</lastBuildDate>
+    <lastBuildDate>Sat, 12 Dec 2020 20:55:37 +0800</lastBuildDate>
     
 	<atom:link href="https://qmr0925.github.io/tags/%E4%BA%8C%E5%B1%82%E4%BA%A4%E6%8D%A2/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>HttpStatusCode</title>
+      <link>https://qmr0925.github.io/network/httpstatuscode/</link>
+      <pubDate>Sat, 12 Dec 2020 20:55:37 +0800</pubDate>
+      
+      <guid>https://qmr0925.github.io/network/httpstatuscode/</guid>
+      <description>状态码的职责是当客户端向服务器发送请求时，描述返回的请求结果。借助状态码，用户可以知道服务器端是正常处理了请求还是出现了错误。
+一、状态码的类别      类别 原因短语     1XX Informational（信息性状态码） 接受的请求正在处理   2XX Success（成功状态码） 请求正常处理完毕   3XX Redirection（重定向状态码） 需要进行附加操作以完成请求   4XX Client Error（客户端错误状态码 服务器无法处理请求   5XX Server Error（服务器错误状态码） 服务器处理请求出错     一、状态码的具体解释 1、1xx - 信息提示  这些状态代码表示临时的响应。客户端在收到常规响应之前，应准备接收一个或多个 1xx 响应。
+  (1)100 Continue 初始的请求已经接受，客户应当继续发送请求的其余部分。（HTTP 1.1新）
+(2)101 Switching Protocols 服务器将遵从客户的请求转换到另外一种协议（HTTP 1.1新）
+ 2、2**开头 （请求成功）表示成功处理了请求的状态代码。  (1)200 OK 请求已正常处理。
+(2)201 Created 服务器已经创建了文档，Location头给出了它的URL。</description>
+    </item>
+    
+    <item>
+      <title>GET和POST两种基本请求方法的区别</title>
+      <link>https://qmr0925.github.io/network/getpost/</link>
+      <pubDate>Sat, 12 Dec 2020 20:36:47 +0800</pubDate>
+      
+      <guid>https://qmr0925.github.io/network/getpost/</guid>
+      <description>一、   1、   2、   3、    (1)     (2)     (3)     ​</description>
+    </item>
     
     <item>
       <title>以太网数据帧结构</title>
